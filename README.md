@@ -12,5 +12,6 @@ Features:
 - Search by product name / type;
 - Add product in shopping cart;
 - Remove product from shopping cart;
+- User to print products from shopping cart;
 - Admin to add product in product list;
 - Admin to remove product from product list.

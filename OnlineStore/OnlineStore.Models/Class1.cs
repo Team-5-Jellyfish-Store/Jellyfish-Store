@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Models
 {
-    public class Class1
+    public class Client
     {
     }
 }

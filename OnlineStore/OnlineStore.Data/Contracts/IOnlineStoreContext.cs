@@ -10,5 +10,8 @@ namespace OnlineStore.Data.Contracts
         IDbSet<Order> Orders { get; set; }
         IDbSet<Product> Products { get; set; }
         IDbSet<Supplier> Suppliers { get; set; }
+        IDbSet<Town> Towns { get; set; }
+
+        int SaveChanges();
     }
 }

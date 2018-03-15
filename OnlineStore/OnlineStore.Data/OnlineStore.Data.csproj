@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201803150848248_first server run.cs" />
+    <Compile Include="Migrations\201803150848248_first server run.Designer.cs">
+      <DependentUpon>201803150848248_first server run.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +64,11 @@
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803150848248_first server run.resx">
+      <DependentUpon>201803150848248_first server run.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

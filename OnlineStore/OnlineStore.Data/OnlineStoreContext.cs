@@ -1,24 +1,29 @@
-﻿
-
+﻿using System.Data.Entity;
+using OnlineStore.Data.Contracts;
 using OnlineStore.Models;
-using System.Data.Entity;
-using System.Runtime.Remoting.Contexts;
 
 namespace OnlineStore.Data
 {
-    public class OnlineStoreContext : DbContext
+    public class OnlineStoreContext : DbContext, IOnlineStoreContext
     {
-        public OnlineStoreContext() : base("OnlineStore")
-        {
-        }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
+
+        public OnlineStoreContext()
+            : base("OnlineStore") { }
+        
+        public IDbSet<Client> Clients { get; set; }
+        public IDbSet<Category> Categories { get; set; }
+        public IDbSet<Order> Orders { get; set; }
+        public IDbSet<Product> Products { get; set; }
+        public IDbSet<Supplier> Suppliers { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Product>()
+            //    .HasRequired(s => s.Supplier)
+            //    .WithMany(g => g.Products)
+            //    .HasForeignKey(s => s.SupplierId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

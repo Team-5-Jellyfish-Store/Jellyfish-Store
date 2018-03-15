@@ -1,4 +1,5 @@
-﻿using OnlineStore.Data;
+﻿using OnlineStore.Core.Security;
+using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Models;
 using System;
@@ -9,10 +10,12 @@ namespace OnlineStore.Core.Commands
     public class RegisterClientCommand : ICommand
     {
         private readonly IOnlineStoreContext context;
+        private readonly IHasher hasher;
 
-        public RegisterClientCommand(IOnlineStoreContext context)
+        public RegisterClientCommand(IOnlineStoreContext context, IHasher hasher)
         {
             this.context = context;
+            this.hasher = hasher;
         }
 
         public void Execute(string[] parameters)
@@ -30,7 +33,9 @@ namespace OnlineStore.Core.Commands
             }
 
             var town = context.Towns.Where(x => x.Name == townName).FirstOrDefault()
-                                ?? throw new ArgumentNullException();
+                                ?? throw new ArgumentNullException("Town not Found!");
+
+            password = this.hasher.CreatePassword(password);
 
             var newUser = new Client()
             {

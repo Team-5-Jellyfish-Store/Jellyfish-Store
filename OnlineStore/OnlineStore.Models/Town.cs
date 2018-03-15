@@ -4,6 +4,12 @@ namespace OnlineStore.Models
 {
     public class Town
     {
+        public Town()
+        {
+            this.Clients= new HashSet<Client>();
+            this.Suppliers= new HashSet<Supplier>();
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }

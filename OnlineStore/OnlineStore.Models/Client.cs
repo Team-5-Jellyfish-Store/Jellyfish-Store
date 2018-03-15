@@ -8,6 +8,11 @@ namespace OnlineStore.Models
 {
     public class Client
     {
+        public Client()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+
         public int Id { get; set; }
 
         public string Username { get; set; }
@@ -20,5 +25,7 @@ namespace OnlineStore.Models
         
         public int TownId { get; set; }
         public Town Town { get; set; } //navprop
+
+        public ICollection<Order> Orders { get; set; } //navprop
     }
 }

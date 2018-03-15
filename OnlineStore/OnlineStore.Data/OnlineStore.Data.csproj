@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201803151431278_Towns Table Addded.Designer.cs">
       <DependentUpon>201803151431278_Towns Table Addded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803151442569_Navigation Properties Set in Models.cs" />
+    <Compile Include="Migrations\201803151442569_Navigation Properties Set in Models.Designer.cs">
+      <DependentUpon>201803151442569_Navigation Properties Set in Models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803151431278_Towns Table Addded.resx">
       <DependentUpon>201803151431278_Towns Table Addded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803151442569_Navigation Properties Set in Models.resx">
+      <DependentUpon>201803151442569_Navigation Properties Set in Models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

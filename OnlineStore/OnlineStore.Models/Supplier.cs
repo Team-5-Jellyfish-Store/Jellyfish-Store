@@ -8,6 +8,11 @@ namespace OnlineStore.Models
 {
     public class Supplier
     {
+        public Supplier()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+
         public int Id { get; set; }
 
         public string FirstName { get; set; }

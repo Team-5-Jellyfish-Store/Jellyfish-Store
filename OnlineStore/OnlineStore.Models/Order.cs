@@ -8,6 +8,11 @@ namespace OnlineStore.Models
 {
     public class Order
     {
+        public Order()
+        {
+            this.Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
 
         public string Comment { get; set; }

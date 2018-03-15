@@ -48,30 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IOnlineStoreContext.cs" />
-    <Compile Include="Migrations\201803150848248_first server run.cs" />
-    <Compile Include="Migrations\201803150848248_first server run.Designer.cs">
-      <DependentUpon>201803150848248_first server run.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151339213_OrderProductsTable.cs" />
-    <Compile Include="Migrations\201803151339213_OrderProductsTable.Designer.cs">
-      <DependentUpon>201803151339213_OrderProductsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151343394_updated table OrderProduct.cs" />
-    <Compile Include="Migrations\201803151343394_updated table OrderProduct.Designer.cs">
-      <DependentUpon>201803151343394_updated table OrderProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151354259_Order-Supplier &amp; Order-Client.cs" />
-    <Compile Include="Migrations\201803151354259_Order-Supplier &amp; Order-Client.Designer.cs">
-      <DependentUpon>201803151354259_Order-Supplier &amp; Order-Client.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151431278_Towns Table Addded.cs" />
-    <Compile Include="Migrations\201803151431278_Towns Table Addded.Designer.cs">
-      <DependentUpon>201803151431278_Towns Table Addded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803151442569_Navigation Properties Set in Models.cs" />
-    <Compile Include="Migrations\201803151442569_Navigation Properties Set in Models.Designer.cs">
-      <DependentUpon>201803151442569_Navigation Properties Set in Models.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,26 +61,6 @@
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803150848248_first server run.resx">
-      <DependentUpon>201803150848248_first server run.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151339213_OrderProductsTable.resx">
-      <DependentUpon>201803151339213_OrderProductsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151343394_updated table OrderProduct.resx">
-      <DependentUpon>201803151343394_updated table OrderProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151354259_Order-Supplier &amp; Order-Client.resx">
-      <DependentUpon>201803151354259_Order-Supplier &amp; Order-Client.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151431278_Towns Table Addded.resx">
-      <DependentUpon>201803151431278_Towns Table Addded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803151442569_Navigation Properties Set in Models.resx">
-      <DependentUpon>201803151442569_Navigation Properties Set in Models.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

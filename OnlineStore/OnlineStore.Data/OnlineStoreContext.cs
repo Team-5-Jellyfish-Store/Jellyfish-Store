@@ -19,6 +19,12 @@ namespace OnlineStore.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Order>().HasMany(or => or.Products).WithMany(pr => pr.Orders);
+
+            modelBuilder.Entity<Town>().HasMany(t => t.Clients).WithRequired(cl => cl.Town).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Town>().HasMany(t => t.Suppliers).WithRequired(sup=> sup.Town).WillCascadeOnDelete(false);
+
             //modelBuilder.Entity<Product>()
             //    .HasRequired(s => s.Supplier)
             //    .WithMany(g => g.Products)

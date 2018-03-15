@@ -3,7 +3,7 @@ namespace OnlineStore.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class firstserverrun : DbMigration
+    public partial class initial1 : DbMigration
     {
         public override void Up()
         {

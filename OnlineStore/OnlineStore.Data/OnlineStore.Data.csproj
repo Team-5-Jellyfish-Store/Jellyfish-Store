@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IOnlineStoreContext.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

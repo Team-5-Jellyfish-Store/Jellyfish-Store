@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Models
 {
-    public class Client
+    public class Category
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

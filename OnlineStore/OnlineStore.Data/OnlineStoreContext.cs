@@ -6,6 +6,7 @@ namespace OnlineStore.Data
 {
     public class OnlineStoreContext : DbContext, IOnlineStoreContext
     {
+
         public OnlineStoreContext()
             : base("OnlineStore") { }
         
@@ -14,6 +15,7 @@ namespace OnlineStore.Data
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<Product> Products { get; set; }
         public IDbSet<Supplier> Suppliers { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

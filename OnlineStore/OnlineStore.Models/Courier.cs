@@ -22,8 +22,6 @@ namespace OnlineStore.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        public ICollection<Order> Orders { get; set; } //navprop
-
-
+        public virtual ICollection<Order> Orders { get; set; } //navprop
     }
 }

@@ -4,6 +4,11 @@ namespace OnlineStore.Models
 {
     public class Supplier
     {
+        public Supplier()
+        {
+            this.Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
 
         public string Firstname { get; set; }
@@ -15,6 +20,6 @@ namespace OnlineStore.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        public ICollection<Product> Products { get; set; } //navprop
+        public virtual ICollection<Product> Products { get; set; } //navprop
     }
 }

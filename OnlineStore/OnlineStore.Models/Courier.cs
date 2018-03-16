@@ -19,7 +19,7 @@ namespace OnlineStore.Models
 
         public string LastName { get; set; }
 
-        public int TownId { get; set; }
+        public int TownId { get; set; } // here is test comment
         public Town Town { get; set; } //navprop
 
         public ICollection<Order> Orders { get; set; } //navprop

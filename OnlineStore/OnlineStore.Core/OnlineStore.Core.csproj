@@ -54,8 +54,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddProductToCartCommand.cs" />
+    <Compile Include="Commands\AdminFile\AddProductToProductsCommand.cs" />
+    <Compile Include="Commands\AdminFile\ImportCouriersCommand.cs" />
+    <Compile Include="Commands\AdminFile\ImportProductsCommand.cs" />
+    <Compile Include="Commands\AdminFile\ImportSuppliersCommand.cs" />
+    <Compile Include="Commands\AdminFile\RemoveProductFromProductsCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\LoginCommand.cs" />
+    <Compile Include="Commands\PrintAvailableProductReportCommand.cs" />
+    <Compile Include="Commands\PrintOrdersReportCommand.cs" />
     <Compile Include="Commands\RegisterClientCommand.cs" />
+    <Compile Include="Commands\RemoveProductFromCartCommand.cs" />
+    <Compile Include="Commands\SearchCategoryCommand.cs" />
+    <Compile Include="Commands\SearchProductCommand.cs" />
     <Compile Include="Contracts\ICommand.cs" />
     <Compile Include="Contracts\ICommandFactory.cs" />
     <Compile Include="Contracts\ICommandParser.cs" />

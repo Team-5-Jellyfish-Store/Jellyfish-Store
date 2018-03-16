@@ -48,6 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IOnlineStoreContext.cs" />
+    <Compile Include="Migrations\201803151527412_All Table Relations Added.cs" />
+    <Compile Include="Migrations\201803151527412_All Table Relations Added.Designer.cs">
+      <DependentUpon>201803151527412_All Table Relations Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803160855052_added supplier to table.cs" />
+    <Compile Include="Migrations\201803160855052_added supplier to table.Designer.cs">
+      <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +69,14 @@
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803151527412_All Table Relations Added.resx">
+      <DependentUpon>201803151527412_All Table Relations Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160855052_added supplier to table.resx">
+      <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

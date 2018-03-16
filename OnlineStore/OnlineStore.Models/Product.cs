@@ -17,9 +17,13 @@ namespace OnlineStore.Models
 
         public string Name { get; set; }
 
-        public int CategoryId { get; set; }
-        public Category Category { get; set; } //navprop
+        public decimal Price { get; set; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; } //navp
+        public int SupplierId { get; set; }
+        
+        public Supplier Supplier { get; set; }//navprop
         public ICollection<Order> Orders { get; set; } //navprop
 
     }

@@ -22,8 +22,8 @@ namespace OnlineStore.Models
         public int ClientId { get; set; }
         public Client Client { get; set; } //navprop
 
-        public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; } //navprop
+        public int CourierId { get; set; }
+        public Courier Courier { get; set; } //navprop
 
         public ICollection<Product> Products { get; set; } //navprop
     }

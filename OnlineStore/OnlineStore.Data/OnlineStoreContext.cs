@@ -14,7 +14,9 @@ namespace OnlineStore.Data
         public IDbSet<Category> Categories { get; set; }
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<Product> Products { get; set; }
+        public IDbSet<Courier> Courriers { get; set; }
         public IDbSet<Supplier> Suppliers { get; set; }
+        public IDbSet<Town> Towns { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -23,7 +25,7 @@ namespace OnlineStore.Data
 
             modelBuilder.Entity<Town>().HasMany(t => t.Clients).WithRequired(cl => cl.Town).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Town>().HasMany(t => t.Suppliers).WithRequired(sup=> sup.Town).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Town>().HasMany(t => t.Couriers).WithRequired(courier=> courier.Town).WillCascadeOnDelete(false);
 
             //modelBuilder.Entity<Product>()
             //    .HasRequired(s => s.Supplier)

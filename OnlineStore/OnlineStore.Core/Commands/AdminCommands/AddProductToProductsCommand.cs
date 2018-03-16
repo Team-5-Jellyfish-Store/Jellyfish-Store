@@ -1,4 +1,5 @@
-﻿using OnlineStore.Core.Contracts;
+﻿using System;
+using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {
@@ -6,7 +7,8 @@ namespace OnlineStore.Core.Commands.AdminCommands
     {
         public string ExecuteThisCommand(string[] commandParameters)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("I added the file...");
+            return "not implemented";
         }
     }
 }

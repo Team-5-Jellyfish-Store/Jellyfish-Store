@@ -1,0 +1,35 @@
+﻿using Autofac;
+using OnlineStore.Core;
+using OnlineStore.Core.Commands;
+using OnlineStore.Core.Contracts;
+using OnlineStore.Core.Factories;
+using OnlineStore.Core.Providers;
+using OnlineStore.Core.ShoppingCartRepository;
+using OnlineStore.Data;
+using OnlineStore.Data.Contracts;
+using ICommand = OnlineStore.Core.Contracts.ICommand;
+
+namespace OnlineStore.App.AutofacConfig
+{
+    internal class AutofacConfig : Autofac.Module
+    {
+
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<CommandFactory>().As<ICommandFactory>().SingleInstance();
+            builder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
+            builder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
+            builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>().SingleInstance();
+            builder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();
+            builder.RegisterType<ConsoleWriter>().As<IWriter>().SingleInstance();
+
+            builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
+            builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
+            builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
+
+            //Commands
+            builder.RegisterType<RegisterClientCommand>().Named<ICommand>("registerClient");
+            builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
+        }
+    }
+}

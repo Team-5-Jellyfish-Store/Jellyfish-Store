@@ -1,4 +1,5 @@
-﻿using OnlineStore.Data;
+﻿using Autofac;
+using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.App
 {
@@ -6,7 +7,12 @@ namespace OnlineStore.App
     {
         static void Main()
         {
-            var db = new OnlineStoreContext();
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new AutofacConfig.AutofacConfig());
+            var container = builder.Build();
+
+            var engine = container.Resolve<IEngine>();
+            engine.Run();
         }
     }
 }

@@ -4,6 +4,7 @@ using OnlineStore.Data.Contracts;
 using OnlineStore.Models;
 using System;
 using System.Linq;
+using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Core.Commands
 {
@@ -18,7 +19,7 @@ namespace OnlineStore.Core.Commands
             this.hasher = hasher;
         }
 
-        public void Execute(string[] parameters)
+        public string ExecuteThisCommand(string[] parameters)
         {
             string username = parameters[0];
             string password = parameters[1];
@@ -49,6 +50,8 @@ namespace OnlineStore.Core.Commands
             context.Clients.Add(newUser);
 
             context.SaveChanges();
+
+            return "User registered successfully!";
         }
     }
 }

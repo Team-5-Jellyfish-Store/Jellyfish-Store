@@ -56,6 +56,34 @@
     <Compile Include="Migrations\201803160855052_added supplier to table.Designer.cs">
       <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803160949366_Additional Columns.cs" />
+    <Compile Include="Migrations\201803160949366_Additional Columns.Designer.cs">
+      <DependentUpon>201803160949366_Additional Columns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.cs" />
+    <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.Designer.cs">
+      <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161137366_UserRole Added.cs" />
+    <Compile Include="Migrations\201803161137366_UserRole Added.Designer.cs">
+      <DependentUpon>201803161137366_UserRole Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161139344_Client Renamed To User.cs" />
+    <Compile Include="Migrations\201803161139344_Client Renamed To User.Designer.cs">
+      <DependentUpon>201803161139344_Client Renamed To User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161143475_Referal User Added.cs" />
+    <Compile Include="Migrations\201803161143475_Referal User Added.Designer.cs">
+      <DependentUpon>201803161143475_Referal User Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161239088_Products Quantity Added.cs" />
+    <Compile Include="Migrations\201803161239088_Products Quantity Added.Designer.cs">
+      <DependentUpon>201803161239088_Products Quantity Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161248532_Products Selling &amp; Purchase Price Added.cs" />
+    <Compile Include="Migrations\201803161248532_Products Selling &amp; Purchase Price Added.Designer.cs">
+      <DependentUpon>201803161248532_Products Selling &amp; Purchase Price Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +104,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803160855052_added supplier to table.resx">
       <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160949366_Additional Columns.resx">
+      <DependentUpon>201803160949366_Additional Columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160955049_Supplier Name Columns Added.resx">
+      <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161137366_UserRole Added.resx">
+      <DependentUpon>201803161137366_UserRole Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161139344_Client Renamed To User.resx">
+      <DependentUpon>201803161139344_Client Renamed To User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161143475_Referal User Added.resx">
+      <DependentUpon>201803161143475_Referal User Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161239088_Products Quantity Added.resx">
+      <DependentUpon>201803161239088_Products Quantity Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161248532_Products Selling &amp; Purchase Price Added.resx">
+      <DependentUpon>201803161248532_Products Selling &amp; Purchase Price Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

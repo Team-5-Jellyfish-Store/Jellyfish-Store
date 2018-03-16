@@ -37,7 +37,7 @@ namespace OnlineStore.Core.Commands
 
             password = this.hasher.CreatePassword(password);
 
-            var newUser = new Client()
+            var newUser = new User()
             {
                 FirstName = firstName,
                 LastName = lastName,

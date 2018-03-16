@@ -12,6 +12,7 @@ namespace OnlineStore.Data.Contracts
         IDbSet<Courier> Courriers { get; set; }
         IDbSet<Supplier> Suppliers { get; set; }
         IDbSet<Town> Towns { get; set; }
+        IDbSet<Address> Addresses { get; set; }
 
         int SaveChanges();
     }

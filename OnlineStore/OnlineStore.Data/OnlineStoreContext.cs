@@ -16,6 +16,7 @@ namespace OnlineStore.Data
         public IDbSet<Product> Products { get; set; }
         public IDbSet<Courier> Courriers { get; set; }
         public IDbSet<Supplier> Suppliers { get; set; }
+        public IDbSet<Address> Addresses { get; set; }
         public IDbSet<Town> Towns { get; set; }
 
 
@@ -23,9 +24,11 @@ namespace OnlineStore.Data
         {
             modelBuilder.Entity<Order>().HasMany(or => or.Products).WithMany(pr => pr.Orders);
 
-            modelBuilder.Entity<Town>().HasMany(t => t.Clients).WithRequired(cl => cl.Town).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Address>().HasMany(t => t.Clients).WithRequired(cl => cl.Address).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Town>().HasMany(t => t.Couriers).WithRequired(courier=> courier.Town).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Address>().HasMany(t => t.Couriers).WithRequired(courier=> courier.Address).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Address>().HasMany(t => t.Suppliers).WithRequired(sup => sup.Address).WillCascadeOnDelete(false);
 
             //modelBuilder.Entity<Product>()
             //    .HasRequired(s => s.Supplier)

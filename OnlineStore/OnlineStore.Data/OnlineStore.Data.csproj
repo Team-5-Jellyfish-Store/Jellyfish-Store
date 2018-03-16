@@ -56,6 +56,14 @@
     <Compile Include="Migrations\201803160855052_added supplier to table.Designer.cs">
       <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803160949366_Additional Columns.cs" />
+    <Compile Include="Migrations\201803160949366_Additional Columns.Designer.cs">
+      <DependentUpon>201803160949366_Additional Columns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.cs" />
+    <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.Designer.cs">
+      <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +84,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803160855052_added supplier to table.resx">
       <DependentUpon>201803160855052_added supplier to table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160949366_Additional Columns.resx">
+      <DependentUpon>201803160949366_Additional Columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803160955049_Supplier Name Columns Added.resx">
+      <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

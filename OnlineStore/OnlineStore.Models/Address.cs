@@ -6,7 +6,7 @@ namespace OnlineStore.Models
     {
         public Address()
         {
-            this.Clients = new HashSet<Client>();
+            this.Users = new HashSet<User>();
             this.Couriers = new HashSet<Courier>();
             this.Suppliers = new HashSet<Supplier>();
         }
@@ -18,7 +18,7 @@ namespace OnlineStore.Models
         public int TownId { get; set; }
         public Town Town { get; set; } //navprop
 
-        public ICollection<Client> Clients { get; set; } //navprop
+        public ICollection<User> Users { get; set; } //navprop
         public ICollection<Courier> Couriers { get; set; } //navprop
         public ICollection<Supplier> Suppliers { get; set; } //navprop
     }

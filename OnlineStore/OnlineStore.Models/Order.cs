@@ -18,8 +18,8 @@ namespace OnlineStore.Models
 
         public DateTime? DeliveredOn { get; set; }
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; } //navprop
+        public int UserId { get; set; }
+        public User User { get; set; } //navprop
 
         public int CourierId { get; set; }
         public Courier Courier { get; set; } //navprop

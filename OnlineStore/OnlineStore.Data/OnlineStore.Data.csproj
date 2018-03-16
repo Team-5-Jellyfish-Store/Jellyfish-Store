@@ -64,9 +64,17 @@
     <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.Designer.cs">
       <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803161108595_fixedTowns.cs" />
-    <Compile Include="Migrations\201803161108595_fixedTowns.Designer.cs">
-      <DependentUpon>201803161108595_fixedTowns.cs</DependentUpon>
+    <Compile Include="Migrations\201803161137366_UserRole Added.cs" />
+    <Compile Include="Migrations\201803161137366_UserRole Added.Designer.cs">
+      <DependentUpon>201803161137366_UserRole Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161139344_Client Renamed To User.cs" />
+    <Compile Include="Migrations\201803161139344_Client Renamed To User.Designer.cs">
+      <DependentUpon>201803161139344_Client Renamed To User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161143475_Referal User Added.cs" />
+    <Compile Include="Migrations\201803161143475_Referal User Added.Designer.cs">
+      <DependentUpon>201803161143475_Referal User Added.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
@@ -95,8 +103,14 @@
     <EmbeddedResource Include="Migrations\201803160955049_Supplier Name Columns Added.resx">
       <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803161108595_fixedTowns.resx">
-      <DependentUpon>201803161108595_fixedTowns.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803161137366_UserRole Added.resx">
+      <DependentUpon>201803161137366_UserRole Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161139344_Client Renamed To User.resx">
+      <DependentUpon>201803161139344_Client Renamed To User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161143475_Referal User Added.resx">
+      <DependentUpon>201803161143475_Referal User Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

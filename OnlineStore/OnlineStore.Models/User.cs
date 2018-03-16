@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineStore.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Models
 {
-    public class Client
+    public class User
     {
-        public Client()
+        public User()
         {
             this.Orders = new HashSet<Order>();
         }
@@ -24,6 +25,11 @@ namespace OnlineStore.Models
         public string LastName { get; set; }
 
         public string EMail { get; set; }
+
+        public UserRole Role { get; set; }
+
+        public int ReferalUserId { get; set; }
+        public User ReferalUser { get; set; } //navprop
 
         public int AddressId { get; set; }
         public Address Address { get; set; } //navprop

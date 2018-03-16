@@ -1,13 +1,15 @@
 ﻿using Autofac;
 using OnlineStore.Core;
 using OnlineStore.Core.Commands;
+using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
 using OnlineStore.Core.ShoppingCartRepository;
+using OnlineStore.Core.UserService;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
-using ICommand = OnlineStore.Core.Contracts.ICommand;
+
 
 namespace OnlineStore.App.AutofacConfig
 {
@@ -25,11 +27,13 @@ namespace OnlineStore.App.AutofacConfig
 
             builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
+            builder.RegisterType<UserSessionService>().As<IUserSessionService>().SingleInstance();
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 
             //Commands
             builder.RegisterType<RegisterClientCommand>().Named<ICommand>("registerClient");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
+            builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
         }
     }
 }

@@ -4,7 +4,7 @@ namespace OnlineStore.Core.Commands
 {
     public class RemoveProductFromCartCommand : ICommand
     {
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             throw new System.NotImplementedException();
         }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Core.Commands
 {
-    class SearchCategoryCommand
+    public class SearchCategoryCommand : ICommand
     {
+        public string ExecuteThisCommand()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

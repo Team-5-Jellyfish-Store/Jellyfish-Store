@@ -5,7 +5,7 @@ namespace OnlineStore.Core.Commands
 {
     public class ExitCommand : ICommand
     {
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             //Environment.Exit(0);
             return "Goodbye! Thank you for your business!";

@@ -1,6 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
 
-namespace OnlineStore.Core.Commands
+namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class ImportCouriersCommand : ICommand
     {
@@ -9,6 +9,6 @@ namespace OnlineStore.Core.Commands
             throw new System.NotImplementedException();
         }
 
-        IUserSessionService userSessionService
+        
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 using OnlineStore.Core.Contracts;
 
-namespace OnlineStore.Core.Commands
+namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class ImportProductsCommand : ICommand
     {

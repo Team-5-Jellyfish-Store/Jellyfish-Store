@@ -22,9 +22,11 @@ namespace OnlineStore.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        
-        public int TownId { get; set; }
-        public Town Town { get; set; } //navprop
+
+        public string EMail { get; set; }
+
+        public int AddressId { get; set; }
+        public Address Address { get; set; } //navprop
 
         public ICollection<Order> Orders { get; set; } //navprop
     }

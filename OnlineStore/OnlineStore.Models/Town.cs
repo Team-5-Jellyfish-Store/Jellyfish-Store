@@ -6,15 +6,13 @@ namespace OnlineStore.Models
     {
         public Town()
         {
-            this.Clients= new HashSet<Client>();
-            this.Couriers = new HashSet<Courier>();
+            this.Addresses = new HashSet<Address>();
         }
 
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public ICollection<Client> Clients { get; set; } //navprop
-        public ICollection<Courier> Couriers { get; set; } //navprop
+        public ICollection<Address> Addresses { get; set; } //navprop
     }
 }

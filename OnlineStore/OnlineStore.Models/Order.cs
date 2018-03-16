@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Models
 {
@@ -18,6 +15,8 @@ namespace OnlineStore.Models
         public string Comment { get; set; }
 
         public DateTime OrderedOn { get; set; }
+
+        public DateTime? DeliveredOn { get; set; }
 
         public int ClientId { get; set; }
         public Client Client { get; set; } //navprop

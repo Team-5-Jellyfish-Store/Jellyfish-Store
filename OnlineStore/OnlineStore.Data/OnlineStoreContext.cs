@@ -8,7 +8,11 @@ namespace OnlineStore.Data
     {
 
         public OnlineStoreContext()
-            : base("OnlineStore") { }
+            : base("OnlineStore")
+        {
+            var strategy = new DropCreateDatabaseAlways<OnlineStoreContext>();
+            Database.SetInitializer(strategy);
+        }
         
         public IDbSet<Client> Clients { get; set; }
         public IDbSet<Category> Categories { get; set; }

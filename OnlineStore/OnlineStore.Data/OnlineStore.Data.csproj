@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201803160955049_Supplier Name Columns Added.Designer.cs">
       <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803161108595_fixedTowns.cs" />
+    <Compile Include="Migrations\201803161108595_fixedTowns.Designer.cs">
+      <DependentUpon>201803161108595_fixedTowns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803160955049_Supplier Name Columns Added.resx">
       <DependentUpon>201803160955049_Supplier Name Columns Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161108595_fixedTowns.resx">
+      <DependentUpon>201803161108595_fixedTowns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

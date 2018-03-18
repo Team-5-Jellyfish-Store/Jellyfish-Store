@@ -13,6 +13,6 @@ namespace OnlineStore.Models
 
         public string Name { get; set; }
 
-        public ICollection<Address> Addresses { get; set; } //navprop
+        public virtual ICollection<Address> Addresses { get; set; } //navprop
     }
 }

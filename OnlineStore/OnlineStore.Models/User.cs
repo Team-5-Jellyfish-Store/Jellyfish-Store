@@ -25,11 +25,11 @@ namespace OnlineStore.Models
         public UserRole Role { get; set; }
 
         public int ReferalUserId { get; set; }
-        public User ReferalUser { get; set; } //navprop
+        public virtual User ReferalUser { get; set; } //navprop
 
         public int AddressId { get; set; }
-        public Address Address { get; set; } //navprop
+        public virtual Address Address { get; set; } //navprop
 
-        public ICollection<Order> Orders { get; set; } //navprop
+        public virtual ICollection<Order> Orders { get; set; } //navprop
     }
 }

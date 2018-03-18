@@ -43,7 +43,7 @@ namespace OnlineStore.Core
                 catch (ArgumentException e) { this.writer.Write(e.Message); }
                 catch (ComponentNotRegisteredException) { this.writer.Write($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)"); }
 
-                this.writer.Write("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
+                this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
 
                 inputLine = ReadCommand();
 

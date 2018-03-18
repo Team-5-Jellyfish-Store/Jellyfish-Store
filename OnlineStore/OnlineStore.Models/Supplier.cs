@@ -24,9 +24,11 @@ namespace OnlineStore.Models
 
         [Required]
         [StringLength(13, MinimumLength = 6, ErrorMessage = "Please enter correct Phone")]
-        public string Phone { get; set;  }
+        public string Phone { get; set; }
 
         public int AddressId { get; set; }
+
+        public Address Address { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } //navprop
     }

@@ -87,7 +87,7 @@
     <Compile Include="Providers\ConsoleReader.cs" />
     <Compile Include="Providers\ConsoleWriter.cs" />
     <Compile Include="Security\Hasher.cs" />
-    <Compile Include="Security\IHasher.cs" />
+    <Compile Include="Contracts\IHasher.cs" />
     <Compile Include="ShoppingCartRepository\ShoppingCartRepository.cs" />
     <Compile Include="UserService\UserSessionService.cs" />
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
             this.writer = writer;
         }
 
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
             {

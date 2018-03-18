@@ -12,7 +12,7 @@ namespace OnlineStore.Core.Commands
             this.writer = writer;
         }
 
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             this.writer.Write("Goodbye! Thank you for your business!");
             Environment.Exit(0);

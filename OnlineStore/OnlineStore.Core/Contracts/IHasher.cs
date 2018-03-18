@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Core.Security
+﻿namespace OnlineStore.Core.Contracts
 {
     public interface IHasher
     {

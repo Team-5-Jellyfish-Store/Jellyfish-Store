@@ -31,7 +31,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 
             //Commands
-            builder.RegisterType<RegisterClientCommand>().Named<ICommand>("registerClient");
+            builder.RegisterType<RegisterClientCommand>().Named<ICommand>("register");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
 

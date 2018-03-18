@@ -5,6 +5,11 @@ namespace OnlineStore.Models
 {
     public class Supplier
     {
+        public Supplier()
+        {
+            this.Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -19,11 +24,11 @@ namespace OnlineStore.Models
 
         [Required]
         [StringLength(13, MinimumLength = 6, ErrorMessage = "Please enter correct Phone")]
-        public string Phone { get; set;  }
+        public string Phone { get; set; }
 
         public int AddressId { get; set; }
 
-        public virtual Address Address { get; set; } //navprop
+        public Address Address { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } //navprop
     }

@@ -24,19 +24,18 @@ namespace OnlineStore.Core
             this.writer = writer ?? throw new ArgumentNullException();
             this.reader = reader ?? throw new ArgumentNullException();
         }
-        
+
         public void Run()
         {
-            var inputLine = ReadCommand();
-            
+            var inputLine = this.reader.Read();
+
             while (true)
             {
                 try
                 {
                     var command = this.commandParser.ParseCommand(inputLine);
-                    var result = this.commandProcessor.ProcessSingleCommand(command, inputLine);
-                    this.PrintResult(result);
-
+                    var result = this.commandProcessor.ProcessSingleCommand(command);
+                    this.writer.Write(result);
                 }
                 catch (NotSupportedException e) { this.writer.Write(e.Message); }
                 catch (InvalidOperationException e) { this.writer.Write(e.Message); }
@@ -45,19 +44,8 @@ namespace OnlineStore.Core
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
 
-                inputLine = ReadCommand();
-
+                inputLine = this.reader.Read();
             }
-        }
-
-        private string ReadCommand()
-        {
-            return this.reader.Read();
-        }
-
-        private void PrintResult(string result)
-        {
-            this.writer.Write(result);
         }
     }
 }

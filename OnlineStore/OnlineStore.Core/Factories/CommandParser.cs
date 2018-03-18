@@ -18,12 +18,8 @@ namespace OnlineStore.Core.Factories
 
         protected ICommandFactory CmdFactory => cmdFactory;
 
-        public ICommand ParseCommand(string fullCommandName)
+        public ICommand ParseCommand(string commandName)
         {
-            var commandParametersSplit = fullCommandName.Trim().Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var commandName = commandParametersSplit[0];
-
             var command = this.CmdFactory.CreateCommand(commandName);
 
             return command;

@@ -6,11 +6,9 @@ namespace OnlineStore.Core.Factories
 {
     public class CommandProcessor : ICommandProcessor
     {
-        public string ProcessSingleCommand(ICommand command, string fullCommandParams)
+        public string ProcessSingleCommand(ICommand command)
         {
-            var lineParameters = fullCommandParams.Trim().Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var result = command.ExecuteThisCommand(lineParameters.Skip(1).ToArray());
+            var result = command.ExecuteThisCommand();
             return result;
         }
     }

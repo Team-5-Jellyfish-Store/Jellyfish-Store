@@ -4,7 +4,7 @@ namespace OnlineStore.Core.Commands
 {
     public class LoginCommand : ICommand
     {
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             throw new System.NotImplementedException();
         }

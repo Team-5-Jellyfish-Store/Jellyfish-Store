@@ -19,7 +19,7 @@ namespace OnlineStore.Core.Commands
             this.hasher = hasher;
         }
 
-        public string ExecuteThisCommand(string[] parameters)
+        public string ExecuteThisCommand()
         {
             string username = parameters[0];
             string password = parameters[1];

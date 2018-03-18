@@ -10,8 +10,8 @@ namespace OnlineStore.Data
         public OnlineStoreContext()
             : base("OnlineStore")
         {
-            var strategy = new DropCreateDatabaseAlways<OnlineStoreContext>();
-            Database.SetInitializer(strategy);
+            //var strategy = new DropCreateDatabaseAlways<OnlineStoreContext>();
+            //Database.SetInitializer(strategy);
         }
         
         public IDbSet<User> Clients { get; set; }

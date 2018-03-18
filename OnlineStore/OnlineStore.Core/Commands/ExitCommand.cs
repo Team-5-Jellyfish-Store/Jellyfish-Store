@@ -5,10 +5,18 @@ namespace OnlineStore.Core.Commands
 {
     public class ExitCommand : ICommand
     {
-        public string ExecuteThisCommand()
+        private readonly IWriter writer;
+
+        public ExitCommand(IWriter writer)
         {
-            //Environment.Exit(0);
-            return "Goodbye! Thank you for your business!";
+            this.writer = writer;
+        }
+
+        public string ExecuteThisCommand(string[] commandParameters)
+        {
+            this.writer.Write("Goodbye! Thank you for your business!");
+            Environment.Exit(0);
+            return string.Empty;
         }
     }
 }

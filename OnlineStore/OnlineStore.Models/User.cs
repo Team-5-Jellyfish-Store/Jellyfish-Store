@@ -1,5 +1,4 @@
 ﻿using OnlineStore.Models.Enums;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,7 +49,7 @@ namespace OnlineStore.Models
 
         [Required]
         public int AddressId { get; set; }
-        public Address Address { get; set; } //navprop
+        public virtual Address Address { get; set; } //navprop
 
         public virtual ICollection<Order> Orders { get; set; } //navprop
     }

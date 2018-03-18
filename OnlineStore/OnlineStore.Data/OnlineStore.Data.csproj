@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201803161248532_Products Selling &amp; Purchase Price Added.Designer.cs">
       <DependentUpon>201803161248532_Products Selling &amp; Purchase Price Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803181545313_AddedPhoneProperty.cs" />
+    <Compile Include="Migrations\201803181545313_AddedPhoneProperty.Designer.cs">
+      <DependentUpon>201803181545313_AddedPhoneProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803161248532_Products Selling &amp; Purchase Price Added.resx">
       <DependentUpon>201803161248532_Products Selling &amp; Purchase Price Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803181545313_AddedPhoneProperty.resx">
+      <DependentUpon>201803181545313_AddedPhoneProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

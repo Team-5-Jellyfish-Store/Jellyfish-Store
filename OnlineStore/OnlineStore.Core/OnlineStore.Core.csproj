@@ -72,6 +72,7 @@
     <Compile Include="Contracts\ICommandFactory.cs" />
     <Compile Include="Contracts\ICommandParser.cs" />
     <Compile Include="Contracts\ICommandProcessor.cs" />
+    <Compile Include="Contracts\IUserSessionService.cs" />
     <Compile Include="Contracts\IShoppingCartRepository.cs" />
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IOnlineStoreFactory.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Security\Hasher.cs" />
     <Compile Include="Security\IHasher.cs" />
     <Compile Include="ShoppingCartRepository\ShoppingCartRepository.cs" />
+    <Compile Include="UserService\UserSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">

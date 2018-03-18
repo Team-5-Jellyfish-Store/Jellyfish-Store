@@ -20,7 +20,7 @@ namespace OnlineStore.Core.Commands
             this.reader = reader;
             this.writer = writer;
         }
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter category name to view all products in this category");
             var categories = this.context.Categories.ToList();

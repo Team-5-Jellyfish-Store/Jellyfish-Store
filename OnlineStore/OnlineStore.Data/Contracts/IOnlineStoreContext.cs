@@ -5,7 +5,7 @@ namespace OnlineStore.Data.Contracts
 {
     public interface IOnlineStoreContext
     {
-        IDbSet<User> Clients { get; set; }
+        IDbSet<User> Users { get; set; }
         IDbSet<Category> Categories { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<Product> Products { get; set; }

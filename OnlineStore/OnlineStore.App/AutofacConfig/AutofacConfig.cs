@@ -5,6 +5,7 @@ using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
+using OnlineStore.Core.Security;
 using OnlineStore.Core.ShoppingCartRepository;
 using OnlineStore.Core.UserService;
 using OnlineStore.Data;
@@ -24,6 +25,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>().SingleInstance();
             builder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();
             builder.RegisterType<ConsoleWriter>().As<IWriter>().SingleInstance();
+            builder.RegisterType<Hasher>().As<IHasher>().SingleInstance();
 
             builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
@@ -32,6 +34,7 @@ namespace OnlineStore.App.AutofacConfig
 
             //Commands
             builder.RegisterType<RegisterClientCommand>().Named<ICommand>("register");
+            builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
 

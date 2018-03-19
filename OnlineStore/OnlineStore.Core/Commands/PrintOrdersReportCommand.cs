@@ -54,7 +54,7 @@ namespace OnlineStore.Core.Commands
                 writer.Close();
                 // Always close open filehandles explicity
                 fs.Close();
-                return "Exported Successful";
+                return "Exported orders successful";
             }
             return "User must be admin or moderator in order to export data!";
         }

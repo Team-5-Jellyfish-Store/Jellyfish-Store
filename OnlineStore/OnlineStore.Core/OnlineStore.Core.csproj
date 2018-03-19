@@ -92,6 +92,7 @@
     <Compile Include="Contracts\IWriter.cs" />
     <Compile Include="DTO\CourierImportDto.cs" />
     <Compile Include="DTO\ProductImportDto.cs" />
+    <Compile Include="DTO\SuppliersImportDto.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Factories\CommandFactory.cs" />
     <Compile Include="Factories\CommandParser.cs" />

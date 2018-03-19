@@ -27,10 +27,12 @@ namespace OnlineStore.Core
 
         public void Run()
         {
-            var inputLine = this.reader.Read();
+            this.writer.WriteLine(System.IO.File.ReadAllText("../../../Datasets/WellcomeText.txt"));
 
             while (true)
             {
+                this.writer.Write("Please enter command name: ");
+                var inputLine = this.reader.Read();
                 try
                 {
                     var command = this.commandParser.ParseCommand(inputLine);
@@ -43,8 +45,6 @@ namespace OnlineStore.Core
                 catch (ComponentNotRegisteredException) { this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)"); }
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
-
-                inputLine = this.reader.Read();
             }
         }
     }

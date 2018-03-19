@@ -104,6 +104,10 @@
     <Compile Include="Migrations\201803191109108_ChangedCategoryNameLen.Designer.cs">
       <DependentUpon>201803191109108_ChangedCategoryNameLen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803191231564_SupplierNameIsUnique.cs" />
+    <Compile Include="Migrations\201803191231564_SupplierNameIsUnique.Designer.cs">
+      <DependentUpon>201803191231564_SupplierNameIsUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803191109108_ChangedCategoryNameLen.resx">
       <DependentUpon>201803191109108_ChangedCategoryNameLen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191231564_SupplierNameIsUnique.resx">
+      <DependentUpon>201803191231564_SupplierNameIsUnique.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,25 @@
+						 _
+				|\	/\	/ \
+				| | | | | | | |  *_> 
+				| | | | | | | |   /
+				|/	\/	\_/
+ 
+ 
+ ^^**^^	Wellcome to The Precious Jellyfish Online Store. ^^**^^
+	We sell a vast collection of sea creatures for your personal home aquarium.
+	You can use the following commands in order to take advantage of our product:
+	- login
+	- register
+	- importCouriers
+	- importProducts
+	- importSuppliers
+	- removeProduct
+	- addProduct
+	- printAvailableProducts
+	- printOrders
+	- searchCategory
+	- searchProduct
+	- logout
+	- exit
+	
+	Please note that some commands require special (Admin/Moderator) access.

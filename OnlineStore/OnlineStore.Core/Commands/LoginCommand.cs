@@ -12,25 +12,27 @@ namespace OnlineStore.Core.Commands
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
+        private readonly IValidator validator;
 
-        public LoginCommand(IOnlineStoreContext context, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher)
+        public LoginCommand(IOnlineStoreContext context, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
-            this.context = context ?? throw new System.ArgumentNullException(nameof(context));
-            this.userSession = userSession ?? throw new System.ArgumentNullException(nameof(userSession));
-            this.writer = writer ?? throw new System.ArgumentNullException(nameof(writer));
-            this.reader = reader ?? throw new System.ArgumentNullException(nameof(reader));
-            this.hasher = hasher ?? throw new System.ArgumentNullException(nameof(hasher));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
+            this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
+            this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            this.hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
+            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public string ExecuteThisCommand()
         {
             this.writer.Write("Username: ");
             string username = this.reader.Read();
-            username = ValidateValue(username, true);
+            username = this.validator.ValidateValue(username, true);
 
             this.writer.Write("Password: ");
             string password = this.reader.Read();
-            password = ValidateValue(password, true);
+            password = this.validator.ValidateValue(password, true);
 
             var user = context.Users.SingleOrDefault(x => x.Username == username);
             var actualPassword = user.Password;
@@ -39,7 +41,6 @@ namespace OnlineStore.Core.Commands
             {
                 throw new ArgumentException("User with that username don't exist!");
             }
-
 
             if (!this.hasher.CheckPassword(password, actualPassword))
             {
@@ -51,18 +52,6 @@ namespace OnlineStore.Core.Commands
             return $"User {username} logged in successfuly!";
         }
 
-        private string ValidateValue(string property, bool isRequired)
-        {
-            if (isRequired)
-            {
-                property = property != string.Empty ? property : throw new ArgumentException("The field is Required");
-            }
-            else
-            {
-                property = property != string.Empty ? property : null;
-            }
 
-            return property;
-        }
     }
 }

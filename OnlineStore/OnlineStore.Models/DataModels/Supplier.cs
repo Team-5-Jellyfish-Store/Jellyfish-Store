@@ -24,7 +24,7 @@ namespace OnlineStore.Models.DataModels
         public int AddressId { get; set; }
 
         [Required]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } //navprop
     }

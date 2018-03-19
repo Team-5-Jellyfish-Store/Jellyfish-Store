@@ -42,7 +42,7 @@ namespace OnlineStore.Models.DataModels
         public UserRole Role { get; set; }
 
         public Nullable<int> ReferalUserId { get; set; }
-        public User ReferalUser { get; set; } //navprop
+        public virtual User ReferalUser { get; set; } //navprop
 
         public int AddressId { get; set; }
         [Required]

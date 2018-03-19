@@ -104,10 +104,6 @@
     <Compile Include="Migrations\201803191109108_ChangedCategoryNameLen.Designer.cs">
       <DependentUpon>201803191109108_ChangedCategoryNameLen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803191119292_user phone column dropped.cs" />
-    <Compile Include="Migrations\201803191119292_user phone column dropped.Designer.cs">
-      <DependentUpon>201803191119292_user phone column dropped.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,9 +154,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803181759173_more validations.resx">
       <DependentUpon>201803181759173_more validations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803191119292_user phone column dropped.resx">
-      <DependentUpon>201803191119292_user phone column dropped.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803191038296_Changedsuppliername.resx">
       <DependentUpon>201803191038296_Changedsuppliername.cs</DependentUpon>

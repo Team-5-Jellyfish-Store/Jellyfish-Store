@@ -27,12 +27,13 @@ namespace OnlineStore.Models.DataModels
         public int Quantity { get; set; }
 
         public int CategoryId { get; set; }
-        [Required]
-        public Category Category { get; set; } //navp
+
+        
+        public virtual Category Category { get; set; } //navp
 
         public int SupplierId { get; set; }
-        [Required]
-        public Supplier Supplier { get; set; }//navprop
+        
+        public virtual Supplier Supplier { get; set; }//navprop
 
         public virtual ICollection<Order> Orders { get; set; } //navprop
     }

@@ -1,7 +1,7 @@
 ﻿using OnlineStore.Core.Security;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
-using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 using System;
 using System.Linq;
 using OnlineStore.Core.Contracts;

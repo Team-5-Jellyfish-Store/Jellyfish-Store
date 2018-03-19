@@ -22,11 +22,11 @@ namespace OnlineStore.Models.DataModels
 
         [Required]
         public int UserId { get; set; }
-        public User User { get; set; } //navprop
+        public virtual User User { get; set; } //navprop
 
         [Required]
         public int CourierId { get; set; }
-        public Courier Courier { get; set; } //navprop
+        public virtual Courier Courier { get; set; } //navprop
 
         public virtual ICollection<Product> Products { get; set; } //navprop
     }

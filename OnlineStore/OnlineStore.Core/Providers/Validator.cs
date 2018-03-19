@@ -64,5 +64,13 @@ namespace OnlineStore.Core.Providers
                 throw new ArgumentException($"Field length must be between {minLength} and {maxLength} symbols!");
             }
         }
+
+        public void ValidateLength(int property, int minLength, int maxLength)
+        {
+            if (property < minLength || property > maxLength)
+            {
+                throw new ArgumentException($"Field length must be between {minLength} and {maxLength}!");
+            }
+        }
     }
 }

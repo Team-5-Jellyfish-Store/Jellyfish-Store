@@ -24,23 +24,22 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            var username = string.Empty;
-            var password = string.Empty;
-
             this.writer.Write("Username: ");
-            username = this.reader.Read();
+            string username = this.reader.Read();
+            username = ValidateValue(username, true);
 
             this.writer.Write("Password: ");
-            password = this.reader.Read();
+            string password = this.reader.Read();
+            password = ValidateValue(password, true);
 
             var user = context.Users.SingleOrDefault(x => x.Username == username);
+            var actualPassword = user.Password;
 
             if (user == null)
             {
                 throw new ArgumentException("User with that username don't exist!");
             }
 
-            var actualPassword = user.Password;
 
             if (!this.hasher.CheckPassword(password, actualPassword))
             {
@@ -50,6 +49,20 @@ namespace OnlineStore.Core.Commands
             this.userSession.SetLoggedUser(user);
 
             return $"User {username} logged in successfuly!";
+        }
+
+        private string ValidateValue(string property, bool isRequired)
+        {
+            if (isRequired)
+            {
+                property = property != string.Empty ? property : throw new ArgumentException("The field is Required");
+            }
+            else
+            {
+                property = property != string.Empty ? property : null;
+            }
+
+            return property;
         }
     }
 }

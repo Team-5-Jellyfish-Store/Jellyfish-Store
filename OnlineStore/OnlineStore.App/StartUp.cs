@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Data;
-using System.Linq;
+using OnlineStore.Core.AutomapperConfig;
 
 namespace OnlineStore.App
 {
@@ -9,7 +8,7 @@ namespace OnlineStore.App
     {
         static void Main()
         {
-           
+            AutomapperConfiguration.Initialize();
             var builder = new ContainerBuilder();
             builder.RegisterModule(new AutofacConfig.AutofacConfig());
             var container = builder.Build();

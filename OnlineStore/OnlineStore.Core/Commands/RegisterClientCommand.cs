@@ -21,35 +21,35 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            string username = parameters[0];
-            string password = parameters[1];
-            string confirmedPassword = parameters[2];
-            string address = parameters[3];
-            string firstName = parameters[4];
-            string lastName = parameters[5];
+            //string username = parameters[0];
+            //string password = parameters[1];
+            //string confirmedPassword = parameters[2];
+            //string address = parameters[3];
+            //string firstName = parameters[4];
+            //string lastName = parameters[5];
 
-            if (password != confirmedPassword)
-            {
-                throw new ArgumentException("Password not matching!");
-            }
+            //if (password != confirmedPassword)
+            //{
+            //    throw new ArgumentException("Password not matching!");
+            //}
 
-            var addressFromDb = context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
-                                ?? throw new ArgumentNullException("Address not Found!");
+            //var addressFromDb = context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
+            //                    ?? throw new ArgumentNullException("Address not Found!");
 
-            password = this.hasher.CreatePassword(password);
+            //password = this.hasher.CreatePassword(password);
 
-            var newUser = new User()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = username,
-                Password = password,
-                AddressId = addressFromDb.Id
-            };
+            //var newUser = new User()
+            //{
+            //    FirstName = firstName,
+            //    LastName = lastName,
+            //    Username = username,
+            //    Password = password,
+            //    AddressId = addressFromDb.Id
+            //};
 
-            context.Clients.Add(newUser);
+            //context.Clients.Add(newUser);
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
             return "User registered successfully!";
         }

@@ -20,7 +20,7 @@ namespace OnlineStore.Core.Commands
             this.reader = reader;
             this.writer = writer;
         }
-        public string ExecuteThisCommand(string[] commandParameters)
+        public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter product name to search for it");
             var searchedProduct = reader.Read();

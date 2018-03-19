@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using OnlineStore.Core.DTO;
-using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.AutomapperConfig
 {
@@ -10,7 +10,7 @@ namespace OnlineStore.Core.AutomapperConfig
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<CourierDto, Courier>().ReverseMap();
+                cfg.CreateMap<CourierImportDto, Courier>().ReverseMap();
             });
         }
     }

@@ -26,6 +26,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();
             builder.RegisterType<ConsoleWriter>().As<IWriter>().SingleInstance();
             builder.RegisterType<Hasher>().As<IHasher>().SingleInstance();
+            builder.RegisterType<Validator>().As<IValidator>().SingleInstance();
 
             builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
@@ -35,9 +36,11 @@ namespace OnlineStore.App.AutofacConfig
             //Commands
             builder.RegisterType<RegisterClientCommand>().Named<ICommand>("register");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
+            builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
             builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");
+            builder.RegisterType<ImportProductsCommand>().Named<ICommand>("importProducts");
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.DataModels
 {
     public class Town
     {

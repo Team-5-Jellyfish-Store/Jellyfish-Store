@@ -1,28 +1,40 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
 namespace OnlineStore.Core.UserService
 {
     public class UserSessionService : IUserSessionService
     {
-        public User User { get; private set; }
-        public void SetLoggedUser(User user)
+        private User user;
+
+        public string GetLoggedUser()
         {
-            this.User = user ?? throw new ArgumentNullException();
+            if (this.user == null)
+            {
+                throw new ArgumentNullException("No logged user!");
+            }
+
+            return this.user.FirstName + " " + this.user.LastName;
         }
 
-        public void Logout() => this.User = null;
+        public void SetLoggedUser(User user)
+        {
+            this.user = user ?? throw new ArgumentNullException();
+        }
+
+        public void Logout() => this.user = null;
 
         public bool UserIsAdmin()
         {
-            return this.User != null && this.User.Role == UserRole.Admin;
+            return this.user != null && this.user.Role == UserRole.Admin;
         }
 
         public bool UserIsModerator()
         {
-            return this.User != null && this.User.Role == UserRole.Moderator;
+            return this.user != null && this.user.Role == UserRole.Moderator;
         }
     }
 }

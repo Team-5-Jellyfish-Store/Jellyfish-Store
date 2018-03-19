@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.DataModels
 {
     public class Product
     {
@@ -20,11 +16,9 @@ namespace OnlineStore.Models
         [StringLength(30, MinimumLength = 4)]
         public string Name { get; set; }
 
-        [Required]
         [Range(0, int.MaxValue)]
         public decimal PurchasePrice { get; set; }
 
-        [Required]
         [Range(0, int.MaxValue)]
         public decimal SellingPrice { get; set; }
 
@@ -32,13 +26,14 @@ namespace OnlineStore.Models
         [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
-        [Required]
         public int CategoryId { get; set; }
+        [Required]
         public Category Category { get; set; } //navp
 
-        [Required]
         public int SupplierId { get; set; }
+        [Required]
         public Supplier Supplier { get; set; }//navprop
+
         public virtual ICollection<Order> Orders { get; set; } //navprop
     }
 }

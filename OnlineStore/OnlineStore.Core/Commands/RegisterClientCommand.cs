@@ -11,45 +11,68 @@ namespace OnlineStore.Core.Commands
     public class RegisterClientCommand : ICommand
     {
         private readonly IOnlineStoreContext context;
+        private readonly IWriter writer;
+        private readonly IReader reader;
         private readonly IHasher hasher;
 
-        public RegisterClientCommand(IOnlineStoreContext context, IHasher hasher)
+        public RegisterClientCommand(IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher)
         {
-            this.context = context;
-            this.hasher = hasher;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
+            this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            this.hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
 
         public string ExecuteThisCommand()
         {
-            //string username = parameters[0];
-            //string password = parameters[1];
-            //string confirmedPassword = parameters[2];
-            //string address = parameters[3];
-            //string firstName = parameters[4];
-            //string lastName = parameters[5];
+            this.writer.Write("Username: ");
+            string username = this.reader.Read();
+            username = username != string.Empty ? username : throw new ArgumentException("Username is Required");
 
-            //if (password != confirmedPassword)
-            //{
-            //    throw new ArgumentException("Password not matching!");
-            //}
+            if (this.context.Users.Any(x => x.Username == username))
+            {
+                throw new ArgumentException("User with that username already exists!");
+            }
 
-            //var addressFromDb = context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
-            //                    ?? throw new ArgumentNullException("Address not Found!");
+            this.writer.Write("Password: ");
+            string password = this.reader.Read();
+            password = password != string.Empty ? password : throw new ArgumentException("Password is Required");
 
-            //password = this.hasher.CreatePassword(password);
+            this.writer.Write("Confirm password: ");
+            string confirmedPassword = this.reader.Read();
 
-            //var newUser = new User()
-            //{
-            //    FirstName = firstName,
-            //    LastName = lastName,
-            //    Username = username,
-            //    Password = password,
-            //    AddressId = addressFromDb.Id
-            //};
+            if (password != confirmedPassword)
+            {
+                throw new ArgumentException("Password not matching!");
+            }
 
-            //context.Clients.Add(newUser);
+            this.writer.Write("First Name: ");
+            string firstName = this.reader.Read();
 
-            //context.SaveChanges();
+            this.writer.Write("Last Name: ");
+            string lastName = this.reader.Read();
+
+            this.writer.Write("Address: ");
+            string address = this.reader.Read();
+            address = address != string.Empty ? address : throw new ArgumentException("Address is Required");
+
+            var addressFromDb = context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
+                                ?? throw new ArgumentNullException("Address not Found!");
+
+            password = this.hasher.CreatePassword(password);
+
+            var newUser = new User()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Username = username,
+                Password = password,
+                AddressId = addressFromDb.Id
+            };
+
+            context.Users.Add(newUser);
+
+            context.SaveChanges();
 
             return "User registered successfully!";
         }

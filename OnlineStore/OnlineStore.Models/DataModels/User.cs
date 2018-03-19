@@ -3,11 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.DataModels
 {
     public class User
     {
@@ -19,7 +16,7 @@ namespace OnlineStore.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 8)]
+        [StringLength(20, MinimumLength = 5)]
         [Index(IsUnique = true)]
         public string Username { get; set; }
 
@@ -39,7 +36,6 @@ namespace OnlineStore.Models
         public string EMail { get; set; }
 
         [StringLength(15, MinimumLength = 4)]
-        [Index(IsUnique = true)]
         public string Phone { get; set; }
 
         [Required]
@@ -48,8 +44,8 @@ namespace OnlineStore.Models
         public Nullable<int> ReferalUserId { get; set; }
         public User ReferalUser { get; set; } //navprop
 
-        [Required]
         public int AddressId { get; set; }
+        [Required]
         public virtual Address Address { get; set; } //navprop
 
         public virtual ICollection<Order> Orders { get; set; } //navprop

@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 using OnlineStore.Data.Contracts;
-using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Data
 {

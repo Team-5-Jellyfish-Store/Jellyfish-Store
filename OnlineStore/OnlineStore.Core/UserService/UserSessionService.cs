@@ -1,6 +1,7 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
 namespace OnlineStore.Core.UserService

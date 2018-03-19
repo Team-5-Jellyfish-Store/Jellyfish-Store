@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Data.Contracts
 {

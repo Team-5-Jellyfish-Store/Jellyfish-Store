@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using OnlineStore.Data.Migrations;
-using OnlineStore.Models;
 
 namespace OnlineStore.Core.DTO
 {
-    public class CourierDto
+    public class CourierImportDto
     {
         [Required]
         [MinLength(2, ErrorMessage = "First name should be atleast 2 characters")]

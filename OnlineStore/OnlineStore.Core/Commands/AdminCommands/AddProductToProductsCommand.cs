@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
-using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {

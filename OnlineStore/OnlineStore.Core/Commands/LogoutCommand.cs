@@ -13,7 +13,7 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            string currentUser = $"{this.sessionService.User.FirstName} {this.sessionService.User.LastName}";
+            string currentUser = this.sessionService.GetLoggedUser();
             this.sessionService.Logout();
             return $"{currentUser} logged out successfully!";
         }

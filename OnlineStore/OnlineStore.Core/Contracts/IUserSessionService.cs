@@ -5,7 +5,7 @@ namespace OnlineStore.Core.Contracts
 {
     public interface IUserSessionService
     {
-        User User { get; }
+        string GetLoggedUser();
 
         void SetLoggedUser(User user);
 

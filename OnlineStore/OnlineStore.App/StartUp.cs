@@ -16,6 +16,7 @@ namespace OnlineStore.App
             var engine = container.Resolve<IEngine>();
             engine.Run();
 
+            
             //This is my test, forget about it!
             //var ctx = new OnlineStoreContext();
             //var towns = ctx.Towns.ToList();

@@ -4,6 +4,7 @@ using OnlineStore.Models.Enums;
 
 namespace OnlineStore.Data.Migrations
 {
+    using OnlineStore.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

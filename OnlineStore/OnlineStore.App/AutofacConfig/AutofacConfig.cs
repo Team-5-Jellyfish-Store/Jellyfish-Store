@@ -41,7 +41,9 @@ namespace OnlineStore.App.AutofacConfig
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
+            builder.RegisterType<PrintAvailableProductReportCommand>().Named<ICommand>("4");
 
+          
 
 
 

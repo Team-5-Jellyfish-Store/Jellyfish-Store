@@ -12,10 +12,7 @@ namespace OnlineStore.Core.UserService
 
         public string GetLoggedUser()
         {
-            if (this.user == null)
-            {
-                throw new ArgumentNullException("No logged user!");
-            }
+            this.CheckForLoggedUser();
 
             return this.user.Username;
         }
@@ -29,12 +26,24 @@ namespace OnlineStore.Core.UserService
 
         public bool UserIsAdmin()
         {
+            this.CheckForLoggedUser();
+
             return this.user != null && this.user.Role == UserRole.Admin;
         }
 
         public bool UserIsModerator()
         {
+            this.CheckForLoggedUser();
+
             return this.user != null && this.user.Role == UserRole.Moderator;
+        }
+
+        private void CheckForLoggedUser()
+        {
+            if (this.user == null)
+            {
+                throw new ArgumentException("No logged user!");
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace OnlineStore.Core.UserService
                 throw new ArgumentNullException("No logged user!");
             }
 
-            return this.user.FirstName + " " + this.user.LastName;
+            return this.user.Username;
         }
 
         public void SetLoggedUser(User user)

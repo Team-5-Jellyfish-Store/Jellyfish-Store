@@ -27,7 +27,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
         {
             if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
             {
-                const string FailureMessage = "Data rejected. Input is with invalid format.";
+                const string FailureMessage = "Import rejected. Input is with invalid format.";
                 var importString = File.ReadAllText("../../../Datasets/Couriers.json");
                 var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportDto[]>(importString);
                 var importResults = new StringBuilder();
@@ -71,7 +71,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
                 validCouriers.ForEach(c => this.context.Couriers.Add(c));
                 this.context.SaveChanges();
-                var result = importResults.ToString();
+                var result = importResults.ToString().Trim();
                 return result;
             }
 

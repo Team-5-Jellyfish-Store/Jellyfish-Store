@@ -7,13 +7,13 @@ namespace OnlineStore.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class userphonecolumndropped : IMigrationMetadata
+    public sealed partial class SupplierNameIsUnique : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(userphonecolumndropped));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SupplierNameIsUnique));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803191119292_user phone column dropped"; }
+            get { return "201803191231564_SupplierNameIsUnique"; }
         }
         
         string IMigrationMetadata.Source

@@ -3,16 +3,16 @@ namespace OnlineStore.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class userphonecolumndropped : DbMigration
+    public partial class SupplierNameIsUnique : DbMigration
     {
         public override void Up()
         {
-            DropIndex("dbo.Users", new[] { "Phone" });
+            CreateIndex("dbo.Suppliers", "Name", unique: true);
         }
         
         public override void Down()
         {
-            CreateIndex("dbo.Users", "Phone", unique: true);
+            DropIndex("dbo.Suppliers", new[] { "Name" });
         }
     }
 }

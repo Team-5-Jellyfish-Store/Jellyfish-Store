@@ -12,11 +12,9 @@ namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class ImportProductsCommand : ICommand
     {
-
         private readonly IUserSessionService sessionService;
         private readonly IOnlineStoreContext context;
         private readonly IValidator validator;
-
 
         public ImportProductsCommand(IUserSessionService sessionService, IOnlineStoreContext context, IValidator validator)
         {
@@ -25,11 +23,11 @@ namespace OnlineStore.Core.Commands.AdminCommands
             this.validator = validator;
         }
 
-    public string ExecuteThisCommand()
+        public string ExecuteThisCommand()
         {
-            //if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
-            //{
-                const string FailureMessage = "Data rejected. Input is with invalid format.";
+            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            {
+                const string FailureMessage = "Import rejected. Input is with invalid format.";
                 var importString = File.ReadAllText("../../../Datasets/Products.json");
                 var deserializedProducts = JsonConvert.DeserializeObject<ProductImportDto[]>(importString);
                 var importResults = new StringBuilder();
@@ -52,7 +50,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
                     if (!this.context.Categories.Any(a => a.Name == productDto.Category))
                     {
-                        var categoryToAdd = new Category { Name = productDto.Category};
+                        var categoryToAdd = new Category { Name = productDto.Category };
                         this.context.Categories.Add(categoryToAdd);
                         this.context.SaveChanges();
                     }
@@ -73,11 +71,13 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
                 validProducts.ForEach(c => this.context.Products.Add(c));
                 this.context.SaveChanges();
-                var result = importResults.ToString();
+                var result = importResults.ToString().Trim();
                 return result;
-            //}
-
-            return "User must be admin or moderator in order to import data!";
+            }
+            else
+            {
+                return "User must be admin or moderator in order to import data!";
+            }
         }
     }
 }

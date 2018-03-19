@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Models.DataModels
 {
@@ -15,6 +16,7 @@ namespace OnlineStore.Models.DataModels
         [Required]
         [MinLength(2, ErrorMessage = "Company name should be at least 2 characters")]
         [MaxLength(20, ErrorMessage = "Company name should be shorter than 20 characters")]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]

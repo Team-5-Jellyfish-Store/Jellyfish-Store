@@ -41,6 +41,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
             builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");
             builder.RegisterType<ImportProductsCommand>().Named<ICommand>("importProducts");
+            builder.RegisterType<ImportSuppliersCommand>().Named<ICommand>("importSuppliers");
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");

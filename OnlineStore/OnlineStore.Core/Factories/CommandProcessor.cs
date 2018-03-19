@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using OnlineStore.Core.Contracts;
+﻿using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Core.Factories
 {

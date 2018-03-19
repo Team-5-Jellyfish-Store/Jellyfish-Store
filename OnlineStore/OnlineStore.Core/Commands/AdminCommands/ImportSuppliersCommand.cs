@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
         public ImportSuppliersCommand(IUserSessionService sessionService, IOnlineStoreContext context, IValidator validator)
         {
-            this.sessionService = sessionService;
-            this.context = context;
-            this.validator = validator;
+            this.validator = validator ?? throw new ArgumentNullException(nameof(IValidator));
+            this.sessionService = sessionService ?? throw new ArgumentNullException(nameof(IUserSessionService));
+            this.context = context ?? throw new ArgumentNullException(nameof(IOnlineStoreContext));
         }
 
         public string ExecuteThisCommand()

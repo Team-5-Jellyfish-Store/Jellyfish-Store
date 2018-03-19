@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.DataModels
 {
     public class Category
     {
@@ -14,7 +14,7 @@ namespace OnlineStore.Models
 
         [Required]
         [MinLength(3, ErrorMessage = "Category name should be atleast 3 characters")]
-        [MaxLength(15, ErrorMessage = "Category name should be shorter than 15 characters")]
+        [MaxLength(30, ErrorMessage = "Category name should be shorter than 30 characters")]
         public string Name { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } //navprop

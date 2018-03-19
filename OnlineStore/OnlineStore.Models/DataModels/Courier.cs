@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.DataModels
 {
     public class Courier
     {

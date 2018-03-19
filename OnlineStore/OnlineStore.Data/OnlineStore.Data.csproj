@@ -96,6 +96,14 @@
     <Compile Include="Migrations\201803181759173_more validations.Designer.cs">
       <DependentUpon>201803181759173_more validations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803191038296_Changedsuppliername.cs" />
+    <Compile Include="Migrations\201803191038296_Changedsuppliername.Designer.cs">
+      <DependentUpon>201803191038296_Changedsuppliername.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803191109108_ChangedCategoryNameLen.cs" />
+    <Compile Include="Migrations\201803191109108_ChangedCategoryNameLen.Designer.cs">
+      <DependentUpon>201803191109108_ChangedCategoryNameLen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201803191119292_user phone column dropped.cs" />
     <Compile Include="Migrations\201803191119292_user phone column dropped.Designer.cs">
       <DependentUpon>201803191119292_user phone column dropped.cs</DependentUpon>
@@ -153,6 +161,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803191119292_user phone column dropped.resx">
       <DependentUpon>201803191119292_user phone column dropped.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191038296_Changedsuppliername.resx">
+      <DependentUpon>201803191038296_Changedsuppliername.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191109108_ChangedCategoryNameLen.resx">
+      <DependentUpon>201803191109108_ChangedCategoryNameLen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Models;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.Contracts
 {

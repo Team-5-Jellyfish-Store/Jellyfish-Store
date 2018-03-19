@@ -21,11 +21,11 @@ namespace OnlineStore.Models
         public string Name { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
         public decimal PurchasePrice { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
         public decimal SellingPrice { get; set; }
 
         [Required]

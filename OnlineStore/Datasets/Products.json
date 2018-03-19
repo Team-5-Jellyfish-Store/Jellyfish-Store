@@ -5,5 +5,43 @@
 	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 2,
 	"PurchasePrice" : 499.99
+  },
+  {
+	"Name": "Riba Kloun",
+    "Category" : "Krasivi solenovodni",
+	"Supplier" : "Awful Creatures Ltd.",
+    "Quantity" : 5,
+	"PurchasePrice" : 299.99
+  },
+  {
+	"Name": "Stuklen som",
+    "Category" : "Prozrachni ribi",
+	"Supplier" : "Awful Creatures Ltd.",
+    "Quantity" : 50,
+	"PurchasePrice" : 4.99
+  }
+  ,
+  {
+	"Name": "Gupi",
+    "Category" : "Jivorajdashti",
+	"Supplier" : "Awful Creatures Ltd.",
+    "Quantity" : 50,
+	"PurchasePrice" : 1.99
+  }
+  ,
+  {
+	"Name": "Heleri",
+    "Category" : "Jivorajdashti",
+	"Supplier" : "Awful Creatures Ltd.",
+    "Quantity" : 50,
+	"PurchasePrice" : 4.99
+  }
+  ,
+  {
+	"Name": "Vodna jaba",
+    "Category" : "Zemnovodni",
+	"Supplier" : "Awful Creatures Ltd.",
+    "Quantity" : 10,
+	"PurchasePrice" : 44.99
   }
 ]

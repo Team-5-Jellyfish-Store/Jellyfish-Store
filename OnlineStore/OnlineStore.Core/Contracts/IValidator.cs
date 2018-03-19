@@ -11,5 +11,7 @@
         void ValidatePassword(string password);
 
         void ValidateLength(string property, int minLength, int maxLength);
+
+        void ValidateLength(int property, int minLength, int maxLength);
     }
 }

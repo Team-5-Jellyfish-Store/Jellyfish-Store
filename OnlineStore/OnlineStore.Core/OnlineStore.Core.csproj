@@ -102,7 +102,7 @@
     <Compile Include="Providers\ConsoleReader.cs" />
     <Compile Include="Providers\ConsoleWriter.cs" />
     <Compile Include="Providers\Validator.cs" />
-    <Compile Include="Security\Hasher.cs" />
+    <Compile Include="Providers\Hasher.cs" />
     <Compile Include="Contracts\IHasher.cs" />
     <Compile Include="ShoppingCartRepository\ShoppingCartRepository.cs" />
     <Compile Include="UserService\UserSessionService.cs" />

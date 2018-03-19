@@ -13,12 +13,15 @@ namespace OnlineStore.Models.DataModels
 
         public int Id { get; set; }
 
+        [Range(1, 1000)]
+        public int ProductsCount { get; set; }
+
         [MaxLength(300)]
         public string Comment { get; set; }
 
         public DateTime OrderedOn { get; set; }
 
-        public DateTime? DeliveredOn { get; set; }
+        public Nullable<DateTime> DeliveredOn { get; set; }
 
         [Required]
         public int UserId { get; set; }

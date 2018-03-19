@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Models.DataModels;
+using OnlineStore.Data.Migrations;
 
 namespace OnlineStore.Data
 {
@@ -10,10 +11,10 @@ namespace OnlineStore.Data
         public OnlineStoreContext()
             : base("OnlineStore")
         {
-            //var strategy = new DropCreateDatabaseAlways<OnlineStoreContext>();
-            //Database.SetInitializer(strategy);
+            var strategy = new MigrateDatabaseToLatestVersion<OnlineStoreContext, Configuration>();
+            Database.SetInitializer(strategy);
         }
-        
+
         public IDbSet<User> Users { get; set; }
         public IDbSet<Category> Categories { get; set; }
         public IDbSet<Order> Orders { get; set; }
@@ -30,7 +31,7 @@ namespace OnlineStore.Data
 
             modelBuilder.Entity<Address>().HasMany(t => t.Users).WithRequired(cl => cl.Address).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Address>().HasMany(t => t.Couriers).WithRequired(courier=> courier.Address).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Address>().HasMany(t => t.Couriers).WithRequired(courier => courier.Address).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Address>().HasMany(t => t.Suppliers).WithRequired(sup => sup.Address).WillCascadeOnDelete(false);
 

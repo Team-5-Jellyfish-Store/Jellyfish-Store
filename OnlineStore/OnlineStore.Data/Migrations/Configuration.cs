@@ -14,31 +14,35 @@ namespace OnlineStore.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            this.AutomaticMigrationsEnabled = false;
+            this.AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(OnlineStoreContext context)
         {
-            var adminUser = new User
+            if (!context.Users.Any(x => x.Role == UserRole.Admin))
             {
-                Username = "admin",
-                Password = "52E1860E990048A44E5A8664395E709F0B786577199EB1DC0180D285A113BAD6",
-                FirstName = "Pesho",
-                LastName = "Bradata",
-                EMail = "a@a.a",
-                Role = UserRole.Admin,
-                Address = new Address() {AddressText = "Server room 1", Town = new Town() {Name = "Plovdiv"}}
-            };
+                var adminUser = new User
+                {
+                    Username = "admin",
+                    Password = "52E1860E990048A44E5A8664395E709F0B786577199EB1DC0180D285A113BAD6",
+                    FirstName = "Pesho",
+                    LastName = "Bradata",
+                    EMail = "a@a.a",
+                    Role = UserRole.Admin,
+                    Address = new Address() { AddressText = "Server room 1", Town = new Town() { Name = "Plovdiv" } }
+                };
 
-            var firstSupplier = new Supplier
-            {
-                Name = "Awful Creatures Ltd.",
-                Phone = "+35929110101",
-                Address = new Address() { AddressText = "Bronx 1", Town = new Town() { Name = "Varna" } }
-            };
-            context.Users.Add(adminUser);
-            context.Suppliers.Add(firstSupplier);
-            context.SaveChanges();
+                var firstSupplier = new Supplier
+                {
+                    Name = "Awful Creatures Ltd.",
+                    Phone = "+35929110101",
+                    Address = new Address() { AddressText = "Bronx 1", Town = new Town() { Name = "Varna" } }
+                };
+                context.Users.Add(adminUser);
+                context.Suppliers.Add(firstSupplier);
+                context.SaveChanges();
+            }
         }
     }
 }

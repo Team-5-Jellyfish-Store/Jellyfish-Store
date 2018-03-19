@@ -15,57 +15,66 @@ namespace OnlineStore.Core.Commands.AdminCommands
     {
         private readonly IUserSessionService sessionService;
         private readonly IOnlineStoreContext context;
-        
+
         public ImportCouriersCommand(IUserSessionService sessionService, IOnlineStoreContext context)
         {
 
             this.sessionService = sessionService;
             this.context = context;
-            
+
         }
 
         public string ExecuteThisCommand()
         {
-            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            //if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            //{
+            const string FailureMessage = "Courier input is invalid";
+            var importString = File.ReadAllText("../../../Datasets/Couriers.json");
+            var deserializedCouriers = JsonConvert.DeserializeObject<CourierDto[]>(importString);
+            var sb = new StringBuilder();
+
+            var validCouriers = new List<Courier>();
+
+            foreach (var courierDto in deserializedCouriers)
             {
-                const string FailureMessage = "Courier input is invalid";
-                var importString = File.ReadAllText("../../../Datasets/Couriers.json");
-                var deserializedCouriers = JsonConvert.DeserializeObject<CourierDto[]>(importString);
-                var sb = new StringBuilder();
-
-                var validCouriers = new List<Courier>();
-
-                foreach (var courierDto in deserializedCouriers)
+                if (!IsValid(courierDto))
                 {
-                    if (!IsValid(courierDto))
-                    {
-                        sb.AppendLine(FailureMessage);
-                        continue;
-                    }
-
-                    if (!this.context.Addresses.Any(a => a.AddressText == courierDto.Address))
-                    {
-                        var addressToAdd = new Address() { AddressText = courierDto.Address };
-                        context.Addresses.Add(addressToAdd);
-                        context.SaveChanges();
-                    }
-                    var courierAddress = this.context.Addresses.FirstOrDefault(f => f.AddressText == courierDto.Address);
-
-                    var courierToAdd = new Courier()
-                    {
-                        FirstName = courierDto.FirstName,
-                        LastName = courierDto.LastName,
-                        Phone = courierDto.Phone,
-                        AddressId = courierAddress.Id
-                    };
-                    validCouriers.Add(courierToAdd);
-                    sb.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
+                    sb.AppendLine(FailureMessage);
+                    continue;
                 }
-                validCouriers.Select(s => this.context.Couriers.Add(s));
-                context.SaveChanges();
-                var result = sb.ToString();
-                return result;
+
+                if (!this.context.Towns.Any(a => a.Name == courierDto.Town))
+                {
+                    var townToAdd = new Town() { Name = courierDto.Town };
+                    context.Towns.Add(townToAdd);
+                    context.SaveChanges();
+                }
+                var courierTown = this.context.Towns.FirstOrDefault(f => f.Name == courierDto.Town);
+
+                if (!this.context.Addresses.Any(a => a.AddressText == courierDto.Address))
+                {
+                    var addressToAdd = new Address() { AddressText = courierDto.Address, TownId = courierTown.Id };
+                    context.Addresses.Add(addressToAdd);
+                    context.SaveChanges();
+                }
+                var courierAddress = this.context.Addresses.FirstOrDefault(f => f.AddressText == courierDto.Address);
+
+                var courierToAdd = new Courier()
+                {
+                    FirstName = courierDto.FirstName,
+                    LastName = courierDto.LastName,
+                    Phone = courierDto.Phone,
+                    AddressId = courierAddress.Id
+                };
+                validCouriers.Add(courierToAdd);
+                sb.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
             }
+
+            validCouriers.ForEach(s => this.context.Couriers.Add(s));
+            this.context.SaveChanges();
+            var result = sb.ToString();
+            return result;
+            // }
 
             return "User must be admin or moderator in order to import data!";
         }

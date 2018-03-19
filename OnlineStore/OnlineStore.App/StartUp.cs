@@ -9,6 +9,7 @@ namespace OnlineStore.App
     {
         static void Main()
         {
+           
             var builder = new ContainerBuilder();
             builder.RegisterModule(new AutofacConfig.AutofacConfig());
             var container = builder.Build();
@@ -16,6 +17,7 @@ namespace OnlineStore.App
             var engine = container.Resolve<IEngine>();
             engine.Run();
 
+            
             //This is my test, forget about it!
             //var ctx = new OnlineStoreContext();
             //var towns = ctx.Towns.ToList();

@@ -35,6 +35,7 @@ namespace OnlineStore.App.AutofacConfig
             //Commands
             builder.RegisterType<RegisterClientCommand>().Named<ICommand>("register");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
+            builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
             builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");

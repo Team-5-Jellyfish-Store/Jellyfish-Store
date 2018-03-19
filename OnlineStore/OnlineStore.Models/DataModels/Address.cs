@@ -17,7 +17,7 @@ namespace OnlineStore.Models.DataModels
 
         [Required]
         [StringLength(60, MinimumLength = 4)]
-        [Index(IsUnique = true)]
+        [Index(IsUnique = true)] // to be removed, addresses can be duplicate in different cities
         public string AddressText { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,16 +19,18 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
         public ImportProductsCommand(IUserSessionService sessionService, IOnlineStoreContext context, IValidator validator)
         {
-            this.sessionService = sessionService;
-            this.context = context;
-            this.validator = validator;
+            this.validator = validator ?? throw new ArgumentNullException(nameof(IValidator));
+            this.sessionService = sessionService ?? throw new ArgumentNullException(nameof(IUserSessionService));
+            this.context = context ?? throw new ArgumentNullException(nameof(IOnlineStoreContext));
         }
 
         public string ExecuteThisCommand()
         {
             if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
             {
-                const string FailureMessage = "Import rejected. Input is with invalid format.";
+                const string failureMessage = "Import rejected. Input is with invalid format.";
+                const string doubleEntryMessage = "Import rejected. Duplicate courier found!";
+
                 var importString = File.ReadAllText("../../../Datasets/Products.json");
                 var deserializedProducts = JsonConvert.DeserializeObject<ProductImportDto[]>(importString);
                 var importResults = new StringBuilder();
@@ -38,7 +41,13 @@ namespace OnlineStore.Core.Commands.AdminCommands
                 {
                     if (!this.validator.IsValid(productDto))
                     {
-                        importResults.AppendLine(FailureMessage);
+                        importResults.AppendLine(failureMessage);
+                        continue;
+                    }
+
+                    if (this.context.Products.Any(a => a.Name == productDto.Name))
+                    {
+                        importResults.AppendLine(doubleEntryMessage);
                         continue;
                     }
                     var supplier = this.context.Suppliers.FirstOrDefault(a => a.Name == productDto.Supplier);

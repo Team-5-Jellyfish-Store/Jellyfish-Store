@@ -22,10 +22,10 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
             builder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
             builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>().SingleInstance();
-            builder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();
-            builder.RegisterType<ConsoleWriter>().As<IWriter>().SingleInstance();
-            builder.RegisterType<Hasher>().As<IHasher>().SingleInstance();
-            builder.RegisterType<Validator>().As<IValidator>().SingleInstance();
+            builder.RegisterType<ConsoleReader>().As<IReader>();
+            builder.RegisterType<ConsoleWriter>().As<IWriter>();
+            builder.RegisterType<Hasher>().As<IHasher>();
+            builder.RegisterType<Validator>().As<IValidator>();
 
             builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
@@ -38,6 +38,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
+            builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeProduct");
             builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");
             builder.RegisterType<ImportProductsCommand>().Named<ICommand>("importProducts");
             builder.RegisterType<ImportSuppliersCommand>().Named<ICommand>("importSuppliers");

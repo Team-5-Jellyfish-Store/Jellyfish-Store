@@ -5,7 +5,6 @@ using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
-using OnlineStore.Core.Security;
 using OnlineStore.Core.ShoppingCartRepository;
 using OnlineStore.Core.UserService;
 using OnlineStore.Data;
@@ -34,7 +33,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 
             //Commands
-            builder.RegisterType<RegisterClientCommand>().Named<ICommand>("register");
+            builder.RegisterType<RegisterCommand>().Named<ICommand>("register");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");

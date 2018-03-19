@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace OnlineStore.Core.Security
+namespace OnlineStore.Core.Providers
 {
     public class Hasher : IHasher
     {

@@ -39,10 +39,18 @@ namespace OnlineStore.Core
                     var result = this.commandProcessor.ProcessSingleCommand(command);
                     this.writer.WriteLine(result);
                 }
-                catch (NotSupportedException e) { this.writer.WriteLine(e.Message); }
-                catch (InvalidOperationException e) { this.writer.WriteLine(e.Message); }
-                catch (ArgumentException e) { this.writer.WriteLine(e.Message); }
-                catch (ComponentNotRegisteredException) { this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)"); }
+                catch (ComponentNotRegisteredException)
+                {
+                    this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)");
+                }
+                catch (Exception e)
+                {
+                    while (e.InnerException != null)
+                    {
+                        e = e.InnerException;
+                    }
+                    this.writer.WriteLine(e.Message);
+                }
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
             }

@@ -35,12 +35,12 @@ namespace OnlineStore.Core
                 {
                     var command = this.commandParser.ParseCommand(inputLine);
                     var result = this.commandProcessor.ProcessSingleCommand(command);
-                    this.writer.Write(result);
+                    this.writer.WriteLine(result);
                 }
-                catch (NotSupportedException e) { this.writer.Write(e.Message); }
-                catch (InvalidOperationException e) { this.writer.Write(e.Message); }
-                catch (ArgumentException e) { this.writer.Write(e.Message); }
-                catch (ComponentNotRegisteredException) { this.writer.Write($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)"); }
+                catch (NotSupportedException e) { this.writer.WriteLine(e.Message); }
+                catch (InvalidOperationException e) { this.writer.WriteLine(e.Message); }
+                catch (ArgumentException e) { this.writer.WriteLine(e.Message); }
+                catch (ComponentNotRegisteredException) { this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)"); }
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
 

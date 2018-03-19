@@ -14,7 +14,7 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            this.writer.Write("Goodbye! Thank you for your business!");
+            this.writer.WriteLine("Goodbye! Thank you for your business!");
             Environment.Exit(0);
             return string.Empty;
         }

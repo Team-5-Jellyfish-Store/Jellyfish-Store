@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using OnlineStore.Data.Migrations;
+using OnlineStore.Models;
 
 namespace OnlineStore.Core.DTO
 {
@@ -19,6 +21,11 @@ namespace OnlineStore.Core.DTO
         public string Phone { get; set; }
 
         [Required]
+        [StringLength(60, MinimumLength = 4)]
         public string Address { get; set; }
+
+        [Required]
+        [StringLength(30, MinimumLength = 2)]
+        public string Town { get; set; }
     }
 }

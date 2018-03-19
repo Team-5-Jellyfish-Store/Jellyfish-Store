@@ -39,7 +39,6 @@ namespace OnlineStore.Models
         public string EMail { get; set; }
 
         [StringLength(15, MinimumLength = 4)]
-        [Index(IsUnique = true)]
         public string Phone { get; set; }
 
         [Required]

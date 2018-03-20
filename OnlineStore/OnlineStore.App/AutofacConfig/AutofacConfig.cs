@@ -21,7 +21,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CommandFactory>().As<ICommandFactory>().SingleInstance();
             builder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
             builder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
-            builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>().SingleInstance();
+            builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>();
             builder.RegisterType<ConsoleReader>().As<IReader>();
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<Hasher>().As<IHasher>();

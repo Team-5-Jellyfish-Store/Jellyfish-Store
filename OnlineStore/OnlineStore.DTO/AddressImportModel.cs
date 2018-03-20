@@ -4,6 +4,6 @@
     {
        public string AddressText { get; set; }
 
-       public TownImportModel Town { get; set; }
+       public string TownName { get; set; }
     }
 }

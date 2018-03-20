@@ -22,6 +22,11 @@ namespace OnlineStore.Logic
             this.mapper = mapper;
         }
 
+        public void Create(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public CategoryModel FindCategoryByName(string name)
         {
             var category = context.Categories.FirstOrDefault(x => x.Name == name);
@@ -33,6 +38,11 @@ namespace OnlineStore.Logic
 
             var categoryModel = mapper.Map<CategoryModel>(category);
             return categoryModel;
+        }
+
+        public int FindIdByName(string name)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<CategoryModel> GetAllCategories()

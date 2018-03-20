@@ -37,7 +37,24 @@ namespace OnlineStore.Logic
                 throw new ArgumentException("User with that email already exists!");
             }
 
+            var town = this.context.Towns.SingleOrDefault(x => x.Name == userModel.TownName)
+                ?? throw new ArgumentException("Town not found!");
+            var address = town.Addresses.FirstOrDefault(x => x.AddressText == userModel.AddressText)
+                ?? throw new ArgumentException("Address not found!");
+
             var userToAdd = this.mapper.Map<User>(userModel);
+
+            userToAdd.Address = address;
+
+            //var userToAdd = new User()
+            //{
+            //    Username = userModel.Username,
+            //    Password = userModel.Password,
+            //    EMail = userModel.EMail,
+            //    FirstName = userModel.FirstName,
+            //    LastName = userModel.LastName,
+            //    Address = address
+            //};
 
             context.Users.Add(userToAdd);
 

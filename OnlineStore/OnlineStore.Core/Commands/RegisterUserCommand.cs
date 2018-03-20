@@ -8,17 +8,15 @@ namespace OnlineStore.Core.Commands
     public class RegisterUserCommand : ICommand
     {
         private readonly IUserService userService;
-        private readonly IAddressService addressService;
         private readonly IUserSessionService userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public RegisterUserCommand(IUserService userService, IAddressService addressService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public RegisterUserCommand(IUserService userService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -79,8 +77,6 @@ namespace OnlineStore.Core.Commands
 
             password = this.hasher.CreatePassword(password);
 
-            var address = this.addressService.GetAddress(addressText, townName);
-
             var userModel = new UserRegisterModel()
             {
                 Username = username,
@@ -88,7 +84,8 @@ namespace OnlineStore.Core.Commands
                 EMail = email,
                 FirstName = firstName,
                 LastName = lastName,
-                Address = address
+                AddressText = addressText,
+                TownName = townName
             };
 
             this.userService.RegisterUser(userModel);

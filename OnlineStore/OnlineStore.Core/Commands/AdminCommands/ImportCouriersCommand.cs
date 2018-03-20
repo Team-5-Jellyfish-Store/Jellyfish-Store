@@ -27,66 +27,63 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
         public string ExecuteThisCommand()
         {
-            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            if (!this.sessionService.UserIsAdmin() && !this.sessionService.UserIsModerator())
             {
-                const string failureMessage = "Import rejected. Input is with invalid format.";
-                const string doubleEntryMessage = "Import rejected. Duplicate courier found!";
-                var importString = File.ReadAllText("../../../Datasets/Couriers.json");
-                var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportDto[]>(importString);
-                var importResults = new StringBuilder();
-
-                var validCouriers = new List<Courier>();
-
-                foreach (var courierDto in deserializedCouriers)
-                {
-                    if (!this.validator.IsValid(courierDto))
-                    {
-                        importResults.AppendLine(failureMessage);
-                        continue;
-                    }
-
-                    if (this.context.Couriers.Any(a => a.FirstName == courierDto.FirstName && a.LastName == courierDto.LastName))
-                    {
-                        importResults.AppendLine(doubleEntryMessage);
-                        continue;
-                    }
-
-                    if (!this.context.Towns.Any(a => a.Name == courierDto.Town))
-                    {
-                        var townToAdd = new Town() { Name = courierDto.Town };
-                        this.context.Towns.Add(townToAdd);
-                        this.context.SaveChanges();
-                    }
-                    var courierTown = this.context.Towns.FirstOrDefault(f => f.Name == courierDto.Town);
-
-                    if (!this.context.Addresses.Any(a => a.AddressText == courierDto.Address))
-                    {
-                        var addressToAdd = new Address() { AddressText = courierDto.Address, TownId = courierTown.Id };
-                        this.context.Addresses.Add(addressToAdd);
-                        this.context.SaveChanges();
-                    }
-                    var courierAddress = this.context.Addresses.FirstOrDefault(f => f.AddressText == courierDto.Address);
-
-                    var courierToAdd = new Courier()
-                    {
-                        FirstName = courierDto.FirstName,
-                        LastName = courierDto.LastName,
-                        Phone = courierDto.Phone,
-                        Address = courierAddress
-                    };
-                    validCouriers.Add(courierToAdd);
-                    importResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
-                }
-
-                validCouriers.ForEach(c => this.context.Couriers.Add(c));
-                this.context.SaveChanges();
-                var result = importResults.ToString().Trim();
-                return result;
+                return "User must be admin or moderator in order to import data!";
             }
 
-            return "User must be admin or moderator in order to import data!";
-        }
+            var importString = File.ReadAllText("../../../Datasets/Couriers.json");
 
-       
+            var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportDto[]>(importString);
+            var importResults = new StringBuilder();
+
+            var validCouriers = new List<Courier>();
+
+            foreach (var courierDto in deserializedCouriers)
+            {
+                if (!this.validator.IsValid(courierDto))
+                {
+                    importResults.AppendLine("Import rejected. Input is with invalid format.");
+                    continue;
+                }
+
+                if (this.context.Couriers.Any(a => a.FirstName == courierDto.FirstName && a.LastName == courierDto.LastName))
+                {
+                    importResults.AppendLine("Import rejected. Duplicate courier found!");
+                    continue;
+                }
+
+                if (!this.context.Towns.Any(a => a.Name == courierDto.Town))
+                {
+                    var townToAdd = new Town() { Name = courierDto.Town };
+                    this.context.Towns.Add(townToAdd);
+                    this.context.SaveChanges();
+                }
+                var courierTown = this.context.Towns.FirstOrDefault(f => f.Name == courierDto.Town);
+
+                if (!this.context.Addresses.Any(a => a.AddressText == courierDto.Address))
+                {
+                    var addressToAdd = new Address() { AddressText = courierDto.Address, TownId = courierTown.Id };
+                    this.context.Addresses.Add(addressToAdd);
+                    this.context.SaveChanges();
+                }
+                var courierAddress = this.context.Addresses.FirstOrDefault(f => f.AddressText == courierDto.Address);
+
+                var courierToAdd = new Courier()
+                {
+                    FirstName = courierDto.FirstName,
+                    LastName = courierDto.LastName,
+                    Phone = courierDto.Phone,
+                    Address = courierAddress
+                };
+                validCouriers.Add(courierToAdd);
+                importResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
+            }
+
+            validCouriers.ForEach(c => this.context.Couriers.Add(c));
+            this.context.SaveChanges();
+            var result = importResults.ToString().Trim();
+            return result;
+        }
     }
 }

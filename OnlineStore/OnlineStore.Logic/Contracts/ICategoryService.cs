@@ -1,9 +1,5 @@
 ﻿using OnlineStore.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Logic.Contracts
 {
@@ -14,5 +10,7 @@ namespace OnlineStore.Logic.Contracts
         CategoryModel FindCategoryByName(string name);
 
         // void RemoveCategoryByName(string name);
+        int FindIdByName(string name);
+        void Create(string name);
     }
 }

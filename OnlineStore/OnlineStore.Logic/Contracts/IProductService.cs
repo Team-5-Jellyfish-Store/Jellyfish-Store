@@ -1,9 +1,5 @@
 ﻿using OnlineStore.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Logic.Contracts
 {
@@ -14,5 +10,9 @@ namespace OnlineStore.Logic.Contracts
         ProductModel FindProductByName(string name);
 
         void RemoveProductByName(string name);
+        void AddProduct(ProductImportModel product);
+
+        void CreateProduct(string productName, decimal purchasePrice, int quantity, string categoryName,
+            string supplierName);
     }
 }

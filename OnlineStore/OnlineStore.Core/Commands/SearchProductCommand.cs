@@ -1,5 +1,7 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
+using OnlineStore.Logic;
+using OnlineStore.Logic.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +12,23 @@ namespace OnlineStore.Core.Commands
 {
     public class SearchProductCommand : ICommand
     {
-        private readonly IOnlineStoreContext context;
+       
         private readonly IReader reader;
         private readonly IWriter writer;
+        private readonly IProductService productService;
 
-        public SearchProductCommand(IOnlineStoreContext context, IReader reader, IWriter writer)
+        public SearchProductCommand(IReader reader, IWriter writer, IProductService productService)
         {
-            this.context = context;
             this.reader = reader;
             this.writer = writer;
+            this.productService = productService;
         }
         public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter product name to search for it");
             var searchedProduct = reader.Read();
-            var products = this.context.Products.ToList();
+
+            var products = productService.GetAllProducts();
 
             if (products.Where(x => x.Name == searchedProduct).Count() == 0)
             {
@@ -32,7 +36,9 @@ namespace OnlineStore.Core.Commands
             }
 
 
-            var matchingProducts = products.Find(x => x.Name == searchedProduct);
+            //var matchingProducts = products.find(x => x.Name == searchedProduct);
+            var matchingProducts = products.FirstOrDefault(x => x.Name == searchedProduct);
+
 
             writer.WriteLine("Name / SellingPrice");
 

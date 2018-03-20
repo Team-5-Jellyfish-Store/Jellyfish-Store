@@ -8,7 +8,8 @@ using OnlineStore.Core.Providers;
 using OnlineStore.Core.UserSession;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
-
+using OnlineStore.Logic;
+using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.App.AutofacConfig
 {
@@ -29,7 +30,17 @@ namespace OnlineStore.App.AutofacConfig
             //builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
             builder.RegisterType<UserSessionService>().As<IUserSessionService>().SingleInstance();
+
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
+
+            //services
+            builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
+            builder.RegisterType<CategoryService>().As<ICategoryService>().SingleInstance();
+
+            builder.RegisterType<UserService>().AsSelf().SingleInstance();
+
+
+
 
             //Commands
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");

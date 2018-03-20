@@ -44,7 +44,7 @@ namespace OnlineStore.Core.Commands
 
             writer.Write(matchingProducts.Name + "  ");
             writer.WriteLine(matchingProducts.SellingPrice.ToString());
-           writer.WriteLine(matchingProducts.Category.Pesho.ToString());
+           writer.WriteLine(matchingProducts.Category.Name.ToString());
 
             return "";
         }

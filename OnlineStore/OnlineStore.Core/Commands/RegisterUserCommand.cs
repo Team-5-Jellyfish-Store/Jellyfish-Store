@@ -16,7 +16,7 @@ namespace OnlineStore.Core.Commands
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public RegisterUserCommand(IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+         public RegisterUserCommand(UserService userService, IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
             this.context = context ?? throw new ArgumentNullException(nameof(context));

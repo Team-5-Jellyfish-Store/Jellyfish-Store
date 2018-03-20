@@ -1,5 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
+using OnlineStore.Logic.Contracts;
 using System;
 using System.Linq;
 

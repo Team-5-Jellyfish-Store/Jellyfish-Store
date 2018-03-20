@@ -1,44 +1,29 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using OnlineStore.Data.Contracts;
 using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OnlineStore.Logic
 {
     public class ProductService : IProductService
     {
-        private readonly IOnlineStoreContext dbContext;
-        private readonly IMapper mapper;
+        private readonly IOnlineStoreContext context;
 
-        public ProductService(IOnlineStoreContext dbContext, IMapper mapper)
+        public ProductService(IOnlineStoreContext context)
         {
-            this.dbContext = dbContext;
-            this.mapper = mapper;
+            this.context = context;
         }
 
-        public void AddProduct(ProductImportModel product)
-        {
-            if (product == null)
-            {
-                throw new ArgumentException();
-            }
-            if (this.dbContext.Products.Any(x => x.Name.Contains(product.Name)))
-            {
-                Console.WriteLine("Product already exists!");
-            }
-            var productToAdd = this.mapper.Map<Product>(product);
 
-            this.dbContext.Products.Add(productToAdd);
-            this.dbContext.SaveChanges();
-        }
-
-        public IQueryable<ProductImportModel> GetAllPosts()
+        public IEnumerable<ProductModel> GetAllProducts()
         {
-            return this.dbContext.Products.ProjectTo<ProductImportModel>();
+            return context.Products.ProjectTo<ProductModel>();
         }
     }
 }

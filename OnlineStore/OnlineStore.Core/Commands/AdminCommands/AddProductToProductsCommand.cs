@@ -47,7 +47,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
                     //Category = categoryName,
                     //SupplierImportModel = supplierName
                 };
-                this.productService.AddProduct(product);
+               // this.productService.AddProduct(product);
                 return $"Product {productName} added successfully!";
             }
             else

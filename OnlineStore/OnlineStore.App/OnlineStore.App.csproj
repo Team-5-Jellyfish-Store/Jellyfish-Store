@@ -65,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj">
+      <Project>{dc696ebf-a8ac-4375-9961-710bd91e209b}</Project>
+      <Name>OnlineStore.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Core\OnlineStore.Core.csproj">
       <Project>{6db43d30-81f0-4dec-b7fb-cfbb796066ac}</Project>
       <Name>OnlineStore.Core</Name>

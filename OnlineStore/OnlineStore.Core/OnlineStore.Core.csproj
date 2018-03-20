@@ -33,9 +33,6 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -63,9 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutomapperConfig\AutomapperConfiguration.cs" />
     <Compile Include="Commands\AddOrderCommand.cs" />
-    <Compile Include="Commands\AddProductToCartCommand.cs" />
     <Compile Include="Commands\AdminCommands\AddProductToProductsCommand.cs" />
     <Compile Include="Commands\AdminCommands\RemoveProductFromProductsCommand.cs" />
     <Compile Include="Commands\AdminCommands\ImportCouriersCommand.cs" />
@@ -77,7 +72,6 @@
     <Compile Include="Commands\PrintAvailableProductReportCommand.cs" />
     <Compile Include="Commands\PrintOrdersReportCommand.cs" />
     <Compile Include="Commands\RegisterUserCommand.cs" />
-    <Compile Include="Commands\RemoveProductFromCartCommand.cs" />
     <Compile Include="Commands\SearchCategoryCommand.cs" />
     <Compile Include="Commands\SearchProductCommand.cs" />
     <Compile Include="Contracts\ICommand.cs" />
@@ -85,7 +79,6 @@
     <Compile Include="Contracts\ICommandParser.cs" />
     <Compile Include="Contracts\ICommandProcessor.cs" />
     <Compile Include="Contracts\IUserSessionService.cs" />
-    <Compile Include="Contracts\IShoppingCartRepository.cs" />
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IOnlineStoreFactory.cs" />
     <Compile Include="Contracts\IReader.cs" />
@@ -105,13 +98,16 @@
     <Compile Include="Providers\Validator.cs" />
     <Compile Include="Providers\Hasher.cs" />
     <Compile Include="Contracts\IHasher.cs" />
-    <Compile Include="ShoppingCartRepository\ShoppingCartRepository.cs" />
     <Compile Include="UserSession\UserSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">
       <Project>{D2836ECC-0A1D-4DE2-88CE-83FC66D2A784}</Project>
       <Name>OnlineStore.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.DTO\OnlineStore.DTO.csproj">
+      <Project>{d4fa34c6-6509-4865-b46f-92fdcf40bb24}</Project>
+      <Name>OnlineStore.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Logic\OnlineStore.Logic.csproj">
       <Project>{03d046c9-f890-4746-b309-8baa712a1a5e}</Project>

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Core.AutomapperConfig;
+using OnlineStore.Common.AutoMapperConfig;
 
 namespace OnlineStore.App
 {

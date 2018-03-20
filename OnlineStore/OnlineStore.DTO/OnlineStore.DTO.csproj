@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressImportModel.cs" />
+    <Compile Include="ProductImportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplierImportModel.cs" />
+    <Compile Include="TownImportModel.cs" />
     <Compile Include="UserRegisterModel.cs" />
   </ItemGroup>
   <ItemGroup>

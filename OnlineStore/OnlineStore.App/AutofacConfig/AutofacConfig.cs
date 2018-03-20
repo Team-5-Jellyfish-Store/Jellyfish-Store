@@ -11,6 +11,7 @@ using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Logic;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.Logic.Services;
 
 namespace OnlineStore.App.AutofacConfig
 {
@@ -37,8 +38,10 @@ namespace OnlineStore.App.AutofacConfig
             //services
             builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
             builder.RegisterType<CategoryService>().As<ICategoryService>().SingleInstance();
+            builder.RegisterType<SupplierService>().As<ISupplierService>().SingleInstance();
 
             builder.RegisterType<UserService>().AsSelf().SingleInstance();
+            builder.Register(x => Mapper.Instance);
 
             //Commands
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");

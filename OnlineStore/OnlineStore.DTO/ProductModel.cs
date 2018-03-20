@@ -1,14 +1,10 @@
 ﻿using OnlineStore.Models.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.DTO
 {
     public class ProductModel
     {
+
         public string Name { get; set; }
 
         public decimal PurchasePrice { get; set; }
@@ -17,8 +13,8 @@ namespace OnlineStore.DTO
 
         public int Quantity { get; set; }
 
-        public virtual Category Category { get; set; } //navp
+        public Category Category { get; set; }
 
-        public virtual Supplier Supplier { get; set; }//navprop
+        public Supplier Supplier { get; set; }
     }
 }

@@ -27,8 +27,6 @@ namespace OnlineStore.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>().HasMany(or => or.Products).WithMany(pr => pr.Orders);
-
             modelBuilder.Entity<Address>().HasMany(t => t.Users).WithRequired(cl => cl.Address).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Address>().HasMany(t => t.Couriers).WithRequired(courier => courier.Address).WillCascadeOnDelete(false);

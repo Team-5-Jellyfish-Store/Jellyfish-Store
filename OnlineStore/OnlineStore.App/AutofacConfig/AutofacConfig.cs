@@ -53,9 +53,10 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
+            builder.RegisterType<RegisterUserCommand>().Named<ICommand>("register");
             builder.RegisterType<PrintAvailableProductReportCommand>().Named<ICommand>("reportProducts");
             builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportOrders");
-            builder.RegisterType<RegisterUserCommand>().Named<ICommand>("register");
+            builder.RegisterType<AddOrderCommand>().Named<ICommand>("addOrder");
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
@@ -63,6 +64,7 @@ namespace OnlineStore.App.AutofacConfig
             //Services
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
+            builder.RegisterType<OrderService>().As<IOrderService>().SingleInstance();
 
             //builder.RegisterType<Mapper>().As<IMapper>();
             builder.Register(x => Mapper.Instance).SingleInstance();

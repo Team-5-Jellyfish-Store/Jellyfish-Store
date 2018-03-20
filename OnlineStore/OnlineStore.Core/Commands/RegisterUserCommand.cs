@@ -6,7 +6,7 @@ using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Core.Commands
 {
-    public class RegisterCommand : ICommand
+    public class RegisterUserCommand : ICommand
     {
         private readonly IOnlineStoreContext context;
         private readonly IWriter writer;
@@ -14,7 +14,7 @@ namespace OnlineStore.Core.Commands
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public RegisterCommand(IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public RegisterUserCommand(IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
@@ -69,7 +69,7 @@ namespace OnlineStore.Core.Commands
 
             password = this.hasher.CreatePassword(password);
 
-            var addressFromDb = context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
+            var addressFromDb = this.context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
                                 ?? throw new ArgumentNullException("Address not Found!");
 
             var newUser = new User()

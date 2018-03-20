@@ -15,14 +15,14 @@ namespace OnlineStore.Data
             Database.SetInitializer(strategy);
         }
 
-        public IDbSet<User> Users { get; set; }
-        public IDbSet<Category> Categories { get; set; }
-        public IDbSet<Order> Orders { get; set; }
-        public IDbSet<Product> Products { get; set; }
-        public IDbSet<Courier> Couriers { get; set; }
-        public IDbSet<Supplier> Suppliers { get; set; }
-        public IDbSet<Address> Addresses { get; set; }
-        public IDbSet<Town> Towns { get; set; }
+        public virtual IDbSet<User> Users { get; set; }
+        public virtual IDbSet<Category> Categories { get; set; }
+        public virtual IDbSet<Order> Orders { get; set; }
+        public virtual IDbSet<Product> Products { get; set; }
+        public virtual IDbSet<Courier> Couriers { get; set; }
+        public virtual IDbSet<Supplier> Suppliers { get; set; }
+        public virtual IDbSet<Address> Addresses { get; set; }
+        public virtual IDbSet<Town> Towns { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

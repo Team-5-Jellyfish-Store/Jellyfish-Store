@@ -6,9 +6,10 @@ namespace OnlineStore.Models.DataModels
 {
     public class Town
     {
+        private ICollection<Address> addresses;
         public Town()
         {
-            this.Addresses = new HashSet<Address>();
+            this.addresses = new HashSet<Address>();
         }
 
         public int Id { get; set; }
@@ -18,6 +19,10 @@ namespace OnlineStore.Models.DataModels
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; } //navprop
+        public virtual ICollection<Address> Addresses
+        {
+            get { return this.addresses; }
+            set { this.addresses = value; }
+        }
     }
 }

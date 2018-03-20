@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Models.DataModels
 {
     public class Product
     {
+        private ICollection<Order> orders;
         public Product()
         {
-            this.Orders = new HashSet<Order>();
+            this.orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
 
         [Required]
         [StringLength(30, MinimumLength = 4)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Range(0, int.MaxValue)]
@@ -35,6 +38,10 @@ namespace OnlineStore.Models.DataModels
         
         public virtual Supplier Supplier { get; set; }//navprop
 
-        public virtual ICollection<Order> Orders { get; set; } //navprop
+        public virtual ICollection<Order> Orders
+        {
+            get { return this.orders; }
+            set { this.orders = value; }
+        }
     }
 }

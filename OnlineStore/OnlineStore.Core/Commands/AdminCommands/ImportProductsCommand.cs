@@ -79,6 +79,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
                 }
 
                 validProducts.ForEach(c => this.context.Products.Add(c));
+                
                 this.context.SaveChanges();
                 var result = importResults.ToString().Trim();
                 return result;

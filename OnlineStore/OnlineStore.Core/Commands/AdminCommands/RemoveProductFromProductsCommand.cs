@@ -3,21 +3,21 @@ using System.Linq;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Models.DataModels;
+using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class RemoveProductFromProductsCommand : ICommand
     {
-
+        private readonly IProductService productService;
         private readonly IUserSessionService sessionService;
-        private readonly IOnlineStoreContext context;
         private readonly IReader reader;
         private readonly IWriter writer;
 
-        public RemoveProductFromProductsCommand(IUserSessionService sessionService, IOnlineStoreContext context, IReader reader, IWriter writer)
+        public RemoveProductFromProductsCommand(IProductService productService, IUserSessionService sessionService, IReader reader, IWriter writer)
         {
+            this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
             this.sessionService = sessionService ?? throw new ArgumentNullException(nameof(IUserSessionService));
-            this.context = context ?? throw new ArgumentNullException(nameof(IOnlineStoreContext));
             this.reader = reader ?? throw new ArgumentNullException(nameof(IReader));
             this.writer = writer ?? throw new ArgumentNullException(nameof(IWriter));
         }
@@ -28,14 +28,8 @@ namespace OnlineStore.Core.Commands.AdminCommands
             {
                 this.writer.Write("Please enter product name: ");
                 var productName = this.reader.Read();
-                var productForRemoval = this.context.Products.FirstOrDefault(f => f.Name == productName);
-                if (productForRemoval != null)
-                {
-                    this.context.Products.Remove(productForRemoval);
-                    this.context.SaveChanges();
-                    return $"Product {productName} removed successfully!";
-                }
-                return $"Product {productName} not found!";
+                productService.RemoveProductByName(productName);
+                return $"Product {productName} removed successfully!";
             }
             else
             {

@@ -6,22 +6,22 @@ using iTextSharp.text.pdf;
 using System;
 using OnlineStore.Data.Contracts;
 using System.Linq;
+using OnlineStore.DTO;
+using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Core.Commands
 {
     public class PrintAvailableProductReportCommand : ICommand
     {
-        private IOnlineStoreContext context;
-      
+        private readonly IProductService productService;
 
-        public PrintAvailableProductReportCommand(IOnlineStoreContext context)
+        public PrintAvailableProductReportCommand(IProductService productService)
         {
-            this.context = context;
-            
+            this.productService = productService;
         }
         public string ExecuteThisCommand()
         {
-            var products = context.Products;
+            var products = productService.GetAllProducts();
             string uniqueName= 
                 ($"y{DateTime.Now.Year}m{DateTime.Now.Month}d{DateTime.Now.Day}" +
                 $"h{DateTime.Now.Hour}m{DateTime.Now.Minute}s{DateTime.Now.Second}.pdf");
@@ -43,7 +43,7 @@ namespace OnlineStore.Core.Commands
             {
                 if (item.Quantity>0)
                 {
-                    document.Add(new Paragraph($"{item.Name} {item.Category.Name} {item.Quantity} {item.SellingPrice}"));
+                    document.Add(new Paragraph($"{item.Name} {item.CategoryName} {item.Quantity} {item.SellingPrice}"));
                    
                 }
             }

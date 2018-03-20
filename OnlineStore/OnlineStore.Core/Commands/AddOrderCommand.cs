@@ -40,7 +40,7 @@ namespace OnlineStore.Core.Commands
             comment = validator.ValidateValue(comment, false);
             //validator.ValidateLength(comment, 1, 300);
 
-            var order = new OrderModel()
+            var order = new OrderMakeModel()
             {
                 Username = loggedUser,
                 ProductName = productName,

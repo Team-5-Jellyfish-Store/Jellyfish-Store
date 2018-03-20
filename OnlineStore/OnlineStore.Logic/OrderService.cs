@@ -1,9 +1,13 @@
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using OnlineStore.Logic.Contracts;
+
 ﻿using OnlineStore.Data.Contracts;
 using OnlineStore.DTO;
-using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace OnlineStore.Logic
 {
@@ -16,7 +20,7 @@ namespace OnlineStore.Logic
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void MakeOrder(OrderModel orderModel)
+        public void MakeOrder(OrderMakeModel orderModel)
         {
             if (orderModel == null)
             {
@@ -58,5 +62,11 @@ namespace OnlineStore.Logic
 
             context.SaveChanges();
         }
+
+        public IEnumerable<OrderModel> GetAllOrders()
+        {
+            return context.Orders.ProjectTo<OrderModel>();
+        }
     }
 }
+

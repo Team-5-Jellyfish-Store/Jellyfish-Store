@@ -12,7 +12,7 @@ namespace OnlineStore.Core.Commands
 {
     public class SearchProductCommand : ICommand
     {
-       
+
         private readonly IReader reader;
         private readonly IWriter writer;
         private readonly IProductService productService;
@@ -28,23 +28,13 @@ namespace OnlineStore.Core.Commands
             this.writer.WriteLine("Please enter product name to search for it");
             var searchedProduct = reader.Read();
 
-            var products = productService.GetAllProducts();
+            var matchingProduct = productService.FindProductByName(searchedProduct);
 
-            if (products.Where(x => x.Name == searchedProduct).Count() == 0)
-            {
-                return "No such product exists!\r\n";
-            }
+            writer.WriteLine("Name / SellingPrice / Category");
+            writer.Write(matchingProduct.Name + "  ");
+            writer.Write(matchingProduct.SellingPrice.ToString());
+            writer.WriteLine(matchingProduct.CategoryName);
 
-
-            //var matchingProducts = products.find(x => x.Name == searchedProduct);
-            var matchingProducts = products.FirstOrDefault(x => x.Name == searchedProduct);
-
-
-            writer.WriteLine("Name / SellingPrice");
-
-            writer.Write(matchingProducts.Name + "  ");
-            writer.WriteLine(matchingProducts.SellingPrice.ToString());
-           writer.WriteLine(matchingProducts.Category.Name.ToString());
 
             return "";
         }

@@ -28,23 +28,18 @@ namespace OnlineStore.Core.Commands
         {
             this.writer.WriteLine("Please enter category name to view all products in this category");
             //var categories = this.productService.GetAllProducts(); add category model
-            var categories = this.categoryService.GetAllCategories();
             var categoryName = this.reader.Read();
-
-            if (!categories.Any(x => x.Name== categoryName))
-            {
-                return "No such category!\r\n";
-            }
+            var category = categoryService.FindCategoryByName(categoryName);
 
             var products = this.productService.GetAllProducts();
-            var matchingProducts = products.Where(x => x.Category.Name == categoryName);
-            writer.WriteLine("Name / SellingPrice");
+            var matchingProducts = products.Where(x => x.CategoryName == categoryName);
+
+            writer.WriteLine("Name / SellingPrice / Category");
             foreach (var item in matchingProducts)
             {
-
-
                 writer.Write(item.Name + "  ");
-                writer.WriteLine(item.SellingPrice.ToString());
+                writer.Write(item.SellingPrice.ToString());
+                writer.WriteLine(item.CategoryName);
             }
             return "";
         }

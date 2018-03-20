@@ -106,12 +106,16 @@
     <Compile Include="Providers\Hasher.cs" />
     <Compile Include="Contracts\IHasher.cs" />
     <Compile Include="ShoppingCartRepository\ShoppingCartRepository.cs" />
-    <Compile Include="UserService\UserSessionService.cs" />
+    <Compile Include="UserSession\UserSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">
       <Project>{D2836ECC-0A1D-4DE2-88CE-83FC66D2A784}</Project>
       <Name>OnlineStore.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Logic\OnlineStore.Logic.csproj">
+      <Project>{03d046c9-f890-4746-b309-8baa712a1a5e}</Project>
+      <Name>OnlineStore.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Models\OnlineStore.Models.csproj">
       <Project>{C507A94F-9F5B-4B0F-8467-3C3264A4B57F}</Project>

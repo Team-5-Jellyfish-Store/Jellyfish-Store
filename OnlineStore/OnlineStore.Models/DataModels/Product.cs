@@ -26,8 +26,8 @@ namespace OnlineStore.Models.DataModels
         [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
-        public int CategoryId { get; set; }
 
+        public int CategoryId { get; set; }
         
         public virtual Category Category { get; set; } //navp
 

@@ -113,6 +113,10 @@
       <Project>{D2836ECC-0A1D-4DE2-88CE-83FC66D2A784}</Project>
       <Name>OnlineStore.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.DTO\OnlineStore.DTO.csproj">
+      <Project>{D4FA34C6-6509-4865-B46F-92FDCF40BB24}</Project>
+      <Name>OnlineStore.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Logic\OnlineStore.Logic.csproj">
       <Project>{03d046c9-f890-4746-b309-8baa712a1a5e}</Project>
       <Name>OnlineStore.Logic</Name>

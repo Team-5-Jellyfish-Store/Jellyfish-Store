@@ -9,6 +9,7 @@ namespace OnlineStore.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
-        public virtual Address Address { get; set; }
+        public string AddressText { get; set; }
+        public string TownName { get; set; }
     }
 }

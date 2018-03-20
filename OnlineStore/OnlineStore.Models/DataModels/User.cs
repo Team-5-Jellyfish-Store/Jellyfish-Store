@@ -8,9 +8,10 @@ namespace OnlineStore.Models.DataModels
 {
     public class User
     {
+        private ICollection<Order> orders;
         public User()
         {
-            this.Orders = new HashSet<Order>();
+            this.orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -48,6 +49,10 @@ namespace OnlineStore.Models.DataModels
         [Required]
         public virtual Address Address { get; set; } //navprop
 
-        public virtual ICollection<Order> Orders { get; set; } //navprop
+        public virtual ICollection<Order> Orders
+        {
+            get { return this.orders; }
+            set { this.orders = value; }
+        }
     }
 }

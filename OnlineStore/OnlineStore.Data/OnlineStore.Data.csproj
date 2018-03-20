@@ -112,6 +112,10 @@
     <Compile Include="Migrations\201803191627486_Order Count Added.Designer.cs">
       <DependentUpon>201803191627486_Order Count Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803201139504_RemovedIndexFromAddress.cs" />
+    <Compile Include="Migrations\201803201139504_RemovedIndexFromAddress.Designer.cs">
+      <DependentUpon>201803201139504_RemovedIndexFromAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803191627486_Order Count Added.resx">
       <DependentUpon>201803191627486_Order Count Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201139504_RemovedIndexFromAddress.resx">
+      <DependentUpon>201803201139504_RemovedIndexFromAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

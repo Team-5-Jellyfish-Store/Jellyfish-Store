@@ -5,9 +5,12 @@ namespace OnlineStore.Models.DataModels
 {
     public class Category
     {
+        private ICollection<Product> products;
+
+
         public Category()
         {
-            this.Products = new HashSet<Product>();
+            this.products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -17,6 +20,10 @@ namespace OnlineStore.Models.DataModels
         [MaxLength(30, ErrorMessage = "Category name should be shorter than 30 characters")]
         public string Name { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; } //navprop
+        public virtual ICollection<Product> Products
+        {
+            get { return this.products; }
+            set { this.products = value; }
+        }
     }
 }

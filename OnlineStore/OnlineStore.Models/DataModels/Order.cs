@@ -6,9 +6,11 @@ namespace OnlineStore.Models.DataModels
 {
     public class Order
     {
+        private ICollection<Product> products;
+
         public Order()
         {
-            this.Products = new HashSet<Product>();
+            this.products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -31,6 +33,10 @@ namespace OnlineStore.Models.DataModels
         public int CourierId { get; set; }
         public virtual Courier Courier { get; set; } //navprop
 
-        public virtual ICollection<Product> Products { get; set; } //navprop
+        public virtual ICollection<Product> Products
+        {
+            get { return this.products; }
+            set { this.products = value; }
+        }
     }
 }

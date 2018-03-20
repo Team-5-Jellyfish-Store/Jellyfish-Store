@@ -34,7 +34,7 @@ namespace OnlineStore.Core.Commands
             string password = this.reader.Read();
             password = this.validator.ValidateValue(password, true);
 
-            var user = context.Users.SingleOrDefault(x => x.Username == username);
+            var user = this.context.Users.SingleOrDefault(x => x.Username == username);
             var actualPassword = user.Password;
 
             if (user == null)

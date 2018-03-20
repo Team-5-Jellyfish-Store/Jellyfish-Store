@@ -1,4 +1,6 @@
 ﻿using OnlineStore.Data.Contracts;
+using OnlineStore.DTO;
+using System.Collections.Generic;
 
 namespace OnlineStore.Logic
 {
@@ -11,9 +13,22 @@ namespace OnlineStore.Logic
             this.context = context;
         }
 
-        public void GetAllUsers()
+        public IEnumerable<UserRegisterModel> GetAllUserRegisterData()
         {
+            var users = this.context.Users;
 
+            var userRegisterModels = new List<UserRegisterModel>();
+
+            foreach (var user in users)
+            {
+                userRegisterModels.Add(new UserRegisterModel()
+                {
+                    Username = user.Username,
+                    EMail = user.EMail,
+                });
+            }
+
+            return userRegisterModels;
         }
     }
 }

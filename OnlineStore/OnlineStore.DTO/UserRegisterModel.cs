@@ -2,7 +2,7 @@
 
 namespace OnlineStore.DTO
 {
-    public class UserRegisterDto
+    public class UserRegisterModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

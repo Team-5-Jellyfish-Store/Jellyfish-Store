@@ -6,7 +6,7 @@ using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
 using OnlineStore.Core.ShoppingCartRepository;
-using OnlineStore.Core.UserService;
+using OnlineStore.Core.UserSession;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
 

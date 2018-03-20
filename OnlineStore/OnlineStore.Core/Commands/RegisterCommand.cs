@@ -3,19 +3,22 @@ using OnlineStore.Models.DataModels;
 using System;
 using System.Linq;
 using OnlineStore.Core.Contracts;
+using OnlineStore.Logic;
 
 namespace OnlineStore.Core.Commands
 {
     public class RegisterCommand : ICommand
     {
+        private readonly UserService userService;
         private readonly IOnlineStoreContext context;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public RegisterCommand(IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public RegisterCommand(UserService userService, IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));

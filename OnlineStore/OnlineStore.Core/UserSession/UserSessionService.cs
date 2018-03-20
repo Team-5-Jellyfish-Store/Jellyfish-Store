@@ -4,7 +4,7 @@ using OnlineStore.Models;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
-namespace OnlineStore.Core.UserService
+namespace OnlineStore.Core.UserSession
 {
     public class UserSessionService : IUserSessionService
     {

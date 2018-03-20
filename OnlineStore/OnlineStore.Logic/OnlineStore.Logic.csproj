@@ -55,8 +55,10 @@
     <Compile Include="CategoryService.cs" />
     <Compile Include="Contracts\ICategoryService.cs" />
     <Compile Include="Contracts\IAddressService.cs" />
+    <Compile Include="Contracts\IOrderService.cs" />
     <Compile Include="Contracts\IProductService.cs" />
     <Compile Include="Contracts\ISupplierService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutomapperConfig\AutomapperConfiguration.cs" />
+    <Compile Include="Commands\AddOrderCommand.cs" />
     <Compile Include="Commands\AddProductToCartCommand.cs" />
     <Compile Include="Commands\AdminCommands\AddProductToProductsCommand.cs" />
     <Compile Include="Commands\AdminCommands\RemoveProductFromProductsCommand.cs" />

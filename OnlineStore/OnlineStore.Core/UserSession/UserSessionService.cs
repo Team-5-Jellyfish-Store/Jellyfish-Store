@@ -12,9 +12,12 @@ namespace OnlineStore.Core.UserSession
 
         public string GetLoggedUser()
         {
-            this.CheckForLoggedUser();
+            if (this.CheckForLoggedUser())
+            {
+                return this.user.Username;
+            }
 
-            return this.user.Username;
+            return null;
         }
 
         public void SetLoggedUser(User user)
@@ -38,12 +41,14 @@ namespace OnlineStore.Core.UserSession
             return this.user != null && this.user.Role == UserRole.Moderator;
         }
 
-        private void CheckForLoggedUser()
+        private bool CheckForLoggedUser()
         {
             if (this.user == null)
             {
-                throw new ArgumentException("No logged user!");
+                return false;
             }
+
+            return true;
         }
     }
 }

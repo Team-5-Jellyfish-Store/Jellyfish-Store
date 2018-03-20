@@ -67,6 +67,10 @@
       <Project>{4dc92cc8-197d-474d-aa96-49362f22b625}</Project>
       <Name>OnlineStore.App</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Core\OnlineStore.Core.csproj">
+      <Project>{6db43d30-81f0-4dec-b7fb-cfbb796066ac}</Project>
+      <Name>OnlineStore.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">
       <Project>{d2836ecc-0a1d-4de2-88ce-83fc66d2a784}</Project>
       <Name>OnlineStore.Data</Name>

@@ -1,7 +1,9 @@
-﻿namespace OnlineStore.Logic.Contracts
+﻿using OnlineStore.DTO;
+
+namespace OnlineStore.Logic.Contracts
 {
     public interface IUserService
     {
-        void RegisterUser(string username, string password, string email, string firstName, string lastName, string addressText);
+        void RegisterUser(UserRegisterModel userRegisterModel);
     }
 }

@@ -1,4 +1,6 @@
-﻿using OnlineStore.Data.Contracts;
+﻿using AutoMapper;
+using OnlineStore.Data.Contracts;
+using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
@@ -10,36 +12,32 @@ namespace OnlineStore.Logic
     public class UserService : IUserService
     {
         private readonly IOnlineStoreContext context;
+        private readonly IMapper mapper;
 
-        public UserService(IOnlineStoreContext context)
+        public UserService(IOnlineStoreContext context, IMapper mapper)
         {
-            this.context = context;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void RegisterUser(string username, string password, string email, string firstName, string lastName, string addressText)
+        public void RegisterUser(UserRegisterModel userModel)
         {
-            if (this.context.Users.Any(x => x.Username == username))
+            if (userModel == null)
+            {
+                throw new ArgumentNullException(nameof(userModel));
+            }
+
+            if (this.context.Users.Any(x => x.Username == userModel.Username))
             {
                 throw new ArgumentException("User with that username already exists!");
             }
 
-            if (this.context.Users.Any(x => x.EMail == email))
+            if (this.context.Users.Any(x => x.EMail == userModel.EMail))
             {
                 throw new ArgumentException("User with that email already exists!");
             }
 
-            var addressFromDb = this.context.Addresses.Where(x => x.AddressText == addressText).FirstOrDefault()
-                                ?? throw new ArgumentNullException("Address not Found!");
-
-            var userToAdd = new User()
-            {
-                Username = username,
-                Password = password,
-                EMail = email,
-                FirstName = firstName,
-                LastName = lastName,
-                Address = addressFromDb
-            };
+            var userToAdd = this.mapper.Map<User>(userModel);
 
             context.Users.Add(userToAdd);
 

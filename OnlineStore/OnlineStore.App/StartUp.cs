@@ -1,6 +1,11 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Common.AutoMapperConfig;
+using AutoMapper;
+using OnlineStore.DTO;
+using OnlineStore.Models.DataModels;
+using OnlineStore.Data;
+using System.Linq;
 
 namespace OnlineStore.App
 {
@@ -15,8 +20,6 @@ namespace OnlineStore.App
 
             var engine = container.Resolve<IEngine>();
             engine.Run();
-
-
 
             //This is my test, forget about it!
             //var ctx = new OnlineStoreContext();

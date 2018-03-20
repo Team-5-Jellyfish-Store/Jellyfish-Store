@@ -30,7 +30,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<Validator>().As<IValidator>();
 
             //builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
-            builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerDependency();
+            builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();
             builder.RegisterType<UserSessionService>().As<IUserSessionService>().SingleInstance();
 
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
@@ -42,7 +42,6 @@ namespace OnlineStore.App.AutofacConfig
 
             builder.RegisterType<UserService>().AsSelf().SingleInstance();
             builder.Register(x => Mapper.Instance);
-
 
             //Commands
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
@@ -63,6 +62,10 @@ namespace OnlineStore.App.AutofacConfig
 
             //Services
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
+
+            //builder.RegisterType<Mapper>().As<IMapper>();
+            builder.Register(x => Mapper.Instance).SingleInstance();
         }
     }
 }

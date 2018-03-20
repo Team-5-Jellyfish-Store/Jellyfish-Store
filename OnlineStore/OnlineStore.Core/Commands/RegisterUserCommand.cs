@@ -1,21 +1,24 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.DTO;
 
 namespace OnlineStore.Core.Commands
 {
     public class RegisterUserCommand : ICommand
     {
         private readonly IUserService userService;
+        private readonly IAddressService addressService;
         private readonly IUserSessionService userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public RegisterUserCommand(IUserService userService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public RegisterUserCommand(IUserService userService, IAddressService addressService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -61,9 +64,13 @@ namespace OnlineStore.Core.Commands
             string lastName = this.reader.Read();
             lastName = this.validator.ValidateValue(lastName, false);
 
+            this.writer.Write("Town: ");
+            string townName = this.reader.Read();
+            townName = this.validator.ValidateValue(townName, true);
+
             this.writer.Write("Address: ");
-            string address = this.reader.Read();
-            address = this.validator.ValidateValue(address, true);
+            string addressText = this.reader.Read();
+            addressText = this.validator.ValidateValue(addressText, true);
 
             if (password != confirmedPassword)
             {
@@ -72,7 +79,19 @@ namespace OnlineStore.Core.Commands
 
             password = this.hasher.CreatePassword(password);
 
-            this.userService.RegisterUser(username, password, email, firstName, lastName, address);
+            var address = this.addressService.GetAddress(addressText, townName);
+
+            var userModel = new UserRegisterModel()
+            {
+                Username = username,
+                Password = password,
+                EMail = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Address = address
+            };
+
+            this.userService.RegisterUser(userModel);
 
             return "User registered successfully!";
         }

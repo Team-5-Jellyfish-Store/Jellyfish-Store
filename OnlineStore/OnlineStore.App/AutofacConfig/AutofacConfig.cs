@@ -9,7 +9,8 @@ using OnlineStore.Core.ShoppingCartRepository;
 using OnlineStore.Core.UserSession;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
-
+using OnlineStore.Logic;
+using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.App.AutofacConfig
 {
@@ -39,10 +40,6 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ImportSuppliersCommand>().Named<ICommand>("importSuppliers");
             builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeProduct");
 
-
-
-            
-            
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
@@ -50,18 +47,11 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportOrders");
             builder.RegisterType<RegisterUserCommand>().Named<ICommand>("register");
 
-
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
-           
 
-
-
-
-
-
-
-
+            //Services
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
         }
     }
 }

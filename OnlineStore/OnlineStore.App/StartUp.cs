@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Core.AutomapperConfig;
+using OnlineStore.Common.AutoMapperConfig;
 
 namespace OnlineStore.App
 {
@@ -16,7 +16,8 @@ namespace OnlineStore.App
             var engine = container.Resolve<IEngine>();
             engine.Run();
 
-            
+
+
             //This is my test, forget about it!
             //var ctx = new OnlineStoreContext();
             //var towns = ctx.Towns.ToList();

@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4DC92CC8-197D-474D-AA96-49362F22B625}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>OnlineStore.App</RootNamespace>
-    <AssemblyName>OnlineStore.App</AssemblyName>
+    <ProjectGuid>{DC696EBF-A8AC-4375-9961-710BD91E209B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OnlineStore.Common</RootNamespace>
+    <AssemblyName>OnlineStore.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,21 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,30 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutofacConfig\AutofacConfig.cs" />
-    <Compile Include="StartUp.cs" />
+    <Compile Include="AutoMapperConfig\AutomapperConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj">
-      <Project>{dc696ebf-a8ac-4375-9961-710bd91e209b}</Project>
-      <Name>OnlineStore.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OnlineStore.Core\OnlineStore.Core.csproj">
-      <Project>{6db43d30-81f0-4dec-b7fb-cfbb796066ac}</Project>
-      <Name>OnlineStore.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">
-      <Project>{d2836ecc-0a1d-4de2-88ce-83fc66d2a784}</Project>
-      <Name>OnlineStore.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OnlineStore.Logic\OnlineStore.Logic.csproj">
-      <Project>{03D046C9-F890-4746-B309-8BAA712A1A5E}</Project>
-      <Name>OnlineStore.Logic</Name>
+    <ProjectReference Include="..\OnlineStore.DTO\OnlineStore.DTO.csproj">
+      <Project>{d4fa34c6-6509-4865-b46f-92fdcf40bb24}</Project>
+      <Name>OnlineStore.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Models\OnlineStore.Models.csproj">
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>

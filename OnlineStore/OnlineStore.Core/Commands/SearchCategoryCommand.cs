@@ -1,5 +1,7 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
+using OnlineStore.Logic;
+using OnlineStore.Logic.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,33 +12,36 @@ namespace OnlineStore.Core.Commands
 {
     public class SearchCategoryCommand : ICommand
     {
-        private readonly IOnlineStoreContext context;
+        private readonly ICategoryService categoryService;
+        private readonly IProductService productService;
         private readonly IReader reader;
         private readonly IWriter writer;
 
-        public SearchCategoryCommand(IOnlineStoreContext context, IReader reader, IWriter writer)
+        public SearchCategoryCommand(ICategoryService categoryService, IProductService productService, IReader reader, IWriter writer)
         {
-            this.context = context;
+            this.categoryService = categoryService;
+            this.productService = productService;
             this.reader = reader;
             this.writer = writer;
         }
         public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter category name to view all products in this category");
-            var categories = this.context.Categories.ToList();
+            //var categories = this.productService.GetAllProducts(); add category model
+            var categories = this.categoryService.GetAllCategories();
             var categoryName = this.reader.Read();
 
-            if (categories.Where(x => x.Name == categoryName).Count() ==0)
+            if (!categories.Any(x => x.Name== categoryName))
             {
                 return "No such category!\r\n";
             }
-           
-            var products = this.context.Products.ToList();
+
+            var products = this.productService.GetAllProducts();
             var matchingProducts = products.Where(x => x.Category.Name == categoryName);
             writer.WriteLine("Name / SellingPrice");
             foreach (var item in matchingProducts)
             {
-               
+
 
                 writer.Write(item.Name + "  ");
                 writer.WriteLine(item.SellingPrice.ToString());

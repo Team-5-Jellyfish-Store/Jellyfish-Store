@@ -26,6 +26,13 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
+            var loggedUser = this.userSession.GetLoggedUser();
+
+            if (loggedUser != null)
+            {
+                throw new ArgumentException($"User {loggedUser} is logged in!");
+            }
+
             this.writer.Write("Username: ");
             string username = this.reader.Read();
             username = this.validator.ValidateValue(username, true);
@@ -51,7 +58,5 @@ namespace OnlineStore.Core.Commands
 
             return $"User {username} logged in successfuly!";
         }
-
-
     }
 }

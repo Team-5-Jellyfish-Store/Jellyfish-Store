@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Core.Contracts;
+using System;
 
 namespace OnlineStore.Core.Commands
 {
@@ -13,7 +14,7 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            string currentUser = this.sessionService.GetLoggedUser();
+            string currentUser = this.sessionService.GetLoggedUser() ?? throw new ArgumentException("No logged user!");
             this.sessionService.Logout();
             return $"{currentUser} logged out successfully!";
         }

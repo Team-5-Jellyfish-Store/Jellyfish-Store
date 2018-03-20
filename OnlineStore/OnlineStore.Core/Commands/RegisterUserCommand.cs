@@ -1,25 +1,22 @@
-﻿using OnlineStore.Data.Contracts;
-using OnlineStore.Models.DataModels;
-using System;
-using System.Linq;
+﻿using System;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Logic;
+using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Core.Commands
 {
     public class RegisterUserCommand : ICommand
     {
-        private readonly UserService userService;
-        private readonly IOnlineStoreContext context;
+        private readonly IUserService userService;
+        private readonly IUserSessionService userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-         public RegisterUserCommand(UserService userService, IOnlineStoreContext context, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public RegisterUserCommand(IUserService userService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
             this.hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
@@ -28,9 +25,17 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
+            var loggedUser = this.userSession.GetLoggedUser();
+
+            if (loggedUser != null)
+            {
+                throw new ArgumentException($"User {loggedUser} is logged in!");
+            }
+
             this.writer.Write("Username: ");
             string username = this.reader.Read();
             username = this.validator.ValidateValue(username, true);
+            this.validator.ValidateLength(username, 5, 20);
 
             this.writer.Write("Email: ");
             string email = this.reader.Read();
@@ -60,11 +65,6 @@ namespace OnlineStore.Core.Commands
             string address = this.reader.Read();
             address = this.validator.ValidateValue(address, true);
 
-            if (this.context.Users.Any(x => x.Username == username))
-            {
-                throw new ArgumentException("User with that username already exists!");
-            }
-
             if (password != confirmedPassword)
             {
                 throw new ArgumentException("Password not matching!");
@@ -72,22 +72,7 @@ namespace OnlineStore.Core.Commands
 
             password = this.hasher.CreatePassword(password);
 
-            var addressFromDb = this.context.Addresses.Where(x => x.AddressText == address).FirstOrDefault()
-                                ?? throw new ArgumentNullException("Address not Found!");
-
-            var newUser = new User()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = username,
-                EMail = email,
-                Password = password,
-                AddressId = addressFromDb.Id
-            };
-
-            context.Users.Add(newUser);
-
-            context.SaveChanges();
+            this.userService.RegisterUser(username, password, email, firstName, lastName, address);
 
             return "User registered successfully!";
         }

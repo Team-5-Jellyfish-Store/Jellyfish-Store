@@ -25,7 +25,7 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            var loggedUser = userSession.GetLoggedUser();
+            var loggedUser = userSession.GetLoggedUser() ?? throw new ArgumentException("No logged user!");
             var user = context.Users.SingleOrDefault(x => x.Username == loggedUser);
 
             this.writer.Write("Product: ");

@@ -1,6 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
-using OnlineStore.Models.DataModels;
+using OnlineStore.DTO;
+using OnlineStore.Logic.Contracts;
 using System;
 using System.Linq;
 
@@ -8,15 +8,15 @@ namespace OnlineStore.Core.Commands
 {
     public class AddOrderCommand : ICommand
     {
-        private readonly IOnlineStoreContext context;
+        private readonly IOrderService orderService;
         private readonly IValidator validator;
         private readonly IUserSessionService userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
 
-        public AddOrderCommand(IOnlineStoreContext context, IValidator validator, IUserSessionService userSession, IWriter writer, IReader reader)
+        public AddOrderCommand(IOrderService orderService, IValidator validator, IUserSessionService userSession, IWriter writer, IReader reader)
         {
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
@@ -26,7 +26,6 @@ namespace OnlineStore.Core.Commands
         public string ExecuteThisCommand()
         {
             var loggedUser = userSession.GetLoggedUser() ?? throw new ArgumentException("No logged user!");
-            var user = context.Users.SingleOrDefault(x => x.Username == loggedUser);
 
             this.writer.Write("Product: ");
             string productName = this.reader.Read();
@@ -36,29 +35,23 @@ namespace OnlineStore.Core.Commands
             int productCount = int.Parse(this.reader.Read());
             validator.ValidateLength(productCount, 1, 1000);
 
-            if (!this.context.Products.Any(x => x.Name == productName))
-            {
-                throw new ArgumentException("Product with that name don't exists!");
-            }
+            this.writer.Write("Comment: ");
+            string comment = this.reader.Read();
+            comment = validator.ValidateValue(comment, false);
+            //validator.ValidateLength(comment, 1, 300);
 
-            if (this.context.Products.Any(x => x.Quantity > productCount))
+            var order = new OrderModel()
             {
-                throw new ArgumentException("Product quantity...");
-            }
-
-            var order = new Order()
-            {
-                OrderedOn = DateTime.Now,
-                User = user,
-                Courier = context.Couriers.FirstOrDefault(),
-                ProductsCount = productCount
+                Username = loggedUser,
+                ProductName = productName,
+                ProductCount = productCount,
+                Comment = comment,
+                OrderedOn = DateTime.Now
             };
 
-            user.Orders.Add(order);
+            this.orderService.MakeOrder(order);
 
-            context.SaveChanges();
-
-            return "Order Added";
+            return $"User {loggedUser} ordered {productCount} {productName} on {order.OrderedOn}";
         }
     }
 }

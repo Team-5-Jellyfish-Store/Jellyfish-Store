@@ -1,10 +1,13 @@
 ﻿using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
+using OnlineStore.Logic.Contracts;
+using OnlineStore.Models.DataModels;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineStore.Logic
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IOnlineStoreContext context;
 
@@ -13,22 +16,34 @@ namespace OnlineStore.Logic
             this.context = context;
         }
 
-        public IEnumerable<UserRegisterModel> GetAllUserRegisterData()
+        public void RegisterUser(string username, string password, string email, string firstName, string lastName, string addressText)
         {
-            var users = this.context.Users;
-
-            var userRegisterModels = new List<UserRegisterModel>();
-
-            foreach (var user in users)
+            if (this.context.Users.Any(x => x.Username == username))
             {
-                userRegisterModels.Add(new UserRegisterModel()
-                {
-                    Username = user.Username,
-                    EMail = user.EMail,
-                });
+                throw new ArgumentException("User with that username already exists!");
             }
 
-            return userRegisterModels;
+            if (this.context.Users.Any(x => x.EMail == email))
+            {
+                throw new ArgumentException("User with that email already exists!");
+            }
+
+            var addressFromDb = this.context.Addresses.Where(x => x.AddressText == addressText).FirstOrDefault()
+                                ?? throw new ArgumentNullException("Address not Found!");
+
+            var userToAdd = new User()
+            {
+                Username = username,
+                Password = password,
+                EMail = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Address = addressFromDb
+            };
+
+            context.Users.Add(userToAdd);
+
+            context.SaveChanges();
         }
     }
 }

@@ -6,20 +6,19 @@ namespace OnlineStore.Models.DataModels
 {
     public class Order
     {
-        private ICollection<Product> products;
-
-        public Order()
-        {
-            this.products = new HashSet<Product>();
-        }
-
         public int Id { get; set; }
+
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
 
         [Range(1, 1000)]
         public int ProductsCount { get; set; }
 
         [MaxLength(300)]
         public string Comment { get; set; }
+
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
+        public decimal Amount { get; set; }
 
         public DateTime OrderedOn { get; set; }
 
@@ -33,10 +32,5 @@ namespace OnlineStore.Models.DataModels
         public int CourierId { get; set; }
         public virtual Courier Courier { get; set; } //navprop
 
-        public virtual ICollection<Product> Products
-        {
-            get { return this.products; }
-            set { this.products = value; }
-        }
     }
 }

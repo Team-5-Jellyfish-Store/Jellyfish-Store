@@ -19,10 +19,10 @@ namespace OnlineStore.Models.DataModels
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
         public decimal PurchasePrice { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
         public decimal SellingPrice { get; set; }
 
         [Required]
@@ -31,11 +31,11 @@ namespace OnlineStore.Models.DataModels
 
 
         public int CategoryId { get; set; }
-        
+
         public virtual Category Category { get; set; } //navp
 
         public int SupplierId { get; set; }
-        
+
         public virtual Supplier Supplier { get; set; }//navprop
 
         public virtual ICollection<Order> Orders

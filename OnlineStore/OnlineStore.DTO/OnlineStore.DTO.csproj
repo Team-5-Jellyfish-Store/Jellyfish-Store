@@ -43,6 +43,7 @@
     <Compile Include="AddressModel.cs" />
     <Compile Include="CategoryModel.cs" />
     <Compile Include="AddressImportModel.cs" />
+    <Compile Include="OrderModel.cs" />
     <Compile Include="ProductModel.cs" />
     <Compile Include="ProductImportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

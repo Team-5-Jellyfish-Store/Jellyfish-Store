@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Logic.Contracts
 {
-    public interface IProductService
+    public interface IOrderService
     {
-        IEnumerable<ProductModel> GetAllProducts();
-
-        ProductModel FindProductByName(string name);
-
-        void RemoveProductByName(string name);
+        IEnumerable<OrderModel> GetAllOrders();
     }
 }

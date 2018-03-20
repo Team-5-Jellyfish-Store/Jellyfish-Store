@@ -10,5 +10,9 @@ namespace OnlineStore.Logic.Contracts
     public interface ICategoryService
     {
         IEnumerable<CategoryModel> GetAllCategories();
+
+        CategoryModel FindCategoryByName(string name);
+
+        // void RemoveCategoryByName(string name);
     }
 }

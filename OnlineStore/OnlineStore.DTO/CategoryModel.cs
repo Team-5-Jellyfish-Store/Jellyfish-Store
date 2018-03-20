@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.DTO
 {
-    public  class CategoryModel
+    public class CategoryModel
     {
-       public string Name { get; set; }
+        public string Name { get; set; }
     }
 }

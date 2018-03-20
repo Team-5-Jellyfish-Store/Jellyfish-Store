@@ -2,6 +2,7 @@
 using iTextSharp.text.pdf;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Data.Contracts;
+using OnlineStore.Logic.Contracts;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace OnlineStore.Core.Commands
 {
     public class PrintOrdersReportCommand : ICommand
     {
-        private IOnlineStoreContext context;
+        private readonly IOrderService orderService;
         private readonly IUserSessionService sessionService;
 
-        public PrintOrdersReportCommand(IOnlineStoreContext context, IUserSessionService sessionService)
+        public PrintOrdersReportCommand(IOrderService orderService, IUserSessionService sessionService)
         {
-            this.context = context;
+            this.orderService = orderService;
             this.sessionService = sessionService;
         }
 
@@ -25,10 +26,11 @@ namespace OnlineStore.Core.Commands
         {
             if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
             {
-                var orders = context.Orders.ToList();
+                var orders = orderService.GetAllOrders();
                 string uniqueName =
                     ($"y{DateTime.Now.Year}m{DateTime.Now.Month}d{DateTime.Now.Day}" +
                     $"h{DateTime.Now.Hour}m{DateTime.Now.Minute}s{DateTime.Now.Second}.pdf");
+
                 string fileName = $"../../../OnlineStore.Core/PDFReports/OrdersReport{uniqueName}";
                 FileStream fs = new FileStream(fileName, FileMode.Create);
                 // Create an instance of the document class which represents the PDF document itself.
@@ -42,10 +44,10 @@ namespace OnlineStore.Core.Commands
                 document.Open();
                 // Add a simple and wellknown phrase to the document in a flow layout manner
                 document.Add(new Paragraph("Those are the current orders:"));
-                document.Add(new Paragraph("Id / Comment / ClientName / ItemDeliveredOn"));
+                document.Add(new Paragraph(" Comment / ClientName / ItemDeliveredOn"));
                 foreach (var item in orders)
                 {
-                    document.Add(new Paragraph($"{item.Id} {item.Comment} {item.User.FirstName}{item.User.LastName} {item.DeliveredOn}"));
+                    document.Add(new Paragraph($"{item.Comment} {item.User.FirstName}{item.User.LastName} {item.DeliveredOn}"));
                 }
 
                 // Close the document

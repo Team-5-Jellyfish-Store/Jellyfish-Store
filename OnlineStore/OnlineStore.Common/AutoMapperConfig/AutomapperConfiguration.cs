@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using OnlineStore.DTO;
 using OnlineStore.Models.DataModels;
-
+using OnlineStore.DTO;
 namespace OnlineStore.Common.AutoMapperConfig
 {
     public static class AutomapperConfiguration

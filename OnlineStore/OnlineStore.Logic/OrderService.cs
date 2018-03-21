@@ -22,45 +22,45 @@ namespace OnlineStore.Logic
 
         public void MakeOrder(OrderMakeModel orderModel)
         {
-            if (orderModel == null)
-            {
-                throw new ArgumentNullException(nameof(orderModel));
-            }
+            //if (orderModel == null)
+            //{
+            //    throw new ArgumentNullException(nameof(orderModel));
+            //}
 
-            var product = this.context.Products.SingleOrDefault(x => x.Name == orderModel.ProductName)
-                ?? throw new ArgumentException("Product with that name don't exists!");
+            //var product = this.context.Products.SingleOrDefault(x => x.Name == orderModel.ProductName)
+            //    ?? throw new ArgumentException("Product with that name don't exists!");
 
-            if (product.Quantity < orderModel.ProductCount)
-            {
-                throw new ArgumentException("Product quantity not enough for that order!");
-            }
+            //if (product.Quantity < orderModel.ProductCount)
+            //{
+            //    throw new ArgumentException("Product quantity not enough for that order!");
+            //}
 
-            var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
-                ?? throw new ArgumentException("User not found!");
+            //var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
+            //    ?? throw new ArgumentException("User not found!");
 
-            var courier = this.context.Couriers.FirstOrDefault()
-                ?? throw new ArgumentException("No couriers found!");
+            //var courier = this.context.Couriers.FirstOrDefault()
+            //    ?? throw new ArgumentException("No couriers found!");
 
-            var amount = product.SellingPrice * orderModel.ProductCount;
+            //var amount = product.SellingPrice * orderModel.ProductCount;
 
-            var order = new Order()
-            {
-                Product = product,
-                ProductsCount = orderModel.ProductCount,
-                Comment = orderModel.Comment,
-                OrderedOn = orderModel.OrderedOn,
-                Amount = amount,
-                User = user,
-                Courier = courier
-            };
+            //var order = new Order()
+            //{
+            //    Product = product,
+            //    ProductsCount = orderModel.ProductCount,
+            //    Comment = orderModel.Comment,
+            //    OrderedOn = orderModel.OrderedOn,
+            //    Amount = amount,
+            //    User = user,
+            //    Courier = courier
+            //};
 
-            this.context.Orders.Add(order);
+            //this.context.Orders.Add(order);
 
-            //user.Orders.Add(order);
+            ////user.Orders.Add(order);
 
-            product.Quantity -= orderModel.ProductCount;
+            //product.Quantity -= orderModel.ProductCount;
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         public IEnumerable<OrderModel> GetAllOrders()

@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Models.DataModels;
+using OnlineStore.Models.Enums;
 
 namespace OnlineStore.DTO
 {
@@ -11,5 +12,6 @@ namespace OnlineStore.DTO
         public string EMail { get; set; }
         public string AddressText { get; set; }
         public string TownName { get; set; }
+        public UserRole Role { get; set; }
     }
 }

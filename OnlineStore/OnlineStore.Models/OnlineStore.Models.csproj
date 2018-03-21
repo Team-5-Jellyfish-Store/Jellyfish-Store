@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="DataModels\Address.cs" />
     <Compile Include="DataModels\Category.cs" />
+    <Compile Include="DataModels\OrderProduct.cs" />
     <Compile Include="DataModels\User.cs" />
     <Compile Include="DataModels\Order.cs" />
     <Compile Include="DataModels\Product.cs" />

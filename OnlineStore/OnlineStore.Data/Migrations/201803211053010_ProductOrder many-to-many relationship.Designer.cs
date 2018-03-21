@@ -7,13 +7,13 @@ namespace OnlineStore.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class OrderAmountAdded : IMigrationMetadata
+    public sealed partial class ProductOrdermanytomanyrelationship : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(OrderAmountAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ProductOrdermanytomanyrelationship));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803202215360_Order Amount Added"; }
+            get { return "201803211053010_ProductOrder many-to-many relationship"; }
         }
         
         string IMigrationMetadata.Source

@@ -19,6 +19,7 @@ namespace OnlineStore.Data
         public virtual IDbSet<Category> Categories { get; set; }
         public virtual IDbSet<Order> Orders { get; set; }
         public virtual IDbSet<Product> Products { get; set; }
+        public virtual IDbSet<OrderProduct> OrderProducts { get; set; }
         public virtual IDbSet<Courier> Couriers { get; set; }
         public virtual IDbSet<Supplier> Suppliers { get; set; }
         public virtual IDbSet<Address> Addresses { get; set; }
@@ -32,6 +33,22 @@ namespace OnlineStore.Data
             modelBuilder.Entity<Address>().HasMany(t => t.Couriers).WithRequired(courier => courier.Address).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Address>().HasMany(t => t.Suppliers).WithRequired(sup => sup.Address).WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderProducts);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.OrderProducts);
+
+            modelBuilder.Entity<OrderProduct>()
+                .HasKey(op => new { op.OrderId, op.ProductId });
+
+            modelBuilder.Entity<OrderProduct>()
+                .HasRequired(op => op.Product);
+
+            modelBuilder.Entity<OrderProduct>()
+                .HasRequired(op => op.Order);
 
             //modelBuilder.Entity<Product>()
             //    .HasRequired(s => s.Supplier)

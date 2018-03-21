@@ -116,13 +116,9 @@
     <Compile Include="Migrations\201803201139504_RemovedIndexFromAddress.Designer.cs">
       <DependentUpon>201803201139504_RemovedIndexFromAddress.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803202155547_ProductsOrders relationship is now One-to-Many.cs" />
-    <Compile Include="Migrations\201803202155547_ProductsOrders relationship is now One-to-Many.Designer.cs">
-      <DependentUpon>201803202155547_ProductsOrders relationship is now One-to-Many.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803202215360_Order Amount Added.cs" />
-    <Compile Include="Migrations\201803202215360_Order Amount Added.Designer.cs">
-      <DependentUpon>201803202215360_Order Amount Added.cs</DependentUpon>
+    <Compile Include="Migrations\201803211053010_ProductOrder many-to-many relationship.cs" />
+    <Compile Include="Migrations\201803211053010_ProductOrder many-to-many relationship.Designer.cs">
+      <DependentUpon>201803211053010_ProductOrder many-to-many relationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
@@ -190,11 +186,8 @@
     <EmbeddedResource Include="Migrations\201803201139504_RemovedIndexFromAddress.resx">
       <DependentUpon>201803201139504_RemovedIndexFromAddress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803202155547_ProductsOrders relationship is now One-to-Many.resx">
-      <DependentUpon>201803202155547_ProductsOrders relationship is now One-to-Many.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803202215360_Order Amount Added.resx">
-      <DependentUpon>201803202215360_Order Amount Added.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803211053010_ProductOrder many-to-many relationship.resx">
+      <DependentUpon>201803211053010_ProductOrder many-to-many relationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

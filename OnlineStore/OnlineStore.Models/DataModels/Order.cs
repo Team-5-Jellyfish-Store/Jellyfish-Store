@@ -6,13 +6,12 @@ namespace OnlineStore.Models.DataModels
 {
     public class Order
     {
+        public Order()
+        {
+            this.OrderProducts = new HashSet<OrderProduct>();
+        }
+
         public int Id { get; set; }
-
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
-
-        [Range(1, 1000)]
-        public int ProductsCount { get; set; }
 
         [MaxLength(300)]
         public string Comment { get; set; }
@@ -23,6 +22,8 @@ namespace OnlineStore.Models.DataModels
         public DateTime OrderedOn { get; set; }
 
         public Nullable<DateTime> DeliveredOn { get; set; }
+
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
 
         [Required]
         public int UserId { get; set; }

@@ -9,6 +9,7 @@ namespace OnlineStore.Data.Contracts
         IDbSet<Category> Categories { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<Product> Products { get; set; }
+        IDbSet<OrderProduct> OrderProducts { get; set; }
         IDbSet<Courier> Couriers { get; set; }
         IDbSet<Supplier> Suppliers { get; set; }
         IDbSet<Town> Towns { get; set; }

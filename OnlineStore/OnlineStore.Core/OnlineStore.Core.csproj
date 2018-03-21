@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Commands\AddOrderCommand.cs" />
     <Compile Include="Commands\AdminCommands\AddProductToProductsCommand.cs" />
+    <Compile Include="Commands\AdminCommands\ImportExternalDataCommand.cs" />
     <Compile Include="Commands\AdminCommands\RemoveProductFromProductsCommand.cs" />
     <Compile Include="Commands\AdminCommands\ImportCouriersCommand.cs" />
     <Compile Include="Commands\AdminCommands\ImportProductsCommand.cs" />

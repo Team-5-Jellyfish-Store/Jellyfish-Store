@@ -43,8 +43,8 @@ namespace OnlineStore.Core.Commands
             var order = new OrderMakeModel()
             {
                 Username = loggedUser,
-                ProductName = productName,
-                ProductCount = productCount,
+                //ProductName = productName,
+                //ProductCount = productCount,
                 Comment = comment,
                 OrderedOn = DateTime.Now
             };

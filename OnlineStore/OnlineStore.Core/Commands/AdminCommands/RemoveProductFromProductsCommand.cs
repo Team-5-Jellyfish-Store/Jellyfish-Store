@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
-using OnlineStore.Models.DataModels;
 using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Core.Commands.AdminCommands
@@ -23,18 +20,15 @@ namespace OnlineStore.Core.Commands.AdminCommands
         }
         public string ExecuteThisCommand()
         {
-
-            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
-            {
-                this.writer.Write("Please enter product name: ");
-                var productName = this.reader.Read();
-                productService.RemoveProductByName(productName);
-                return $"Product {productName} removed successfully!";
-            }
-            else
+            if (!this.sessionService.UserIsAdmin() && !this.sessionService.UserIsModerator())
             {
                 return "User is neither admin nor moderator and cannot add products!";
             }
+           
+                this.writer.Write("Please enter product name: ");
+                var productName = this.reader.Read();
+                this.productService.RemoveProductByName(productName);
+                return $"Product {productName} removed successfully!";
         }
     }
 }

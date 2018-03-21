@@ -1,4 +1,5 @@
-﻿using OnlineStore.Models;
+﻿using OnlineStore.DTO;
+using OnlineStore.Models;
 using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.Contracts
@@ -7,7 +8,7 @@ namespace OnlineStore.Core.Contracts
     {
         string GetLoggedUser();
 
-        void SetLoggedUser(User user);
+        void SetLoggedUser(UserRegisterModel user);
 
         void Logout();
 

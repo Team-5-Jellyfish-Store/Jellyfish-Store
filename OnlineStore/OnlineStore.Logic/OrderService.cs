@@ -22,16 +22,16 @@ namespace OnlineStore.Logic
 
         public void MakeOrder(OrderMakeModel orderModel)
         {
-            if (orderModel == null)
-            {
-                throw new ArgumentNullException(nameof(orderModel));
-            }
+            //if (orderModel == null)
+            //{
+            //    throw new ArgumentNullException(nameof(orderModel));
+            //}
 
             var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
                 ?? throw new ArgumentException("User not found!");
 
-            var courier = this.context.Couriers.FirstOrDefault()
-                ?? throw new ArgumentException("No couriers found!");
+            //var courier = this.context.Couriers.FirstOrDefault()
+            //    ?? throw new ArgumentException("No couriers found!");
 
             var order = new Order();
 

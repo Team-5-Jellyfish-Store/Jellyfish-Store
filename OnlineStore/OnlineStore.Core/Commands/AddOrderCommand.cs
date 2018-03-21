@@ -42,11 +42,11 @@ namespace OnlineStore.Core.Commands
 
             var order = new OrderMakeModel()
             {
-                Username = loggedUser,
+                //Username = loggedUser,
                 //ProductName = productName,
                 //ProductCount = productCount,
-                Comment = comment,
-                OrderedOn = DateTime.Now
+                //Comment = comment,
+                //OrderedOn = DateTime.Now
             };
 
             this.orderService.MakeOrder(order);

@@ -60,5 +60,16 @@ namespace OnlineStore.Logic
 
             context.SaveChanges();
         }
+        public UserRegisterModel GetUserWithUserName(string userName)
+        {
+            var userModel = context.Users.FirstOrDefault(x => x.Username == userName);
+
+            if (userModel == null)
+            {
+                throw new ArgumentException("User with that username don't exist!");
+            }
+
+            return mapper.Map<UserRegisterModel>(userModel);
+        }
     }
 }

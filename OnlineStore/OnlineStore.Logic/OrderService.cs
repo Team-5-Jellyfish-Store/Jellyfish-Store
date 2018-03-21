@@ -22,10 +22,10 @@ namespace OnlineStore.Logic
 
         public void MakeOrder(OrderMakeModel orderModel)
         {
-            if (orderModel == null)
-            {
-                throw new ArgumentNullException(nameof(orderModel));
-            }
+            //if (orderModel == null)
+            //{
+            //    throw new ArgumentNullException(nameof(orderModel));
+            //}
 
             //var product = this.context.Products.SingleOrDefault(x => x.Name == orderModel.ProductName)
             //    ?? throw new ArgumentException("Product with that name don't exists!");

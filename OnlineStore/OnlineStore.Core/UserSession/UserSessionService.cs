@@ -3,12 +3,13 @@ using OnlineStore.Core.Contracts;
 using OnlineStore.Models;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
+using OnlineStore.DTO;
 
 namespace OnlineStore.Core.UserSession
 {
     public class UserSessionService : IUserSessionService
     {
-        private User user;
+        private UserRegisterModel user;
 
         public string GetLoggedUser()
         {
@@ -20,7 +21,7 @@ namespace OnlineStore.Core.UserSession
             return null;
         }
 
-        public void SetLoggedUser(User user)
+        public void SetLoggedUser(UserRegisterModel user)
         {
             this.user = user ?? throw new ArgumentNullException();
         }

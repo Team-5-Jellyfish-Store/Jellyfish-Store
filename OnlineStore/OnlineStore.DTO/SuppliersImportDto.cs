@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
+using OnlineStore.DTO.Mapping;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO
 {
-    public class SuppliersImportDto
+    public class SuppliersImportDto : IMapTo<Supplier>, IHaveCustomMappings
     {
         [Required]
         [MinLength(2, ErrorMessage = "Company name should be at least 2 characters")]
@@ -20,5 +23,11 @@ namespace OnlineStore.DTO
         [Required]
         [StringLength(30, MinimumLength = 2)]
         public string Town { get; set; }
+
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<SuppliersImportDto, Supplier>().ForPath(x => x.Address.AddressText, cfg => cfg.MapFrom(x => x.Address));
+            configuration.CreateMap<SuppliersImportDto, Supplier>().ForPath(x => x.Address.Town.Name, cfg => cfg.MapFrom(x => x.Town));
+        }
     }
 }

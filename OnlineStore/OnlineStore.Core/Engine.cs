@@ -31,6 +31,7 @@ namespace OnlineStore.Core
 
             while (true)
             {
+
                 this.writer.Write("Please enter command name: ");
                 var inputLine = this.reader.Read();
                 try
@@ -53,6 +54,14 @@ namespace OnlineStore.Core
                 }
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
+                //this.writer.Write("Please enter command name: ");
+                //var inputLine = this.reader.Read();
+
+                //    var command = this.commandParser.ParseCommand(inputLine);
+                //    var result = this.commandProcessor.ProcessSingleCommand(command);
+                //    this.writer.WriteLine(result);
+
+                //this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
             }
         }
     }

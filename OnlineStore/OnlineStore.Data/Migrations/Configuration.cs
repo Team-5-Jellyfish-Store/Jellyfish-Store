@@ -37,7 +37,7 @@ namespace OnlineStore.Data.Migrations
                 {
                     Name = "Awful Creatures Ltd.",
                     Phone = "+35929110101",
-                    Address = new Address() { AddressText = "Bronx 1", Town = new Town() { Name = "Varna" } }
+                    Address = new Address() { AddressText = "Staria grad 1", Town = new Town() { Name = "Sozopol" } }
                 };
                 context.Users.Add(adminUser);
                 context.Suppliers.Add(firstSupplier);

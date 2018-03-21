@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using OnlineStore.DTO.Mapping;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO
 {
-    public class TownModel
+    public class TownModel : IMapTo<Town>
     {
         public string Name { get; set; }
     }

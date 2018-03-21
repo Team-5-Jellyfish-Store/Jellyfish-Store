@@ -39,6 +39,8 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
             builder.RegisterType<CategoryService>().As<ICategoryService>().SingleInstance();
             builder.RegisterType<SupplierService>().As<ISupplierService>().SingleInstance();
+            builder.RegisterType<ImportService>().As<IImportService>().SingleInstance();
+            builder.RegisterType<CourierService>().As<ICourierService>().SingleInstance();
 
             builder.RegisterType<UserService>().AsSelf().SingleInstance();
             builder.Register(x => Mapper.Instance);
@@ -48,6 +50,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");
             builder.RegisterType<ImportProductsCommand>().Named<ICommand>("importProducts");
             builder.RegisterType<ImportSuppliersCommand>().Named<ICommand>("importSuppliers");
+            builder.RegisterType<ImportExternalDataCommand>().Named<ICommand>("import");
             builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeProduct");
 
             builder.RegisterType<ExitCommand>().Named<ICommand>("exit");

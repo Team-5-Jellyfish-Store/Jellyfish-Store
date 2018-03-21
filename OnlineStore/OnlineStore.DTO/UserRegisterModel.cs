@@ -1,9 +1,10 @@
-﻿using OnlineStore.Models.DataModels;
+﻿using OnlineStore.DTO.Mapping;
+using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
 namespace OnlineStore.DTO
 {
-    public class UserRegisterModel
+    public class UserRegisterModel : IMapTo<User>
     {
         public string Username { get; set; }
         public string Password { get; set; }

@@ -6,8 +6,7 @@ using OnlineStore.Logic.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Logic
 {
@@ -24,7 +23,9 @@ namespace OnlineStore.Logic
 
         public void Create(string name)
         {
-            throw new NotImplementedException();
+            var categoryToAdd = new Category() { Name = name };
+            this.context.Categories.Add(categoryToAdd);
+            this.context.SaveChanges();
         }
 
         public CategoryModel FindCategoryByName(string name)
@@ -42,7 +43,12 @@ namespace OnlineStore.Logic
 
         public int FindIdByName(string name)
         {
-            throw new NotImplementedException();
+            if (name == null)
+            {
+                throw new ArgumentNullException();
+            }
+            var categoryFound = this.context.Categories.FirstOrDefault(f => f.Name == name) ?? throw new ArgumentException("Category not found!");
+            return categoryFound.Id;
         }
 
         public IEnumerable<CategoryModel> GetAllCategories()

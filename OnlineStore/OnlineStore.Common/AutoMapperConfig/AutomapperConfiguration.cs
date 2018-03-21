@@ -16,7 +16,6 @@ namespace OnlineStore.Common.AutoMapperConfig
                 cfg.CreateMap<UserRegisterModel, User>().ReverseMap();
                 cfg.CreateMap<AddressModel, Address>().ReverseMap();
                 cfg.CreateMap<OrderModel, Order>().ReverseMap();
-
                 cfg.CreateMap<TownModel, Town>().ReverseMap();
             });
         }

@@ -22,22 +22,20 @@ namespace OnlineStore.Logic
 
         public void MakeOrder(OrderMakeModel orderModel)
         {
-            //if (orderModel == null)
-            //{
-            //    throw new ArgumentNullException(nameof(orderModel));
-            //}
+            if (orderModel == null)
+            {
+                throw new ArgumentNullException(nameof(orderModel));
+            }
 
             var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
                 ?? throw new ArgumentException("User not found!");
 
-            //var courier = this.context.Couriers.FirstOrDefault()
-            //    ?? throw new ArgumentException("No couriers found!");
+            var courier = this.context.Couriers.FirstOrDefault()
+                ?? throw new ArgumentException("No couriers found!");
 
             var order = new Order();
 
             var orderProducts = new List<OrderProduct>();
-
-            var amount = 0m;
 
             foreach (var productNameAndCount in orderModel.ProductNameAndCounts)
             {
@@ -60,15 +58,13 @@ namespace OnlineStore.Logic
                 };
 
                 orderProducts.Add(orderProduct);
-
-                amount += product.SellingPrice * productCount;
+                
                 product.Quantity -= productCount;
             }
 
             order.OrderProducts = orderProducts;
             order.Comment = orderModel.Comment;
             order.OrderedOn = orderModel.OrderedOn;
-            order.Amount = amount;
             order.User = user;
             order.Courier = courier;
 

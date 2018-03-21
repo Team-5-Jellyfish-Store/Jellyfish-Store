@@ -120,6 +120,10 @@
     <Compile Include="Migrations\201803211053010_ProductOrder many-to-many relationship.Designer.cs">
       <DependentUpon>201803211053010_ProductOrder many-to-many relationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803211543080_order amount removed.cs" />
+    <Compile Include="Migrations\201803211543080_order amount removed.Designer.cs">
+      <DependentUpon>201803211543080_order amount removed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OnlineStoreContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -188,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803211053010_ProductOrder many-to-many relationship.resx">
       <DependentUpon>201803211053010_ProductOrder many-to-many relationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211543080_order amount removed.resx">
+      <DependentUpon>201803211543080_order amount removed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

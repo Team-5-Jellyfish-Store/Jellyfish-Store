@@ -16,9 +16,6 @@ namespace OnlineStore.Models.DataModels
         [MaxLength(300)]
         public string Comment { get; set; }
 
-        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
-        public decimal Amount { get; set; }
-
         public DateTime OrderedOn { get; set; }
 
         public Nullable<DateTime> DeliveredOn { get; set; }

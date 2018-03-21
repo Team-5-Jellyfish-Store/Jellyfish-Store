@@ -2,6 +2,7 @@
 using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineStore.Core.Commands
@@ -25,33 +26,50 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            var loggedUser = userSession.GetLoggedUser() ?? throw new ArgumentException("No logged user!");
+            var loggedUser = userSession.GetLoggedUser()
+                ?? throw new ArgumentException("No logged user!");
 
-            this.writer.Write("Product: ");
-            string productName = this.reader.Read();
-            productName = validator.ValidateValue(productName, true);
+            var productNames = new Dictionary<string, int>();
 
-            this.writer.Write("Count: ");
-            int productCount = int.Parse(this.reader.Read());
-            validator.ValidateLength(productCount, 1, 1000);
+            string yesNo = string.Empty;
+            string productName = string.Empty;
+            int productCount = new int();
+            do
+            {
+                this.writer.Write("Product: ");
+                productName = this.reader.Read();
+                validator.ValidateValue(productName, true);
+
+                if (!productNames.ContainsKey(productName))
+                {
+                    productNames.Add(productName, 0);
+                }
+
+                this.writer.Write("Count: ");
+                productCount = int.Parse(this.reader.Read());
+                validator.ValidateLength(productCount, 1, 1000);
+
+                productNames[productName] += productCount;
+
+                this.writer.Write("More products? (y/n): ");
+                yesNo = this.reader.Read();
+            } while (yesNo.ToLower() == "y");
 
             this.writer.Write("Comment: ");
             string comment = this.reader.Read();
-            comment = validator.ValidateValue(comment, false);
-            //validator.ValidateLength(comment, 1, 300);
+            validator.ValidateValue(comment, false);
 
             var order = new OrderMakeModel()
             {
                 Username = loggedUser,
-                ProductName = productName,
-                ProductCount = productCount,
+                ProductNameAndCounts = productNames,
                 Comment = comment,
                 OrderedOn = DateTime.Now
             };
 
             this.orderService.MakeOrder(order);
 
-            return $"User {loggedUser} ordered {productCount} {productName} on {order.OrderedOn}";
+            return $"User {loggedUser} ordered on {order.OrderedOn}";
         }
     }
 }

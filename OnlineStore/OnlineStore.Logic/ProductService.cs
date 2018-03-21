@@ -40,6 +40,7 @@ namespace OnlineStore.Logic
             this.context.SaveChanges();
         }
 
+
         public void CreateProduct(string productName, decimal purchasePrice, int quantity, string categoryName,
             string supplierName)
         {
@@ -77,6 +78,7 @@ namespace OnlineStore.Logic
                 throw new ArgumentNullException("No such product!");
             }
             context.Products.Remove(productToRemove);
+            context.SaveChanges();
         }
     }
 }

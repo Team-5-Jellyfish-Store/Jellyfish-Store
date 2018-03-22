@@ -31,7 +31,6 @@ namespace OnlineStore.Core
 
             while (true)
             {
-
                 this.writer.Write("Please enter command name: ");
                 var inputLine = this.reader.Read();
                 try
@@ -54,12 +53,13 @@ namespace OnlineStore.Core
                 }
 
                 this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
+                ////below should be used only in debug mode! Comment the upper paragraph and uncomment the below para.
                 //this.writer.Write("Please enter command name: ");
                 //var inputLine = this.reader.Read();
 
-                //    var command = this.commandParser.ParseCommand(inputLine);
-                //    var result = this.commandProcessor.ProcessSingleCommand(command);
-                //    this.writer.WriteLine(result);
+                //var command = this.commandParser.ParseCommand(inputLine);
+                //var result = this.commandProcessor.ProcessSingleCommand(command);
+                //this.writer.WriteLine(result);
 
                 //this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
             }

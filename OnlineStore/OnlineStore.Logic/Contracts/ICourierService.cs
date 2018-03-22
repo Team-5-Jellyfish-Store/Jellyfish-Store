@@ -1,9 +1,10 @@
-﻿using OnlineStore.DTO;
+﻿using System.Collections.Generic;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Logic.Contracts
 {
     public interface ICourierService
     {
-        void AddCourierFromDto(CourierImportDto courier);
+        void AddCourierRange(List<Courier> courier);
     }
 }

@@ -54,18 +54,19 @@
     <Compile Include="AddressModel.cs" />
     <Compile Include="CategoryModel.cs" />
     <Compile Include="AddressImportModel.cs" />
-    <Compile Include="CourierImportDto.cs" />
-    <Compile Include="Mapping\IHaveCustomMappings.cs" />
-    <Compile Include="Mapping\IMapFrom.cs" />
-    <Compile Include="Mapping\IMapTo.cs" />
+    <Compile Include="ExternalImportDto\CourierImportDto.cs" />
+    <Compile Include="ExternalImportDto\ProductJsonModel.cs" />
+    <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
+    <Compile Include="MappingContracts\IMapFrom.cs" />
+    <Compile Include="MappingContracts\IMapTo.cs" />
     <Compile Include="OrderMakeModel.cs" />
     <Compile Include="OrderModel.cs" />
-    <Compile Include="ProductImportDto.cs" />
+    <Compile Include="ExternalImportDto\ProductImportDto.cs" />
     <Compile Include="ProductModel.cs" />
     <Compile Include="ProductImportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupplierImportModel.cs" />
-    <Compile Include="SuppliersImportDto.cs" />
+    <Compile Include="ExternalImportDto\SuppliersImportDto.cs" />
     <Compile Include="TownModel.cs" />
     <Compile Include="UserRegisterModel.cs" />
   </ItemGroup>

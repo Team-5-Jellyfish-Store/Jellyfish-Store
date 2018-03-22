@@ -3,20 +3,20 @@
     "FirstName": "Pesho",
     "LastName": "Goshov",
     "Address": "Morska gara 1",
-    "Town": "Varna",
+    "Town": "Malka Varna",
     "Phone": "+35929876543"
   },
   {
     "FirstName": "Zahari",
     "LastName": "Bahari",
     "Address": "Pechena batka 2",
-    "Town": "Burgas",
+    "Town": "Petkovo",
     "Phone": "+35929876542"
   },
   {
     "LastName": "Pesho",
     "Address": "Maina maina 2",
-    "Town": "Plovdiv",
+    "Town": "Asenovgrad",
     "Phone": "+35929876542"
   }
 ]

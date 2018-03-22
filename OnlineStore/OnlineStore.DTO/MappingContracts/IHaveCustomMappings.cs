@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace OnlineStore.DTO.Mapping
+namespace OnlineStore.DTO.MappingContracts
 {
     public interface IHaveCustomMappings
     {

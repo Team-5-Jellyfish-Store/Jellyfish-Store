@@ -10,7 +10,7 @@ namespace OnlineStore.Logic.Contracts
         CategoryModel FindCategoryByName(string name);
 
         // void RemoveCategoryByName(string name);
-        int FindIdByName(string name);
+        int GetIdByName(string name);
         void Create(string name);
     }
 }

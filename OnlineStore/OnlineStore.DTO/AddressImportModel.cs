@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using OnlineStore.DTO.Mapping;
+using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO

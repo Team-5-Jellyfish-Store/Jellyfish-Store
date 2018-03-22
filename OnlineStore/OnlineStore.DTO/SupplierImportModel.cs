@@ -7,6 +7,5 @@
         public string Phone { get; set; }
 
         public AddressImportModel AddressAddressText { get; set; }
-
     }
 }

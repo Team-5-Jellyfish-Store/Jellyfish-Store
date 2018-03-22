@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.DTO.Mapping
+﻿namespace OnlineStore.DTO.MappingContracts
 {
     public interface IMapFrom<T> where T : class
     {

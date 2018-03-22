@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
-using OnlineStore.DTO.Mapping;
+using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
 
-namespace OnlineStore.DTO
+namespace OnlineStore.DTO.ExternalImportDto
 {
     public class SuppliersImportDto : IMapTo<Supplier>, IHaveCustomMappings
     {

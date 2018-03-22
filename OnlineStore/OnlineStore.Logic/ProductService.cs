@@ -41,8 +41,8 @@ namespace OnlineStore.Logic
         public void CreateProduct(string productName, decimal purchasePrice, int quantity, string categoryName,
             string supplierName)
         {
-            var categoryId = this.categoryService.FindIdByName(categoryName);
-            var supplierId = this.supplierService.GetSupplierIdByName(supplierName);
+            var categoryId = this.categoryService.GetIdByName(categoryName);
+            var supplierId = this.supplierService.GetIdByName(supplierName);
 
             var product = new ProductImportModel
             {

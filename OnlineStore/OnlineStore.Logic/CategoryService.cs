@@ -41,7 +41,7 @@ namespace OnlineStore.Logic
             return categoryModel;
         }
 
-        public int FindIdByName(string name)
+        public int GetIdByName(string name)
         {
             if (name == null)
             {

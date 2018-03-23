@@ -26,8 +26,9 @@ namespace OnlineStore.DTO.ExternalImportDto
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            configuration.CreateMap<SuppliersImportDto, Supplier>().ForPath(x => x.Address.AddressText, cfg => cfg.MapFrom(x => x.Address));
-            configuration.CreateMap<SuppliersImportDto, Supplier>().ForPath(x => x.Address.Town.Name, cfg => cfg.MapFrom(x => x.Town));
+            configuration.CreateMap<SuppliersImportDto, Supplier>()
+                .ForPath(x => x.Address.AddressText, cfg => cfg.MapFrom(x => x.Address))
+                .ForPath(x => x.Address.Town.Name, cfg => cfg.MapFrom(x => x.Town));
         }
     }
 }

@@ -16,10 +16,10 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
         public string ExecuteThisCommand()
         {
-            //if (!this.sessionService.UserIsAdmin() && !this.sessionService.UserIsModerator())
-            //{
-            //    return "User must be admin or moderator in order to import data!";
-            //}
+            if (!this.sessionService.UserIsAdmin() && !this.sessionService.UserIsModerator())
+            {
+                return "User must be admin or moderator in order to import data!";
+            }
             var result = this.importService.Import();
             
             return result;

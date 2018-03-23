@@ -2,14 +2,14 @@
   {
 	"Name": "Morska krastavica",
     "Category" : "Otvratitelni jivotni",
-	"Supplier" : "Awful Creatures 2 Ltd.",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 2,
 	"PurchasePrice" : 499.99
   },
   {
 	"Name": "Riba Kloun",
     "Category" : "Krasivi solenovodni",
-	"Supplier" : "Awful Creatures 2000 Ltd.",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 5,
 	"PurchasePrice" : 299.99
   },
@@ -30,28 +30,28 @@
   {
 	"Name": "Stuklen som",
     "Category" : "Prozrachni ribi",
-	"Supplier" : "Awful Creatures 3 Ltd.",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 50,
 	"PurchasePrice" : 4.99
   },
   {
 	"Name": "Gupi",
     "Category" : "Jivorajdashti",
-	"Supplier" : "Livebearers Ltd.",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 50,
 	"PurchasePrice" : 1.99
   },
   {
 	"Name": "Heleri",
-    "Category" : "Oranjevi Jivorajdashti",
-	"Supplier" : "Livebearers 2 Ltd.",
+    "Category" : "Jivorajdashti",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 50,
 	"PurchasePrice" : 4.99
   },
   {
 	"Name": "Vodna jaba",
     "Category" : "Zemnovodni",
-	"Supplier" : "Frogs Ltd.",
+	"Supplier" : "Awful Creatures Ltd.",
     "Quantity" : 10,
 	"PurchasePrice" : 44.99
   }

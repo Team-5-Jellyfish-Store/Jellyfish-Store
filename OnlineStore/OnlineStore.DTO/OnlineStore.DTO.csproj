@@ -55,7 +55,6 @@
     <Compile Include="CategoryModel.cs" />
     <Compile Include="AddressImportModel.cs" />
     <Compile Include="ExternalImportDto\CourierImportDto.cs" />
-    <Compile Include="ExternalImportDto\ProductJsonModel.cs" />
     <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
     <Compile Include="MappingContracts\IMapFrom.cs" />
     <Compile Include="MappingContracts\IMapTo.cs" />

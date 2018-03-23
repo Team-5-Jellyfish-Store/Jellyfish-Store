@@ -48,9 +48,9 @@ namespace OnlineStore.Logic.Services
 
             importResults.AppendLine(courierImportResults);
 
-            //var productImportResults = ImportProducts();
+            var productImportResults = ImportProducts();
 
-            //importResults.AppendLine(productImportResults);
+            importResults.AppendLine(productImportResults);
 
             return importResults.ToString().Trim();
         }
@@ -74,27 +74,11 @@ namespace OnlineStore.Logic.Services
 
                 var productToAdd = this.mapper.Map<ProductImportDto, Product>(productDto);
 
-                var categoryIdFound = this.categoryService.GetIdByName(productDto.Category);
+                var category = this.categoryService.FindOrCreate(productDto.Category);
+                var supplier = this.supplierService.FindByName(productDto.Supplier);
 
-                if (categoryIdFound == 0)
-                {
-                    productToAdd.Category.Name = productDto.Category;
-                }
-                else
-                {
-                    productToAdd.CategoryId = categoryIdFound;
-                }
-                var supplierIdFound = this.supplierService.GetIdByName(productDto.Supplier);
-
-                if (supplierIdFound == 0)
-                {
-                    productToAdd.Supplier.Name = productDto.Supplier;
-                }
-                else
-                {
-                    productToAdd.SupplierId = supplierIdFound;
-                }
-
+                productToAdd.Category = category;
+                productToAdd.Supplier = supplier;
                 validProducts.Add(productToAdd);
                 importProductsResults.AppendLine($"{productDto.Quantity} items of product {productDto.Name} added successfully!");
             }
@@ -127,7 +111,7 @@ namespace OnlineStore.Logic.Services
 
                 var supplierAddress = this.addressService.FindOrCreate(supplierDto.Address, supplierDto.Town);
 
-                supplierToAdd.Address.Id = supplierAddress.Id;
+                supplierToAdd.Address = supplierAddress;
 
                 validSuppliers.Add(supplierToAdd);
                 importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} added successfully!");
@@ -160,7 +144,7 @@ namespace OnlineStore.Logic.Services
 
                 var courierAddress = this.addressService.FindOrCreate(courierDto.Address, courierDto.Town);
 
-                courierToAdd.Address.Id = courierAddress.Id;
+                courierToAdd.Address = courierAddress;
 
                 validCouriers.Add(courierToAdd);
                 importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");

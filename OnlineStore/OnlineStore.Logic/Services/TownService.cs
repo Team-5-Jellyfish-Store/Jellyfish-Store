@@ -21,21 +21,15 @@ namespace OnlineStore.Logic.Services
 
         public Town FindOrCreate(string name)
         {
-            var townFound = this.context.Towns.FirstOrDefault(f => f.Name == name);
-
-            if (townFound == null)
-            {
-                townFound = this.Create(name);
-            }
+            var townFound = this.context.Towns.FirstOrDefault(f => f.Name == name) ?? this.Create(name);
 
             return townFound;
         }
 
         public Town Create(string name)
         {
-            var townModel = new TownModel {Name = name};
-            var townToAdd = this.mapper.Map<TownModel, Town>(townModel);
-            this.context.Towns.Add(townToAdd);
+            var townModel = new Town {Name = name};
+            this.context.Towns.Add(townModel);
             this.context.SaveChanges();
             var town = this.context.Towns.First(t => t.Name == name);
             return town;

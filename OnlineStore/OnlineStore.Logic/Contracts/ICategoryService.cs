@@ -1,5 +1,6 @@
 ﻿using OnlineStore.DTO;
 using System.Collections.Generic;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Logic.Contracts
 {
@@ -11,6 +12,10 @@ namespace OnlineStore.Logic.Contracts
 
         // void RemoveCategoryByName(string name);
         int GetIdByName(string name);
-        void Create(string name);
+        //void Create(string name);
+
+        Category FindOrCreate(string name);
+
+        Category Create(string name);
     }
 }

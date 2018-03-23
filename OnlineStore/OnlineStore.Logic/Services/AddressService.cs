@@ -32,11 +32,12 @@ namespace OnlineStore.Logic.Services
 
         public Address FindOrCreate(string address, string town)
         {
-            var foundAddress = this.context.Addresses.SingleOrDefault(x => x.AddressText == address);
-            var foundTown = this.townService.FindOrCreate(town);
+            var foundAddress = this.context.Addresses.SingleOrDefault(x => x.AddressText == address && x.Town.Name == town);
+            
 
             if (foundAddress == null)
             {
+                var foundTown = this.townService.FindOrCreate(town);
                 foundAddress = this.Create(address, foundTown);
             }
 

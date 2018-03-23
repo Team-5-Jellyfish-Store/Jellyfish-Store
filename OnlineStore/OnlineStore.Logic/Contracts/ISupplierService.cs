@@ -13,5 +13,7 @@ namespace OnlineStore.Logic.Contracts
         IEnumerable<ProductModel> GetAllProducts();
 
         void AddSupplierRange(List<Supplier> suppliers);
+
+        Supplier FindByName(string name);
     }
 }

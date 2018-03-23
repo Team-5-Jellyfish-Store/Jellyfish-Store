@@ -60,5 +60,13 @@ namespace OnlineStore.Logic.Services
             suppliers.ForEach(s => this.context.Suppliers.Add(s));
             this.context.SaveChanges();
         }
+
+        public Supplier FindByName(string name)
+        {
+            var foundSupplier = this.context.Suppliers.SingleOrDefault(x => x.Name == name) ?? throw new ArgumentNullException();
+
+
+            return foundSupplier;
+        }
     }
 }

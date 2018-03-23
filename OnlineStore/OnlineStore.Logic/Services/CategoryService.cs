@@ -21,12 +21,12 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper;
         }
 
-        public void Create(string name)
-        {
-            var categoryToAdd = new Category() { Name = name };
-            this.context.Categories.Add(categoryToAdd);
-            this.context.SaveChanges();
-        }
+        //public void Create(string name)
+        //{
+        //    var categoryToAdd = new Category() { Name = name };
+        //    this.context.Categories.Add(categoryToAdd);
+        //    this.context.SaveChanges();
+        //}
 
         public CategoryModel FindCategoryByName(string name)
         {
@@ -49,6 +49,22 @@ namespace OnlineStore.Logic.Services
             }
             var categoryFound = this.context.Categories.FirstOrDefault(f => f.Name == name) ?? throw new ArgumentException("Category not found!");
             return categoryFound.Id;
+        }
+
+        public Category FindOrCreate(string name)
+        {
+            var categoryFound = this.context.Categories.FirstOrDefault(f => f.Name == name) ?? this.Create(name);
+
+            return categoryFound;
+        }
+
+        public Category Create(string name)
+        {
+            var categoryToAdd = new Category {Name = name};
+            this.context.Categories.Add(categoryToAdd);
+            this.context.SaveChanges();
+            var category = this.context.Categories.First(t => t.Name == name);
+            return category;
         }
 
         public IEnumerable<CategoryModel> GetAllCategories()

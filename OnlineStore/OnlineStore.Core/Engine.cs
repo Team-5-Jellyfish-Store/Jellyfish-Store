@@ -31,37 +31,37 @@ namespace OnlineStore.Core
 
             while (true)
             {
-                this.writer.Write("Please enter command name: ");
-                var inputLine = this.reader.Read();
-                try
-                {
-                    var command = this.commandParser.ParseCommand(inputLine);
-                    var result = this.commandProcessor.ProcessSingleCommand(command);
-                    this.writer.WriteLine(result);
-                }
-                catch (ComponentNotRegisteredException)
-                {
-                    this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)");
-                }
-                catch (Exception e)
-                {
-                    while (e.InnerException != null)
-                    {
-                        e = e.InnerException;
-                    }
-                    this.writer.WriteLine(e.Message);
-                }
-
-                this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
-                ////below should be used only in debug mode! Comment the upper paragraph and uncomment the below para.
                 //this.writer.Write("Please enter command name: ");
                 //var inputLine = this.reader.Read();
-
-                //var command = this.commandParser.ParseCommand(inputLine);
-                //var result = this.commandProcessor.ProcessSingleCommand(command);
-                //this.writer.WriteLine(result);
+                //try
+                //{
+                //    var command = this.commandParser.ParseCommand(inputLine);
+                //    var result = this.commandProcessor.ProcessSingleCommand(command);
+                //    this.writer.WriteLine(result);
+                //}
+                //catch (ComponentNotRegisteredException)
+                //{
+                //    this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)");
+                //}
+                //catch (Exception e)
+                //{
+                //    while (e.InnerException != null)
+                //    {
+                //        e = e.InnerException;
+                //    }
+                //    this.writer.WriteLine(e.Message);
+                //}
 
                 //this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
+                ////below should be used only in debug mode! Comment the upper paragraph and uncomment the below para.
+                this.writer.Write("Please enter command name: ");
+                var inputLine = this.reader.Read();
+
+                var command = this.commandParser.ParseCommand(inputLine);
+                var result = this.commandProcessor.ProcessSingleCommand(command);
+                this.writer.WriteLine(result);
+
+                this.writer.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
             }
         }
     }

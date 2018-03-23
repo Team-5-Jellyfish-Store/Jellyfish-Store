@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OnlineStore.Models.DataModels;
 
-namespace OnlineStore.Logic
+namespace OnlineStore.Logic.Services
 {
     public class CategoryService : ICategoryService
     {

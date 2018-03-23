@@ -41,6 +41,8 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<SupplierService>().As<ISupplierService>().SingleInstance();
             builder.RegisterType<ImportService>().As<IImportService>().SingleInstance();
             builder.RegisterType<CourierService>().As<ICourierService>().SingleInstance();
+            builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
+            builder.RegisterType<TownService>().As<ITownService>().SingleInstance();
 
             builder.RegisterType<UserService>().AsSelf().SingleInstance();
             builder.Register(x => Mapper.Instance);

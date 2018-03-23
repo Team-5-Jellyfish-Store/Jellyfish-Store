@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace OnlineStore.Logic
+namespace OnlineStore.Logic.Services
 {
     public class OrderService : IOrderService
     {

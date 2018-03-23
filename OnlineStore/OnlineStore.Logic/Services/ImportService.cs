@@ -5,7 +5,6 @@ using System.Text;
 using AutoMapper;
 using Newtonsoft.Json;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.DTO.ExternalImportDto;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
@@ -19,14 +18,16 @@ namespace OnlineStore.Logic.Services
 
         private readonly ICourierService courierService;
         private readonly IProductService productService;
+        private readonly IAddressService addressService;
         private readonly ICategoryService categoryService;
         private readonly ISupplierService supplierService;
         private readonly IOnlineStoreContext context;
         private readonly IMapper mapper;
 
 
-        public ImportService(ICourierService courierService, IProductService productService, ISupplierService supplierService, ICategoryService categoryService, IOnlineStoreContext context, IMapper mapper)
+        public ImportService(ICourierService courierService, IProductService productService, ISupplierService supplierService, ICategoryService categoryService, IAddressService addressService, IOnlineStoreContext context, IMapper mapper)
         {
+            this.addressService = addressService;
             this.courierService = courierService;
             this.productService = productService;
             this.supplierService = supplierService;
@@ -39,17 +40,17 @@ namespace OnlineStore.Logic.Services
         {
             var importResults = new StringBuilder();
 
-            //var supplierImportResults = ImportSuppliers();
+            var supplierImportResults = ImportSuppliers();
 
-            //importResults.AppendLine(supplierImportResults);
+            importResults.AppendLine(supplierImportResults);
 
-            //var courierImportResults = ImportCouriers();
+            var courierImportResults = ImportCouriers();
 
-            //importResults.AppendLine(courierImportResults);
+            importResults.AppendLine(courierImportResults);
 
-            var productImportResults = ImportProducts();
+            //var productImportResults = ImportProducts();
 
-            importResults.AppendLine(productImportResults);
+            //importResults.AppendLine(productImportResults);
 
             return importResults.ToString().Trim();
         }
@@ -124,8 +125,9 @@ namespace OnlineStore.Logic.Services
 
                 var supplierToAdd = this.mapper.Map<SuppliersImportDto, Supplier>(supplierDto);
 
-                supplierToAdd.Address.AddressText = supplierDto.Address;
-                supplierToAdd.Address.Town.Name = supplierDto.Town;
+                var supplierAddress = this.addressService.FindOrCreate(supplierDto.Address, supplierDto.Town);
+
+                supplierToAdd.Address.Id = supplierAddress.Id;
 
                 validSuppliers.Add(supplierToAdd);
                 importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} added successfully!");
@@ -156,8 +158,9 @@ namespace OnlineStore.Logic.Services
 
                 var courierToAdd = this.mapper.Map<CourierImportDto, Courier>(courierDto);
 
-                courierToAdd.Address.AddressText = courierDto.Address;
-                courierToAdd.Address.Town.Name = courierDto.Town;
+                var courierAddress = this.addressService.FindOrCreate(courierDto.Address, courierDto.Town);
+
+                courierToAdd.Address.Id = courierAddress.Id;
 
                 validCouriers.Add(courierToAdd);
                 importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");

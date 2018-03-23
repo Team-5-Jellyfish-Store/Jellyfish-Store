@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-namespace OnlineStore.Logic
+namespace OnlineStore.Logic.Services
 {
     public class ProductService : IProductService
     {

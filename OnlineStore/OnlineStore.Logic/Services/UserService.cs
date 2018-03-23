@@ -4,10 +4,9 @@ using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace OnlineStore.Logic
+namespace OnlineStore.Logic.Services
 {
     public class UserService : IUserService
     {

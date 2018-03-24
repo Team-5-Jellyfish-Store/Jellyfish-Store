@@ -49,12 +49,7 @@ namespace OnlineStore.Data
 
             modelBuilder.Entity<OrderProduct>()
                 .HasRequired(op => op.Order);
-
-            //modelBuilder.Entity<Product>()
-            //    .HasRequired(s => s.Supplier)
-            //    .WithMany(g => g.Products)
-            //    .HasForeignKey(s => s.SupplierId);
-
+            
             base.OnModelCreating(modelBuilder);
         }
     }

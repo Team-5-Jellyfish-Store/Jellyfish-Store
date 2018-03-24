@@ -11,11 +11,11 @@ namespace OnlineStore.Core.Commands
     {
         private readonly IOrderService orderService;
         private readonly IValidator validator;
-        private readonly IUserSessionService userSession;
+        private readonly IUserSession userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
 
-        public AddOrderCommand(IOrderService orderService, IValidator validator, IUserSessionService userSession, IWriter writer, IReader reader)
+        public AddOrderCommand(IOrderService orderService, IValidator validator, IUserSession userSession, IWriter writer, IReader reader)
         {
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
@@ -26,8 +26,10 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            var loggedUser = userSession.GetLoggedUser()
-                ?? throw new ArgumentException("No logged user!");
+            if (!this.userSession.HasSomeoneLogged())
+            {
+                throw new ArgumentException("Login first!");
+            }
 
             var productNames = new Dictionary<string, int>();
 
@@ -38,7 +40,7 @@ namespace OnlineStore.Core.Commands
             {
                 this.writer.Write("Product: ");
                 productName = this.reader.Read();
-                validator.ValidateValue(productName, true);
+                this.validator.ValidateValue(productName, true);
 
                 if (!productNames.ContainsKey(productName))
                 {
@@ -47,7 +49,7 @@ namespace OnlineStore.Core.Commands
 
                 this.writer.Write("Count: ");
                 productCount = int.Parse(this.reader.Read());
-                validator.ValidateLength(productCount, 1, 1000);
+                this.validator.ValidateLength(productCount, 1, 1000);
 
                 productNames[productName] += productCount;
 
@@ -57,11 +59,13 @@ namespace OnlineStore.Core.Commands
 
             this.writer.Write("Comment: ");
             string comment = this.reader.Read();
-            validator.ValidateValue(comment, false);
+            this.validator.ValidateValue(comment, false);
+
+            var username = this.userSession.GetLoggedUserName();
 
             var order = new OrderMakeModel()
             {
-                Username = loggedUser,
+                Username = username,
                 ProductNameAndCounts = productNames,
                 Comment = comment,
                 OrderedOn = DateTime.Now
@@ -69,7 +73,7 @@ namespace OnlineStore.Core.Commands
 
             this.orderService.MakeOrder(order);
 
-            return $"User {loggedUser} ordered on {order.OrderedOn}";
+            return $"User {username} ordered on {order.OrderedOn}";
         }
     }
 }

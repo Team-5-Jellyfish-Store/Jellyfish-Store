@@ -28,9 +28,8 @@ namespace OnlineStore.Models.DataModels
         [StringLength(13, MinimumLength =6,ErrorMessage = "Please enter correct Phone")]
         public string Phone { get; set; }
 
-        [Required]
         public int AddressId { get; set; }
-
+        [Required]
         public virtual Address Address { get; set; } //navprop
 
         public virtual ICollection<Order> Orders

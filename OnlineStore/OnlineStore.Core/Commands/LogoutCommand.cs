@@ -5,18 +5,23 @@ namespace OnlineStore.Core.Commands
 {
     public class LogoutCommand : ICommand
     {
-        private readonly IUserSessionService sessionService;
+        private readonly IUserSession userSession;
 
-        public LogoutCommand(IUserSessionService sessionService)
+        public LogoutCommand(IUserSession userSession)
         {
-            this.sessionService = sessionService;
+            this.userSession = userSession;
         }
 
         public string ExecuteThisCommand()
         {
-            string currentUser = this.sessionService.GetLoggedUser() ?? throw new ArgumentException("No logged user!");
-            this.sessionService.Logout();
-            return $"{currentUser} logged out successfully!";
+            if (!this.userSession.HasSomeoneLogged())
+            {
+                throw new ArgumentException("No logged user!");
+            }
+
+            this.userSession.Logout();
+
+            return $"User logged out successfully!";
         }
     }
 }

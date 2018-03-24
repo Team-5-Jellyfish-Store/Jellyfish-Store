@@ -12,19 +12,24 @@ namespace OnlineStore.Core.Commands
     public class PrintOrdersReportCommand : ICommand
     {
         private readonly IOrderService orderService;
-        private readonly IUserSessionService sessionService;
+        private readonly IUserSession userSession;
 
-        public PrintOrdersReportCommand(IOrderService orderService, IUserSessionService sessionService)
+        public PrintOrdersReportCommand(IOrderService orderService, IUserSession userSession)
         {
             this.orderService = orderService;
-            this.sessionService = sessionService;
+            this.userSession = userSession;
         }
 
-        
+
 
         public string ExecuteThisCommand()
         {
-            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            if (!this.userSession.HasSomeoneLogged())
+            {
+                return "Login first!";
+            }
+
+            if (this.userSession.HasAdminRights())
             {
                 var orders = orderService.GetAllOrders();
                 string uniqueName =
@@ -47,7 +52,7 @@ namespace OnlineStore.Core.Commands
                 document.Add(new Paragraph(" Comment / ClientName / ItemDeliveredOn"));
                 foreach (var item in orders)
                 {
-                    document.Add(new Paragraph($"{item.Comment} {item.User.FirstName}{item.User.LastName} {item.DeliveredOn}"));
+                    document.Add(new Paragraph($"{item.Comment} {item.Username} {item.DeliveredOn}"));
                 }
 
                 // Close the document

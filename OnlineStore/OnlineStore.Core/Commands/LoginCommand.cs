@@ -9,13 +9,13 @@ namespace OnlineStore.Core.Commands
     public class LoginCommand : ICommand
     {
         private readonly IUserService userService;
-        private readonly IUserSessionService userSession;
+        private readonly IUserSession userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
         private readonly IValidator validator;
 
-        public LoginCommand(IUserService userService, IUserSessionService userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public LoginCommand(IUserService userService, IUserSession userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
@@ -27,11 +27,9 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            var loggedUser = this.userSession.GetLoggedUser();
-
-            if (loggedUser != null)
+            if (this.userSession.HasSomeoneLogged())
             {
-                throw new ArgumentException($"User {loggedUser} is logged in!");
+                throw new ArgumentException($"Logout first!");
             }
 
             this.writer.Write("Username: ");
@@ -42,7 +40,7 @@ namespace OnlineStore.Core.Commands
             string password = this.reader.Read();
             password = this.validator.ValidateValue(password, true);
 
-            var user = userService.GetUserWithUserName(username);
+            var user = this.userService.GetRegisteredUser(username);
             var actualPassword = user.Password;
 
             if (!this.hasher.CheckPassword(password, actualPassword))
@@ -50,7 +48,7 @@ namespace OnlineStore.Core.Commands
                 throw new ArgumentException("Incorrect Password!");
             }
 
-            this.userSession.SetLoggedUser(user);
+            this.userSession.Login(user);
 
             return $"User {username} logged in successfuly!";
         }

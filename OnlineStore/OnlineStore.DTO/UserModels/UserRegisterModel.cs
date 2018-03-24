@@ -2,7 +2,7 @@
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
-namespace OnlineStore.DTO
+namespace OnlineStore.DTO.UserModels
 {
     public class UserRegisterModel : IMapTo<User>
     {

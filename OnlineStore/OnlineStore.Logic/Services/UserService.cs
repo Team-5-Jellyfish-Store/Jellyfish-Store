@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineStore.Data.Contracts;
 using OnlineStore.DTO;
+using OnlineStore.DTO.UserModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
@@ -41,34 +42,20 @@ namespace OnlineStore.Logic.Services
             var address = town.Addresses.FirstOrDefault(x => x.AddressText == userModel.AddressText)
                 ?? throw new ArgumentException("Address not found!");
 
-            var userToAdd = this.mapper.Map<User>(userModel);
+            var userToRegister = this.mapper.Map<User>(userModel);
+            userToRegister.Address = address;
 
-            userToAdd.Address = address;
+            this.context.Users.Add(userToRegister);
 
-            //var userToAdd = new User()
-            //{
-            //    Username = userModel.Username,
-            //    Password = userModel.Password,
-            //    EMail = userModel.EMail,
-            //    FirstName = userModel.FirstName,
-            //    LastName = userModel.LastName,
-            //    Address = address
-            //};
-
-            context.Users.Add(userToAdd);
-
-            context.SaveChanges();
+            this.context.SaveChanges();
         }
-        public UserRegisterModel GetUserWithUserName(string userName)
+
+        public UserLoginModel GetRegisteredUser(string userName)
         {
-            var userModel = context.Users.FirstOrDefault(x => x.Username == userName);
+            var userModel = this.context.Users.SingleOrDefault(x => x.Username == userName)
+                ?? throw new ArgumentException($"User with username {userName} don't exist!");
 
-            if (userModel == null)
-            {
-                throw new ArgumentException("User with that username don't exist!");
-            }
-
-            return mapper.Map<UserRegisterModel>(userModel);
+            return mapper.Map<UserLoginModel>(userModel);
         }
     }
 }

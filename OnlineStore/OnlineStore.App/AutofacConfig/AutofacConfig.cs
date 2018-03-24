@@ -6,7 +6,6 @@ using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
-using OnlineStore.Core.UserSession;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Logic;
@@ -23,15 +22,13 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
             builder.RegisterType<CommandParser>().As<ICommandParser>();
             builder.RegisterType<CommandProcessor>().As<ICommandProcessor>();
-            //builder.RegisterType<OnlineStoreFactory>().As<IOnlineStoreFactory>();
             builder.RegisterType<ConsoleReader>().As<IReader>();
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<Hasher>().As<IHasher>();
             builder.RegisterType<Validator>().As<IValidator>();
 
-            //builder.RegisterType<ShoppingCartRepository>().As<IShoppingRepository>().SingleInstance();
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();
-            builder.RegisterType<UserSessionService>().As<IUserSessionService>().SingleInstance();
+            builder.RegisterType<UserSession>().As<IUserSession>().SingleInstance();
 
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 

@@ -18,7 +18,5 @@ namespace OnlineStore.DTO
         public int Quantity { get; set; }
 
         public string CategoryName { get; set; } //navp
-
-      //  public virtual Supplier Supplier { get; set; }//navprop
     }
 }

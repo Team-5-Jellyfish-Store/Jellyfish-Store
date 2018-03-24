@@ -22,9 +22,9 @@ namespace OnlineStore.Models.DataModels
         [StringLength(60, MinimumLength = 4)]
         public string AddressText { get; set; }
 
-        [Required]
         public int TownId { get; set; }
-        public Town Town { get; set; } //navprop
+        [Required]
+        public virtual Town Town { get; set; } //navprop
 
         public virtual ICollection<User> Users
         {

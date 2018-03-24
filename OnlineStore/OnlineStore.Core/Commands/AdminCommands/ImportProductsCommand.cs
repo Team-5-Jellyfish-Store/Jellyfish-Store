@@ -5,28 +5,33 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Core.DTO;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Models.DataModels;
+using OnlineStore.DTO.ExternalImportDto;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class ImportProductsCommand : ICommand
     {
-        private readonly IUserSessionService sessionService;
+        private readonly IUserSession userSession;
         private readonly IOnlineStoreContext context;
         private readonly IValidator validator;
 
-        public ImportProductsCommand(IUserSessionService sessionService, IOnlineStoreContext context, IValidator validator)
+        public ImportProductsCommand(IUserSession userSession, IOnlineStoreContext context, IValidator validator)
         {
             this.validator = validator ?? throw new ArgumentNullException(nameof(IValidator));
-            this.sessionService = sessionService ?? throw new ArgumentNullException(nameof(IUserSessionService));
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(IUserSession));
             this.context = context ?? throw new ArgumentNullException(nameof(IOnlineStoreContext));
         }
 
         public string ExecuteThisCommand()
         {
-            if (this.sessionService.UserIsAdmin() || this.sessionService.UserIsModerator())
+            if (!this.userSession.HasSomeoneLogged())
+            {
+                return "Login first!";
+            }
+
+            if (this.userSession.HasAdminRights())
             {
                 const string failureMessage = "Import rejected. Input is with invalid format.";
                 const string doubleEntryMessage = "Import rejected. Duplicate courier found!";
@@ -79,7 +84,7 @@ namespace OnlineStore.Core.Commands.AdminCommands
                 }
 
                 validProducts.ForEach(c => this.context.Products.Add(c));
-                
+
                 this.context.SaveChanges();
                 var result = importResults.ToString().Trim();
                 return result;

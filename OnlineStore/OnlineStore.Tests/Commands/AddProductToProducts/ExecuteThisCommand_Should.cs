@@ -2,6 +2,7 @@
 using Moq;
 using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
+using OnlineStore.DTO.ProductModels;
 using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Tests.Commands.AddProductToProducts
@@ -72,7 +73,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             //Act
             addProductCommand.ExecuteThisCommand();
             //Assert
-            fakeProductService.Verify(v => v.CreateProduct(It.IsAny<string>(), It.IsAny<decimal>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            fakeProductService.Verify(v => v.AddProduct(It.IsAny<ProductImportModel>()), Times.Once);
         }
 
         [TestMethod]

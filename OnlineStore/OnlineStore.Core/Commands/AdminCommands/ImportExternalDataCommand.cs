@@ -1,7 +1,6 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
-using System;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {

@@ -1,11 +1,9 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
 using OnlineStore.Logic.Contracts;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace OnlineStore.Core.Commands
 {
@@ -16,11 +14,9 @@ namespace OnlineStore.Core.Commands
 
         public PrintOrdersReportCommand(IOrderService orderService, IUserSession userSession)
         {
-            this.orderService = orderService;
-            this.userSession = userSession;
+            this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
         }
-
-
 
         public string ExecuteThisCommand()
         {

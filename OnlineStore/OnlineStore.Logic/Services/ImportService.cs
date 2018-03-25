@@ -5,10 +5,13 @@ using System.Text;
 using AutoMapper;
 using Newtonsoft.Json;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO.ExternalImportDto;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
+using System.Linq;
+using OnlineStore.DTO.CourierModels;
+using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.SupplierModels;
 
 namespace OnlineStore.Logic.Services
 {
@@ -16,20 +19,22 @@ namespace OnlineStore.Logic.Services
     {
         const string failureMessage = "Import rejected. Input is with invalid format.";
 
-        private readonly ICourierService courierService;
-        private readonly IProductService productService;
-        private readonly IAddressService addressService;
         private readonly ICategoryService categoryService;
         private readonly ISupplierService supplierService;
+        private readonly IProductService productService;
+        private readonly ICourierService courierService;
+        private readonly IAddressService addressService;
+        private readonly ITownService townService;
         private readonly IOnlineStoreContext context;
         private readonly IMapper mapper;
 
 
-        public ImportService(ICourierService courierService, IProductService productService, ISupplierService supplierService, ICategoryService categoryService, IAddressService addressService, IOnlineStoreContext context, IMapper mapper)
+        public ImportService(IProductService productService, ICourierService courierService, ISupplierService supplierService, ICategoryService categoryService, IAddressService addressService, ITownService townService, IOnlineStoreContext context, IMapper mapper)
         {
             this.addressService = addressService;
+            this.townService = townService ?? throw new System.ArgumentNullException(nameof(townService));
+            this.productService = productService ?? throw new System.ArgumentNullException(nameof(productService));
             this.courierService = courierService;
-            this.productService = productService;
             this.supplierService = supplierService;
             this.categoryService = categoryService;
             this.context = context;
@@ -60,9 +65,9 @@ namespace OnlineStore.Logic.Services
             var importProductsResults = new StringBuilder();
 
             var importString = File.ReadAllText("../../../Datasets/Products.json");
-            var deserializedProducts = JsonConvert.DeserializeObject<ProductImportDto[]>(importString);
+            var deserializedProducts = JsonConvert.DeserializeObject<ProductImportModel[]>(importString);
 
-            var validProducts = new List<Product>();
+            var validProducts = new List<ProductImportModel>();
 
             foreach (var productDto in deserializedProducts)
             {
@@ -72,22 +77,13 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
-                var productToAdd = this.mapper.Map<ProductImportDto, Product>(productDto);
-
-                var category = this.categoryService.FindOrCreate(productDto.Category);
-                var supplier = this.supplierService.FindByName(productDto.Supplier);
-
-                productToAdd.Category = category;
-                productToAdd.Supplier = supplier;
-                validProducts.Add(productToAdd);
+                validProducts.Add(productDto);
                 importProductsResults.AppendLine($"{productDto.Quantity} items of product {productDto.Name} added successfully!");
             }
 
-            validProducts.ForEach(c => this.context.Products.Add(c));
+            this.productService.AddProductRange(validProducts);
 
-            this.context.SaveChanges();
-            var result = importProductsResults.ToString().Trim();
-            return result;
+            return importProductsResults.ToString().Trim();
         }
 
         private string ImportSuppliers()
@@ -95,9 +91,9 @@ namespace OnlineStore.Logic.Services
             var importSuppliersResults = new StringBuilder();
 
             var suppliersImportString = File.ReadAllText("../../../Datasets/Suppliers.json");
+            var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportModel[]>(suppliersImportString);
 
-            var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportDto[]>(suppliersImportString);
-            var validSuppliers = new List<Supplier>();
+            var validSupplierModels = new List<SuppliersImportModel>();
 
             foreach (var supplierDto in deserializedSuppliers)
             {
@@ -107,17 +103,12 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
-                var supplierToAdd = this.mapper.Map<SuppliersImportDto, Supplier>(supplierDto);
+                validSupplierModels.Add(supplierDto);
 
-                var supplierAddress = this.addressService.FindOrCreate(supplierDto.Address, supplierDto.Town);
-
-                supplierToAdd.Address = supplierAddress;
-
-                validSuppliers.Add(supplierToAdd);
                 importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} added successfully!");
             }
 
-            this.supplierService.AddSupplierRange(validSuppliers);
+            this.supplierService.AddSupplierRange(validSupplierModels);
 
             return importSuppliersResults.ToString();
         }
@@ -127,10 +118,9 @@ namespace OnlineStore.Logic.Services
             var importCourierResults = new StringBuilder();
 
             var importCouriersResults = File.ReadAllText("../../../Datasets/Couriers.json");
+            var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportModel[]>(importCouriersResults);
 
-            var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportDto[]>(importCouriersResults);
-
-            var validCouriers = new List<Courier>();
+            var validCouriers = new List<CourierImportModel>();
 
             foreach (var courierDto in deserializedCouriers)
             {
@@ -140,18 +130,13 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
-                var courierToAdd = this.mapper.Map<CourierImportDto, Courier>(courierDto);
-
-                var courierAddress = this.addressService.FindOrCreate(courierDto.Address, courierDto.Town);
-
-                courierToAdd.Address = courierAddress;
-
-                validCouriers.Add(courierToAdd);
+                validCouriers.Add(courierDto);
                 importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
             }
+
             this.courierService.AddCourierRange(validCouriers);
-            var result = importCourierResults.ToString().Trim();
-            return result;
+
+            return importCourierResults.ToString().Trim();
         }
 
         private bool IsValid(object obj)

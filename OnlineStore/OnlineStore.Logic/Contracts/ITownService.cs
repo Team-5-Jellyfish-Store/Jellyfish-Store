@@ -4,8 +4,8 @@ namespace OnlineStore.Logic.Contracts
 {
     public interface ITownService
     {
-        Town FindOrCreate(string name);
+        //Town FindOrCreate(string name);
 
-        Town Create(string name);
+        void Create(string name);
     }
 }

@@ -3,9 +3,9 @@ using AutoMapper;
 using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
 
-namespace OnlineStore.DTO.ExternalImportDto
+namespace OnlineStore.DTO.ProductModels
 {
-    public class ProductImportDto : IMapTo<Product>, IHaveCustomMappings
+    public class ProductImportModel : IMapTo<Product>, IHaveCustomMappings
     {
         [Required]
         [StringLength(30, MinimumLength = 4)]
@@ -28,7 +28,7 @@ namespace OnlineStore.DTO.ExternalImportDto
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            configuration.CreateMap<ProductImportDto, Product>()
+            configuration.CreateMap<ProductImportModel, Product>()
                 .ForPath(x => x.Category.Name, cfg => cfg.MapFrom(x => x.Category))
                 .ForPath(x => x.Supplier.Name, cfg => cfg.MapFrom(x => x.Supplier))
                 .ForMember(x => x.SellingPrice, cfg => cfg.MapFrom(x => x.PurchasePrice * 1.5m));

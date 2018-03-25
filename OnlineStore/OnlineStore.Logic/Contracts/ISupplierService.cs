@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using OnlineStore.DTO;
 using OnlineStore.Models.DataModels;
+using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.SupplierModels;
 
 namespace OnlineStore.Logic.Contracts
 {
@@ -12,8 +14,8 @@ namespace OnlineStore.Logic.Contracts
 
         IEnumerable<ProductModel> GetAllProducts();
 
-        void AddSupplierRange(List<Supplier> suppliers);
+        void AddSupplierRange(List<SuppliersImportModel> suppliers);
 
-        Supplier FindByName(string name);
+        void Create(string supplier);
     }
 }

@@ -21,41 +21,37 @@ namespace OnlineStore.Logic.Services
             this.townService = townService ?? throw new ArgumentNullException(nameof(townService));
         }
 
-        public /*AddressModel*/ Address GetAddress(string addressText, string townName)
+        public void Create(string address, string townName)
         {
-            var town = this.context.Towns.SingleOrDefault(x => x.Name == townName);
-
-            return town.Addresses.FirstOrDefault(x => x.AddressText == addressText);
-
-            //return this.mapper.Map<AddressModel>(address);
-        }
-
-        public Address FindOrCreate(string address, string town)
-        {
-            var foundAddress = this.context.Addresses.SingleOrDefault(x => x.AddressText == address && x.Town.Name == town);
-            
-
-            if (foundAddress == null)
+            if (string.IsNullOrEmpty(address))
             {
-                var foundTown = this.townService.FindOrCreate(town);
-                foundAddress = this.Create(address, foundTown);
+                throw new ArgumentException("Address is required!", nameof(address));
             }
 
-            return foundAddress;
-        }
+            if (string.IsNullOrEmpty(townName))
+            {
+                throw new ArgumentException("Town name is required!", nameof(townName));
+            }
 
-        public Address Create(string address, Town town)
-        {
+            if (!this.context.Towns.Any(x => x.Name == townName))
+            {
+                throw new ArgumentException($"Town {townName} don't exists!");
+            }
+            var town = this.context.Towns.SingleOrDefault(x => x.Name == townName);
+
+            if (this.context.Addresses.Any(x => x.AddressText == address && x.Town.Name == townName))
+            {
+                throw new ArgumentException($"Address {address} in town {townName} already exists!");
+            }
+
             var addressToAdd = new Address()
             {
                 AddressText = address,
                 Town = town
             };
+
             this.context.Addresses.Add(addressToAdd);
             this.context.SaveChanges();
-
-            return this.context.Addresses.First(f => f.AddressText == address);
-
         }
     }
 }

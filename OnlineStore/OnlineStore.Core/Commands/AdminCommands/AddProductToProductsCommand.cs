@@ -1,6 +1,7 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.DTO.ProductModels;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {
@@ -47,8 +48,16 @@ namespace OnlineStore.Core.Commands.AdminCommands
             this.writer.Write("Please enter supplier name: ");
             var supplierName = this.reader.Read();
 
-            this.productService.CreateProduct(productName, purchasePrice, quantity, categoryName,
-            supplierName);
+            var productModel = new ProductImportModel()
+            {
+                Name = productName,
+                PurchasePrice = purchasePrice,
+                Quantity = quantity,
+                Category = categoryName,
+                Supplier = supplierName
+            };
+
+            this.productService.AddProduct(productModel);
 
             return $"Product {productName} added successfully!";
         }

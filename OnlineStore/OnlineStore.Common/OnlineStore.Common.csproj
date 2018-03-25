@@ -30,11 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacConfig\AutofacConfiguration.cs" />
     <Compile Include="AutoMapperConfig\AutomapperConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,9 +59,21 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Core\OnlineStore.Core.csproj">
+      <Project>{6DB43D30-81F0-4DEC-B7FB-CFBB796066AC}</Project>
+      <Name>OnlineStore.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Data\OnlineStore.Data.csproj">
+      <Project>{D2836ECC-0A1D-4DE2-88CE-83FC66D2A784}</Project>
+      <Name>OnlineStore.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineStore.DTO\OnlineStore.DTO.csproj">
       <Project>{d4fa34c6-6509-4865-b46f-92fdcf40bb24}</Project>
       <Name>OnlineStore.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Logic\OnlineStore.Logic.csproj">
+      <Project>{03D046C9-F890-4746-B309-8BAA712A1A5E}</Project>
+      <Name>OnlineStore.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\OnlineStore.Models\OnlineStore.Models.csproj">
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>

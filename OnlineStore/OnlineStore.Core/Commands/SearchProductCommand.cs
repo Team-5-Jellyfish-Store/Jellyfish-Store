@@ -1,12 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
-using OnlineStore.Logic;
 using OnlineStore.Logic.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Core.Commands
 {
@@ -19,10 +13,11 @@ namespace OnlineStore.Core.Commands
 
         public SearchProductCommand(IReader reader, IWriter writer, IProductService productService)
         {
-            this.reader = reader;
-            this.writer = writer;
-            this.productService = productService;
+            this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
+            this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
+
         public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter product name to search for it");

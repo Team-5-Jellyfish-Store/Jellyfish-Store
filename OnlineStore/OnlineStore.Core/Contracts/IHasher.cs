@@ -5,5 +5,7 @@
         string CreatePassword(string password);
 
         bool CheckPassword(string enteredPassword, string actualPassword);
+
+        void ValidatePassword(string password);
     }
 }

@@ -1,13 +1,9 @@
 ﻿using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 
-namespace OnlineStore.DTO
+namespace OnlineStore.DTO.OrderModels
 {
     public class OrderModel : IMapFrom<Order>, IHaveCustomMappings
     {

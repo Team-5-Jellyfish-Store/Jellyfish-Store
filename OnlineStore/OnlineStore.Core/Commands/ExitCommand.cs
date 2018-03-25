@@ -9,7 +9,7 @@ namespace OnlineStore.Core.Commands
 
         public ExitCommand(IWriter writer)
         {
-            this.writer = writer;
+            this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
         }
 
         public string ExecuteThisCommand()

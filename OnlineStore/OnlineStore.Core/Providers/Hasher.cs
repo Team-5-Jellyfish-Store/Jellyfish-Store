@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace OnlineStore.Core.Providers
 {
     public class Hasher : IHasher
     {
+        private readonly string passwordPattern = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
         private readonly List<char> peppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToList();
         private readonly SHA256 algorythm;
 
@@ -28,6 +30,19 @@ namespace OnlineStore.Core.Providers
             var pepper = this.GetPepper();
 
             return this.Hash(password + pepper);
+        }
+
+        public void ValidatePassword(string password)
+        {
+            if (password == string.Empty)
+            {
+                throw new ArgumentException("Password is Required");
+            }
+
+            if (!Regex.IsMatch(password, this.passwordPattern))
+            {
+                throw new ArgumentException("Password must be minimum eight characters, at least one letter and one number!");
+            }
         }
 
         private char GetPepper()

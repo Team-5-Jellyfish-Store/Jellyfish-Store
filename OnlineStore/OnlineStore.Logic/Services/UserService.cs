@@ -52,6 +52,11 @@ namespace OnlineStore.Logic.Services
 
         public UserLoginModel GetRegisteredUser(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new ArgumentException("Username is required!", nameof(userName));
+            }
+
             var userModel = this.context.Users.SingleOrDefault(x => x.Username == userName)
                 ?? throw new ArgumentException($"User with username {userName} don't exist!");
 

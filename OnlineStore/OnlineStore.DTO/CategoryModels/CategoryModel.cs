@@ -1,7 +1,7 @@
 ﻿using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
 
-namespace OnlineStore.DTO
+namespace OnlineStore.DTO.CategoryModels
 {
     public class CategoryModel : IMapFrom<Category>
     {

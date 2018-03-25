@@ -9,7 +9,7 @@ namespace OnlineStore.Core.Commands
 
         public LogoutCommand(IUserSession userSession)
         {
-            this.userSession = userSession;
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
         }
 
         public string ExecuteThisCommand()

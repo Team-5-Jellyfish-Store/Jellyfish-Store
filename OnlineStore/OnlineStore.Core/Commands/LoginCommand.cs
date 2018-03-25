@@ -1,8 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
 using OnlineStore.Logic.Contracts;
 using System;
-using System.Linq;
 
 namespace OnlineStore.Core.Commands
 {
@@ -13,16 +11,14 @@ namespace OnlineStore.Core.Commands
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly IHasher hasher;
-        private readonly IValidator validator;
 
-        public LoginCommand(IUserService userService, IUserSession userSession, IWriter writer, IReader reader, IHasher hasher, IValidator validator)
+        public LoginCommand(IUserService userService, IUserSession userSession, IWriter writer, IReader reader, IHasher hasher)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
             this.hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
-            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public string ExecuteThisCommand()
@@ -34,11 +30,9 @@ namespace OnlineStore.Core.Commands
 
             this.writer.Write("Username: ");
             string username = this.reader.Read();
-            username = this.validator.ValidateValue(username, true);
 
             this.writer.Write("Password: ");
             string password = this.reader.Read();
-            password = this.validator.ValidateValue(password, true);
 
             var user = this.userService.GetRegisteredUser(username);
             var actualPassword = user.Password;

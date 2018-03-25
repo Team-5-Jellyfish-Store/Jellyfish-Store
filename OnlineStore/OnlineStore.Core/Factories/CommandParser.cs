@@ -16,10 +16,14 @@ namespace OnlineStore.Core.Factories
             this.cmdFactory = cmdFactory;
         }
 
-        protected ICommandFactory CmdFactory => cmdFactory;
+        protected ICommandFactory CmdFactory => this.cmdFactory;
 
         public ICommand ParseCommand(string commandName)
         {
+            if (string.IsNullOrEmpty(commandName))
+            {
+                throw new ArgumentNullException("Null string in command parser!");
+            }
             var command = this.CmdFactory.CreateCommand(commandName);
 
             return command;

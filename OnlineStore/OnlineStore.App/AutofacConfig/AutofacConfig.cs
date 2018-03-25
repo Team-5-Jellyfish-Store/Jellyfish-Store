@@ -46,13 +46,8 @@ namespace OnlineStore.App.AutofacConfig
 
             //Commands
             builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
-            builder.RegisterType<ImportCouriersCommand>().Named<ICommand>("importCouriers");
-            builder.RegisterType<ImportProductsCommand>().Named<ICommand>("importProducts");
-            builder.RegisterType<ImportSuppliersCommand>().Named<ICommand>("importSuppliers");
             builder.RegisterType<ImportExternalDataCommand>().Named<ICommand>("import");
             builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeProduct");
-
-            builder.RegisterType<ExitCommand>().Named<ICommand>("exit");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<RegisterUserCommand>().Named<ICommand>("register");

@@ -25,6 +25,11 @@ namespace OnlineStore.Core
             this.reader = reader ?? throw new ArgumentNullException();
         }
 
+        protected ICommandParser CommandParser => this.commandParser;
+        protected ICommandProcessor CommandProcessor => this.commandProcessor;
+        protected IWriter Writer => this.writer;
+        protected IReader Reader => this.reader;
+
         public void Run()
         {
             this.writer.WriteLine(System.IO.File.ReadAllText("../../../Datasets/WellcomeText.txt"));
@@ -33,6 +38,13 @@ namespace OnlineStore.Core
             {
                 this.writer.Write("Please enter command name: ");
                 var inputLine = this.reader.Read();
+
+                if (inputLine == "exit")
+                {
+                    this.writer.WriteLine("Goodbye! Thank you for your business!");
+                    return;
+                }
+
                 try
                 {
                     var command = this.commandParser.ParseCommand(inputLine);

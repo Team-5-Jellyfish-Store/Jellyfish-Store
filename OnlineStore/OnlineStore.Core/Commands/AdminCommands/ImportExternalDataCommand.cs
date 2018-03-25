@@ -1,4 +1,5 @@
-﻿using OnlineStore.Core.Contracts;
+﻿using System;
+using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
 
 namespace OnlineStore.Core.Commands.AdminCommands
@@ -10,8 +11,8 @@ namespace OnlineStore.Core.Commands.AdminCommands
 
         public ImportExternalDataCommand(IImportService importService, IUserSession userSession)
         {
-            this.importService = importService;
-            this.userSession = userSession;
+            this.importService = importService ?? throw new ArgumentNullException(nameof(IImportService));
+            this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
         }
 
         public string ExecuteThisCommand()

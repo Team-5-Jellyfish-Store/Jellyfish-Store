@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OnlineStore.Models.DataModels;
+using OnlineStore.DTO.CategoryModels;
 
 namespace OnlineStore.Logic.Services
 {
@@ -20,13 +21,6 @@ namespace OnlineStore.Logic.Services
             this.context = context;
             this.mapper = mapper;
         }
-
-        //public void Create(string name)
-        //{
-        //    var categoryToAdd = new Category() { Name = name };
-        //    this.context.Categories.Add(categoryToAdd);
-        //    this.context.SaveChanges();
-        //}
 
         public CategoryModel FindCategoryByName(string name)
         {
@@ -51,20 +45,22 @@ namespace OnlineStore.Logic.Services
             return categoryFound.Id;
         }
 
-        public Category FindOrCreate(string name)
+        public void Create(string name)
         {
-            var categoryFound = this.context.Categories.FirstOrDefault(f => f.Name == name) ?? this.Create(name);
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Category name is required!", nameof(name));
+            }
 
-            return categoryFound;
-        }
+            if (this.context.Categories.Any(x => x.Name == name))
+            {
+                throw new ArgumentException($"Category {name} already exists!");
+            }
 
-        public Category Create(string name)
-        {
-            var categoryToAdd = new Category {Name = name};
+            var categoryToAdd = new Category { Name = name };
+
             this.context.Categories.Add(categoryToAdd);
             this.context.SaveChanges();
-            var category = this.context.Categories.First(t => t.Name == name);
-            return category;
         }
 
         public IEnumerable<CategoryModel> GetAllCategories()

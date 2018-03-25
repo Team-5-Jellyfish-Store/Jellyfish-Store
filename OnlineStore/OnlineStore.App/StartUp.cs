@@ -1,11 +1,6 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Common.AutoMapperConfig;
-using AutoMapper;
-using OnlineStore.DTO;
-using OnlineStore.Models.DataModels;
-using OnlineStore.Data;
-using System.Linq;
 
 namespace OnlineStore.App
 {
@@ -14,19 +9,13 @@ namespace OnlineStore.App
         static void Main()
         {
             AutomapperConfiguration.Initialize();
+
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new AutofacConfig.AutofacConfig());
+            builder.RegisterModule(new AutofacConfig.AutofacConfiguration());
             var container = builder.Build();
 
             var engine = container.Resolve<IEngine>();
             engine.Run();
-
-            //This is my test, forget about it!
-            //var ctx = new OnlineStoreContext();
-            //var towns = ctx.Towns.ToList();
-            //var testingTown = towns.Find(x => x.Id == 1);
-            //testingTown.Name = "Changed";
-            //ctx.SaveChanges();
         }
     }
 }

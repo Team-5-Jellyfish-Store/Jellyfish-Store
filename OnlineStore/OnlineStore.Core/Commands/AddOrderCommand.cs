@@ -1,27 +1,29 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.DTO;
+using OnlineStore.Core.Providers;
+using OnlineStore.DTO.OrderModels;
 using OnlineStore.Logic.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace OnlineStore.Core.Commands
 {
     public class AddOrderCommand : ICommand
     {
+        private readonly IProductService productService;
         private readonly IOrderService orderService;
-        private readonly IValidator validator;
         private readonly IUserSession userSession;
         private readonly IWriter writer;
         private readonly IReader reader;
+        private readonly DatetimeProvider datetime;
 
-        public AddOrderCommand(IOrderService orderService, IValidator validator, IUserSession userSession, IWriter writer, IReader reader)
+        public AddOrderCommand(IOrderService orderService, IProductService productService, IUserSession userSession, IWriter writer, IReader reader, DatetimeProvider datetime)
         {
+            this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
-            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            this.datetime = datetime ?? throw new ArgumentNullException(nameof(datetime));
         }
 
         public string ExecuteThisCommand()
@@ -31,49 +33,51 @@ namespace OnlineStore.Core.Commands
                 throw new ArgumentException("Login first!");
             }
 
-            var productNames = new Dictionary<string, int>();
+            var orderModel = new OrderMakeModel();
+            var orderResult = new StringBuilder();
 
-            string yesNo = string.Empty;
             string productName = string.Empty;
             int productCount = new int();
+            string moreProducts = string.Empty;
             do
             {
                 this.writer.Write("Product: ");
                 productName = this.reader.Read();
-                this.validator.ValidateValue(productName, true);
+                var product = this.productService.FindProductByName(productName);
 
-                if (!productNames.ContainsKey(productName))
+                if (!orderModel.ProductNameAndCounts.ContainsKey(product.Name))
                 {
-                    productNames.Add(productName, 0);
+                    orderModel.ProductNameAndCounts.Add(product.Name, 0);
                 }
 
                 this.writer.Write("Count: ");
                 productCount = int.Parse(this.reader.Read());
-                this.validator.ValidateLength(productCount, 1, 1000);
+                if (productCount < 1)
+                {
+                    throw new ArgumentException("Product count cannot be negative!");
+                }
 
-                productNames[productName] += productCount;
+                orderModel.ProductNameAndCounts[product.Name] += productCount;
+
+                orderResult.AppendLine($"{product.Name}: {productCount}");
 
                 this.writer.Write("More products? (y/n): ");
-                yesNo = this.reader.Read();
-            } while (yesNo.ToLower() == "y");
+                moreProducts = this.reader.Read();
+            } while (moreProducts.ToLower() == "y");
 
             this.writer.Write("Comment: ");
             string comment = this.reader.Read();
-            this.validator.ValidateValue(comment, false);
+            orderModel.Comment = comment;
 
             var username = this.userSession.GetLoggedUserName();
+            orderModel.Username = username;
 
-            var order = new OrderMakeModel()
-            {
-                Username = username,
-                ProductNameAndCounts = productNames,
-                Comment = comment,
-                OrderedOn = DateTime.Now
-            };
+            var orderedOn = this.datetime.Now;
+            orderModel.OrderedOn = orderedOn;
 
-            this.orderService.MakeOrder(order);
+            this.orderService.MakeOrder(orderModel);
 
-            return $"User {username} ordered on {order.OrderedOn}";
+            return $"User {username} ordered:\n{orderResult.ToString()}On: {orderModel.OrderedOn}";
         }
     }
 }

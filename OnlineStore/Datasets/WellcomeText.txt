@@ -10,15 +10,16 @@
 	You can use the following commands in order to take advantage of our product:
 	- login
 	- register
+	- import
 	- importCouriers
 	- importProducts
 	- importSuppliers
 	- removeProduct
 	- addProduct
-	- printAvailableProducts
-	- printOrders
-	- searchCategory
-	- searchProduct
+	- reportProducts
+	- reportOrders
+	- searchByCategory
+	- searchByName
 	- logout
 	- exit
 	

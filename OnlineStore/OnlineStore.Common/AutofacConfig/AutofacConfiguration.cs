@@ -8,13 +8,12 @@ using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
-using OnlineStore.Logic;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Logic.Services;
 
 namespace OnlineStore.App.AutofacConfig
 {
-    internal class AutofacConfig : Autofac.Module
+    public class AutofacConfiguration : Autofac.Module
     {
 
         protected override void Load(ContainerBuilder builder)
@@ -25,7 +24,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<ConsoleReader>().As<IReader>();
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<Hasher>().As<IHasher>();
-            builder.RegisterType<Validator>().As<IValidator>();
+            builder.RegisterType<DatetimeProvider>().AsSelf();
 
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();
             builder.RegisterType<UserSession>().As<IUserSession>().SingleInstance();
@@ -63,7 +62,6 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
             builder.RegisterType<OrderService>().As<IOrderService>().SingleInstance();
 
-            //builder.RegisterType<Mapper>().As<IMapper>();
             builder.Register(x => Mapper.Instance).SingleInstance();
         }
     }

@@ -1,11 +1,4 @@
-﻿using OnlineStore.Models.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnlineStore.DTO
+﻿namespace OnlineStore.DTO.ProductModels
 {
     public class ProductModel
     {

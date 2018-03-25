@@ -51,19 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryModel.cs" />
-    <Compile Include="AddressImportModel.cs" />
-    <Compile Include="ExternalImportDto\CourierImportDto.cs" />
+    <Compile Include="CategoryModels\CategoryModel.cs" />
+    <Compile Include="CourierModels\CourierImportModel.cs" />
     <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
     <Compile Include="MappingContracts\IMapFrom.cs" />
     <Compile Include="MappingContracts\IMapTo.cs" />
-    <Compile Include="OrderMakeModel.cs" />
-    <Compile Include="OrderModel.cs" />
-    <Compile Include="ExternalImportDto\ProductImportDto.cs" />
-    <Compile Include="ProductModel.cs" />
-    <Compile Include="ProductImportModel.cs" />
+    <Compile Include="OrderModels\OrderMakeModel.cs" />
+    <Compile Include="OrderModels\OrderModel.cs" />
+    <Compile Include="ProductModels\ProductImportModel.cs" />
+    <Compile Include="ProductModels\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExternalImportDto\SuppliersImportDto.cs" />
+    <Compile Include="SupplierModels\SuppliersImportModel.cs" />
     <Compile Include="UserModels\UserLoginModel.cs" />
     <Compile Include="UserModels\UserRegisterModel.cs" />
   </ItemGroup>
@@ -77,5 +75,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

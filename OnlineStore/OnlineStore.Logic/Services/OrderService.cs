@@ -8,6 +8,7 @@ using OnlineStore.Models.DataModels;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using OnlineStore.DTO.OrderModels;
 
 namespace OnlineStore.Logic.Services
 {
@@ -58,7 +59,7 @@ namespace OnlineStore.Logic.Services
                 };
 
                 orderProducts.Add(orderProduct);
-                
+
                 product.Quantity -= productCount;
             }
 

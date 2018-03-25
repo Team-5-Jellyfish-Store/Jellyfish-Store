@@ -1,12 +1,7 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.Data.Contracts;
-using OnlineStore.Logic;
 using OnlineStore.Logic.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Core.Commands
 {
@@ -19,17 +14,17 @@ namespace OnlineStore.Core.Commands
 
         public SearchCategoryCommand(ICategoryService categoryService, IProductService productService, IReader reader, IWriter writer)
         {
-            this.categoryService = categoryService;
-            this.productService = productService;
-            this.reader = reader;
-            this.writer = writer;
+            this.categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+            this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
         }
         public string ExecuteThisCommand()
         {
             this.writer.WriteLine("Please enter category name to view all products in this category");
             //var categories = this.productService.GetAllProducts(); add category model
             var categoryName = this.reader.Read();
-            var category = categoryService.FindCategoryByName(categoryName);
+            var category = this.categoryService.FindCategoryByName(categoryName);
 
             var products = this.productService.GetAllProducts();
             var matchingProducts = products.Where(x => x.CategoryName == categoryName);

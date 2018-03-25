@@ -78,7 +78,6 @@
     <Compile Include="Contracts\IEngine.cs" />
     <Compile Include="Contracts\IReader.cs" />
     <Compile Include="Contracts\IUserSession.cs" />
-    <Compile Include="Contracts\IValidator.cs" />
     <Compile Include="Contracts\IWriter.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Factories\CommandFactory.cs" />
@@ -87,8 +86,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ConsoleReader.cs" />
     <Compile Include="Providers\ConsoleWriter.cs" />
+    <Compile Include="Providers\DatetimeProvider.cs" />
     <Compile Include="Providers\UserSession.cs" />
-    <Compile Include="Providers\Validator.cs" />
     <Compile Include="Providers\Hasher.cs" />
     <Compile Include="Contracts\IHasher.cs" />
   </ItemGroup>

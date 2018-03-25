@@ -4,6 +4,7 @@ using OnlineStore.Data.Contracts;
 using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
+using System;
 
 namespace OnlineStore.Logic.Services
 {
@@ -18,21 +19,23 @@ namespace OnlineStore.Logic.Services
             this.context = context;
             this.mapper = mapper;
         }
-
-        public Town FindOrCreate(string name)
+        
+        public void Create(string name)
         {
-            var townFound = this.context.Towns.FirstOrDefault(f => f.Name == name) ?? this.Create(name);
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Town name is required!", nameof(name));
+            }
 
-            return townFound;
-        }
+            if (this.context.Towns.Any(x => x.Name == name))
+            {
+                throw new ArgumentException("Town already exists!");
+            }
 
-        public Town Create(string name)
-        {
-            var townModel = new Town {Name = name};
+            var townModel = new Town { Name = name };
+
             this.context.Towns.Add(townModel);
             this.context.SaveChanges();
-            var town = this.context.Towns.First(t => t.Name == name);
-            return town;
         }
     }
 }

@@ -6,6 +6,10 @@ namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class RemoveProductFromProductsCommand : ICommand
     {
+        private readonly string ProductRemovedSuccesMessage = "Product {0} removed successfully!";
+        private readonly string NoLoggedUserFailMessage = "Login first!";
+        private readonly string UserHasNoRightsFailMessage = "User is neither admin nor moderator and cannot add products!";
+
         private readonly IProductService productService;
         private readonly IUserSession userSession;
         private readonly IReader reader;
@@ -22,18 +26,20 @@ namespace OnlineStore.Core.Commands.AdminCommands
         {
             if (!this.userSession.HasSomeoneLogged())
             {
-                return "Login first!";
+                return this.NoLoggedUserFailMessage;
             }
 
             if (!this.userSession.HasAdminRights())
             {
-                return "User is neither admin nor moderator and cannot add products!";
+                return this.UserHasNoRightsFailMessage;
             }
 
             this.writer.Write("Please enter product name: ");
             var productName = this.reader.Read();
+
             this.productService.RemoveProductByName(productName);
-            return $"Product {productName} removed successfully!";
+
+            return string.Format(this.ProductRemovedSuccesMessage, productName);
         }
     }
 }

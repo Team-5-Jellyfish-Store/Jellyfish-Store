@@ -1,5 +1,5 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.Core.Providers;
+using OnlineStore.Core.Providers.Providers;
 using OnlineStore.DTO.OrderModels;
 using OnlineStore.Logic.Contracts;
 using System;
@@ -9,6 +9,11 @@ namespace OnlineStore.Core.Commands
 {
     public class AddOrderCommand : ICommand
     {
+        private readonly string UserOrderSuccessMessage = "User {0} ordered:\n{1}On: {2}";
+
+        private readonly string NoLoggedUserFailMessage = "Login first!";
+        private readonly string NegativeProductCountFailMessage = "Product count cannot be negative!";
+
         private readonly IProductService productService;
         private readonly IOrderService orderService;
         private readonly IUserSession userSession;
@@ -30,7 +35,7 @@ namespace OnlineStore.Core.Commands
         {
             if (!this.userSession.HasSomeoneLogged())
             {
-                throw new ArgumentException("Login first!");
+                throw new ArgumentException(this.NoLoggedUserFailMessage);
             }
 
             var orderModel = new OrderMakeModel();
@@ -54,7 +59,7 @@ namespace OnlineStore.Core.Commands
                 productCount = int.Parse(this.reader.Read());
                 if (productCount < 1)
                 {
-                    throw new ArgumentException("Product count cannot be negative!");
+                    throw new ArgumentException(this.NegativeProductCountFailMessage);
                 }
 
                 orderModel.ProductNameAndCounts[product.Name] += productCount;
@@ -77,7 +82,7 @@ namespace OnlineStore.Core.Commands
 
             this.orderService.MakeOrder(orderModel);
 
-            return $"User {username} ordered:\n{orderResult.ToString()}On: {orderModel.OrderedOn}";
+            return string.Format(this.UserOrderSuccessMessage, username, orderResult.ToString(), orderModel.OrderedOn);
         }
     }
 }

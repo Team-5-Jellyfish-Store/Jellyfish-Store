@@ -9,6 +9,10 @@ namespace OnlineStore.Core.Commands
 {
     public class RegisterUserCommand : ICommand
     {
+        private readonly string UserRegisteredSuccessMessage = "User {0} registered successfully!";
+        private readonly string UserAlreadyLoggedInFailMessage = "Logout first!";
+        private readonly string PasswordsNotMathingFailMessage = "Password not matching!";
+
         private readonly IUserService userService;
         private readonly IUserSession userSession;
         private readonly IWriter writer;
@@ -28,7 +32,7 @@ namespace OnlineStore.Core.Commands
         {
             if (this.userSession.HasSomeoneLogged())
             {
-                throw new ArgumentException($"Logout first!");
+                throw new ArgumentException(this.UserAlreadyLoggedInFailMessage);
             }
 
             var userModel = new UserRegisterModel();
@@ -50,7 +54,7 @@ namespace OnlineStore.Core.Commands
 
             if (password != confirmedPassword)
             {
-                throw new ArgumentException("Password not matching!");
+                throw new ArgumentException(this.PasswordsNotMathingFailMessage);
             }
 
             password = this.hasher.CreatePassword(password);
@@ -75,7 +79,7 @@ namespace OnlineStore.Core.Commands
 
             this.userService.RegisterUser(userModel);
 
-            return "User registered successfully!";
+            return string.Format(this.UserRegisteredSuccessMessage, username);
         }
     }
 }

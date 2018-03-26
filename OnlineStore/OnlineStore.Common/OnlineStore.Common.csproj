@@ -79,6 +79,10 @@
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Providers\OnlineStore.Providers.csproj">
+      <Project>{DC741137-85A5-4A56-9ED4-3E4113C86646}</Project>
+      <Name>OnlineStore.Providers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

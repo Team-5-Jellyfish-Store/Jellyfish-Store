@@ -5,11 +5,13 @@ using OnlineStore.Core.Commands;
 using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Factories;
-using OnlineStore.Core.Providers;
+using OnlineStore.Core.Providers.Providers;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Logic.Services;
+using OnlineStore.Providers.Contracts;
+using OnlineStore.Providers.Providers;
 
 namespace OnlineStore.App.AutofacConfig
 {
@@ -21,9 +23,11 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
             builder.RegisterType<CommandParser>().As<ICommandParser>();
             builder.RegisterType<CommandProcessor>().As<ICommandProcessor>();
+            builder.RegisterType<FileReader>().As<IFileReader>();
             builder.RegisterType<ConsoleReader>().As<IReader>();
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<Hasher>().As<IHasher>();
+            builder.RegisterType<Validator>().As<IValidator>();
             builder.RegisterType<DatetimeProvider>().AsSelf();
 
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();

@@ -2,11 +2,16 @@
 using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.DTO.ProductModels;
+using OnlineStore.Core.Providers;
 
 namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class AddProductToProductsCommand : ICommand
     {
+        private readonly string ProductAddedSuccesMessage = "Product {0} added successfully!";
+        private readonly string NoLoggedUserFailMessage = "Login first!";
+        private readonly string UserHasNoRightsFailMessage = "User is neither admin nor moderator and cannot add products!";
+
         private readonly IProductService productService;
         private readonly IUserSession userSession;
 
@@ -25,12 +30,12 @@ namespace OnlineStore.Core.Commands.AdminCommands
         {
             if (!this.userSession.HasSomeoneLogged())
             {
-                return "Login first!";
+                return this.NoLoggedUserFailMessage;
             }
 
             if (!this.userSession.HasAdminRights())
             {
-                return "User is neither admin nor moderator and cannot add products!";
+                return this.UserHasNoRightsFailMessage;
             }
 
             this.writer.Write("Please enter product name: ");
@@ -53,13 +58,13 @@ namespace OnlineStore.Core.Commands.AdminCommands
                 Name = productName,
                 PurchasePrice = purchasePrice,
                 Quantity = quantity,
-                Category = categoryName,
-                Supplier = supplierName
+                CategoryName = categoryName,
+                SupplierName = supplierName
             };
 
             this.productService.AddProduct(productModel);
 
-            return $"Product {productName} added successfully!";
+            return string.Format(this.ProductAddedSuccesMessage, productName);
         }
     }
 }

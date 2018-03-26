@@ -6,6 +6,9 @@ namespace OnlineStore.Core.Commands.AdminCommands
 {
     public class ImportExternalDataCommand : ICommand
     {
+        private readonly string NoLoggedUserFailMessage = "Login first!";
+        private readonly string UserHasNoRightsFailMessage = "User is neither admin nor moderator and cannot add products!";
+
         private readonly IUserSession userSession;
         private readonly IImportService importService;
 
@@ -19,12 +22,12 @@ namespace OnlineStore.Core.Commands.AdminCommands
         {
             if (!this.userSession.HasSomeoneLogged())
             {
-                return "Login First!";
+                return this.NoLoggedUserFailMessage;
             }
 
             if (!this.userSession.HasAdminRights())
             {
-                return "User must be admin or moderator in order to import data!";
+                return this.UserHasNoRightsFailMessage;
             }
 
             var result = this.importService.Import();

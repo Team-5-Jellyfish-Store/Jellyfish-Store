@@ -6,6 +6,10 @@ namespace OnlineStore.Core.Commands
 {
     public class LoginCommand : ICommand
     {
+        private readonly string UserLoggedInSuccessMessage = "User {0} logged in successfuly!";
+        private readonly string UserAlreadyLoggedInFailMessage = "Logout first!";
+        private readonly string IncorrectPasswordFailMessage = "Incorrect Password!";
+
         private readonly IUserService userService;
         private readonly IUserSession userSession;
         private readonly IWriter writer;
@@ -25,7 +29,7 @@ namespace OnlineStore.Core.Commands
         {
             if (this.userSession.HasSomeoneLogged())
             {
-                throw new ArgumentException($"Logout first!");
+                throw new ArgumentException(this.UserAlreadyLoggedInFailMessage);
             }
 
             this.writer.Write("Username: ");
@@ -39,12 +43,12 @@ namespace OnlineStore.Core.Commands
 
             if (!this.hasher.CheckPassword(password, actualPassword))
             {
-                throw new ArgumentException("Incorrect Password!");
+                throw new ArgumentException(this.IncorrectPasswordFailMessage);
             }
 
             this.userSession.Login(user);
 
-            return $"User {username} logged in successfuly!";
+            return string.Format(this.UserLoggedInSuccessMessage, username);
         }
     }
 }

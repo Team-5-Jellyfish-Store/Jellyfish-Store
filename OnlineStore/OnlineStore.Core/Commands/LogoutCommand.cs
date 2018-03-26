@@ -5,6 +5,9 @@ namespace OnlineStore.Core.Commands
 {
     public class LogoutCommand : ICommand
     {
+        private readonly string UserLoggedOutSuccessMessage = "User {0} logged out successfully!";
+        private readonly string NoLoggedUserFailMessage = "No logged user!";
+
         private readonly IUserSession userSession;
 
         public LogoutCommand(IUserSession userSession)
@@ -16,12 +19,14 @@ namespace OnlineStore.Core.Commands
         {
             if (!this.userSession.HasSomeoneLogged())
             {
-                throw new ArgumentException("No logged user!");
+                throw new ArgumentException(this.NoLoggedUserFailMessage);
             }
+
+            var userToLogout = this.userSession.GetLoggedUserName();
 
             this.userSession.Logout();
 
-            return $"User logged out successfully!";
+            return string.Format(this.UserLoggedOutSuccessMessage, userToLogout);
         }
     }
 }

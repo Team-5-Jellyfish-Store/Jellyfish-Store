@@ -1,14 +1,14 @@
 [
   {
-	"Name": "Kaspichanski ribi",
-    "Phone" : "3598871010101",
-	"Address" : "Kaspichanska gordost, 2000",
-    "Town" : "Kaspichan"
+    "Name": "Kaspichanski ribi",
+    "Phone": "3598871010101",
+    "AddressText": "Kaspichanska gordost, 2000",
+    "TownName": "Kaspichan"
   },
-  {	
-	"Name": "TIM",
-    "Phone" : "3598871010111",
-	"Address" : "Pochivka 11",
-    "Town" : "Varna"
+  {
+    "Name": "TIM",
+    "Phone": "3598871010111",
+    "AddressText": "Pochivka 11",
+    "TownName": "Varna"
   }
 ]

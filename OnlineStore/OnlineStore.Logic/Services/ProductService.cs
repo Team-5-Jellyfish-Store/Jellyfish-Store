@@ -43,9 +43,9 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException($"Product {productModel.Name} already exists!");
             }
 
-            var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.Category)
+            var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.CategoryName)
                 ?? throw new ArgumentException("Category not found!");
-            var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.Supplier)
+            var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName)
                 ?? throw new ArgumentException("Supplier not found!");
 
             var productToAdd = this.mapper.Map<ProductImportModel, Product>(productModel);
@@ -81,7 +81,7 @@ namespace OnlineStore.Logic.Services
             context.SaveChanges();
         }
 
-        public void AddProductRange(List<ProductImportModel> productModels)
+        public void AddProductRange(IList<ProductImportModel> productModels)
         {
             if (productModels == null)
             {
@@ -94,17 +94,17 @@ namespace OnlineStore.Logic.Services
             {
                 var productToAdd = this.mapper.Map<ProductImportModel, Product>(productModel);
 
-                if (!this.context.Categories.Any(x => x.Name == productModel.Category))
+                if (!this.context.Categories.Any(x => x.Name == productModel.CategoryName))
                 {
-                    this.categoryService.Create(productModel.Category);
+                    this.categoryService.Create(productModel.CategoryName);
                 }
-                var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.Category);
+                var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.CategoryName);
 
-                if (!this.context.Suppliers.Any(x => x.Name == productModel.Supplier))
+                if (!this.context.Suppliers.Any(x => x.Name == productModel.SupplierName))
                 {
-                    this.supplierService.Create(productModel.Supplier);
+                    this.supplierService.Create(productModel.SupplierName);
                 }
-                var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.Supplier);
+                var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName);
 
                 productToAdd.Category = category;
                 productToAdd.Supplier = supplier;

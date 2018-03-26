@@ -31,18 +31,8 @@ namespace OnlineStore.Logic.Services
 
             }
 
-            var categoryModel = mapper.Map<CategoryModel>(category);
+            var categoryModel = this.mapper.Map<CategoryModel>(category);
             return categoryModel;
-        }
-
-        public int GetIdByName(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException();
-            }
-            var categoryFound = this.context.Categories.FirstOrDefault(f => f.Name == name) ?? throw new ArgumentException("Category not found!");
-            return categoryFound.Id;
         }
 
         public void Create(string name)

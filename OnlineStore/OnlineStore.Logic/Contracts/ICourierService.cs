@@ -6,6 +6,6 @@ namespace OnlineStore.Logic.Contracts
 {
     public interface ICourierService
     {
-        void AddCourierRange(List<CourierImportModel> courier);
+        void AddCourierRange(IList<CourierImportModel> courier);
     }
 }

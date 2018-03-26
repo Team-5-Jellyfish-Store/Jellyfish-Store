@@ -24,7 +24,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddCourierRange(List<CourierImportModel> courierModels)
+        public void AddCourierRange(IList<CourierImportModel> courierModels)
         {
             if (courierModels == null)
             {
@@ -37,17 +37,17 @@ namespace OnlineStore.Logic.Services
             {
                 var courierToAdd = this.mapper.Map<CourierImportModel, Courier>(courielModel);
 
-                if (!this.context.Towns.Any(x => x.Name == courielModel.Town))
+                if (!this.context.Towns.Any(x => x.Name == courielModel.TownName))
                 {
-                    this.townService.Create(courielModel.Town);
+                    this.townService.Create(courielModel.TownName);
                 }
-                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courielModel.Town);
+                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courielModel.TownName);
 
-                if (!this.context.Addresses.Any(x => x.AddressText == courielModel.Address && x.Town.Name == courielModel.Town))
+                if (!this.context.Addresses.Any(x => x.AddressText == courielModel.AddressText && x.Town.Name == courielModel.TownName))
                 {
-                    this.addressService.Create(courielModel.Address, supplierTown.Name);
+                    this.addressService.Create(courielModel.AddressText, supplierTown.Name);
                 }
-                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courielModel.Address && x.Town.Name == courielModel.Town);
+                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courielModel.AddressText && x.Town.Name == courielModel.TownName);
 
                 courierToAdd.Address = courierAddress;
 

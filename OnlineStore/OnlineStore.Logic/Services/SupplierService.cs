@@ -42,26 +42,7 @@ namespace OnlineStore.Logic.Services
             return supplierFound ?? throw new ArgumentNullException();
         }
 
-        public int GetIdByName(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var supplierFound = this.context
-                .Suppliers
-                .FirstOrDefault(w => w.Name == name) ?? throw new ArgumentException("Supplier not found!");
-
-            return supplierFound.Id;
-        }
-
-        public IEnumerable<ProductModel> GetAllProducts()
-        {
-            return context.Products.ProjectTo<ProductModel>();
-        }
-
-        public void AddSupplierRange(List<SuppliersImportModel> supplierModels)
+        public void AddSupplierRange(IList<SuppliersImportModel> supplierModels)
         {
             if (supplierModels == null)
             {
@@ -74,17 +55,17 @@ namespace OnlineStore.Logic.Services
             {
                 var supplierToAdd = this.mapper.Map<SuppliersImportModel, Supplier>(supplierModel);
 
-                if (!this.context.Towns.Any(x => x.Name == supplierModel.Town))
+                if (!this.context.Towns.Any(x => x.Name == supplierModel.TownName))
                 {
-                    this.townService.Create(supplierModel.Town);
+                    this.townService.Create(supplierModel.TownName);
                 }
-                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == supplierModel.Town);
+                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == supplierModel.TownName);
 
-                if (!this.context.Addresses.Any(x => x.AddressText == supplierModel.Address && x.Town.Name == supplierModel.Town))
+                if (!this.context.Addresses.Any(x => x.AddressText == supplierModel.AddressText && x.Town.Name == supplierModel.TownName))
                 {
-                    this.addressService.Create(supplierModel.Address, supplierTown.Name);
+                    this.addressService.Create(supplierModel.AddressText, supplierTown.Name);
                 }
-                var supplierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == supplierModel.Address && x.Town.Name == supplierModel.Town);
+                var supplierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == supplierModel.AddressText && x.Town.Name == supplierModel.TownName);
 
                 supplierToAdd.Address = supplierAddress;
 

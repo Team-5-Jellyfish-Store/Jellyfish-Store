@@ -10,9 +10,7 @@ namespace OnlineStore.Logic.Contracts
         IEnumerable<CategoryModel> GetAllCategories();
 
         CategoryModel FindCategoryByName(string name);
-
-        int GetIdByName(string name);
-
+        
         void Create(string name);
     }
 }

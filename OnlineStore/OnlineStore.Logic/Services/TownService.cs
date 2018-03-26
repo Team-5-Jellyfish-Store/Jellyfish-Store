@@ -11,15 +11,12 @@ namespace OnlineStore.Logic.Services
     public class TownService : ITownService
     {
         private readonly IOnlineStoreContext context;
-        private readonly IMapper mapper;
 
-
-        public TownService(IOnlineStoreContext context, IMapper mapper)
+        public TownService(IOnlineStoreContext context)
         {
-            this.context = context;
-            this.mapper = mapper;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        
+
         public void Create(string name)
         {
             if (string.IsNullOrEmpty(name))

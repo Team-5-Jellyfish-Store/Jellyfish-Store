@@ -87,6 +87,10 @@
       <Project>{C507A94F-9F5B-4B0F-8467-3C3264A4B57F}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Providers\OnlineStore.Providers.csproj">
+      <Project>{DC741137-85A5-4A56-9ED4-3E4113C86646}</Project>
+      <Name>OnlineStore.Providers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

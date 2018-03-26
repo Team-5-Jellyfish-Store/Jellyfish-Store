@@ -11,14 +11,10 @@ namespace OnlineStore.Logic.Services
     public class AddressService : IAddressService
     {
         private readonly IOnlineStoreContext context;
-        private readonly ITownService townService;
-        private readonly IMapper mapper;
 
-        public AddressService(IOnlineStoreContext context, IMapper mapper, ITownService townService)
+        public AddressService(IOnlineStoreContext context)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            this.townService = townService ?? throw new ArgumentNullException(nameof(townService));
         }
 
         public void Create(string address, string townName)

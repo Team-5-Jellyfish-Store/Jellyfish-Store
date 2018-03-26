@@ -12,9 +12,9 @@ namespace OnlineStore.Logic.Contracts
         ProductModel FindProductByName(string name);
 
         void RemoveProductByName(string name);
-        
+
         void AddProduct(ProductImportModel product);
 
-        void AddProductRange(List<ProductImportModel> products);
+        void AddProductRange(IList<ProductImportModel> products);
     }
 }

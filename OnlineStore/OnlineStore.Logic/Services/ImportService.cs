@@ -1,44 +1,39 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Text;
-using AutoMapper;
 using Newtonsoft.Json;
-using OnlineStore.Data.Contracts;
 using OnlineStore.Logic.Contracts;
-using OnlineStore.Models.DataModels;
 using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
-using System.Linq;
 using OnlineStore.DTO.CourierModels;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.SupplierModels;
+using System;
+using OnlineStore.Core.Contracts;
+using OnlineStore.Providers.Contracts;
 
 namespace OnlineStore.Logic.Services
 {
     public class ImportService : IImportService
     {
-        const string failureMessage = "Import rejected. Input is with invalid format.";
+        private const string failureMessage = "Import rejected. Input is with invalid format.";
 
-        private readonly ICategoryService categoryService;
+        private readonly string productsJSONPathString = "../../../Datasets/Products.json";
+        private readonly string suppliersJSONPathString = "../../../Datasets/Suppliers.json";
+        private readonly string couriersJSONPathString = "../../../Datasets/Couriers.json";
+
         private readonly ISupplierService supplierService;
+        private readonly IFileReader fileReader;
+        private readonly IValidator validator;
         private readonly IProductService productService;
         private readonly ICourierService courierService;
-        private readonly IAddressService addressService;
-        private readonly ITownService townService;
-        private readonly IOnlineStoreContext context;
-        private readonly IMapper mapper;
 
-
-        public ImportService(IProductService productService, ICourierService courierService, ISupplierService supplierService, ICategoryService categoryService, IAddressService addressService, ITownService townService, IOnlineStoreContext context, IMapper mapper)
+        public ImportService(IProductService productService, ICourierService courierService, ISupplierService supplierService, IFileReader fileReader, IValidator validator)
         {
-            this.addressService = addressService;
-            this.townService = townService ?? throw new System.ArgumentNullException(nameof(townService));
-            this.productService = productService ?? throw new System.ArgumentNullException(nameof(productService));
-            this.courierService = courierService;
-            this.supplierService = supplierService;
-            this.categoryService = categoryService;
-            this.context = context;
-            this.mapper = mapper;
+            this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            this.courierService = courierService ?? throw new ArgumentNullException(nameof(courierService));
+            this.supplierService = supplierService ?? throw new ArgumentNullException(nameof(supplierService));
+            this.fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public string Import()
@@ -64,14 +59,14 @@ namespace OnlineStore.Logic.Services
         {
             var importProductsResults = new StringBuilder();
 
-            var importString = File.ReadAllText("../../../Datasets/Products.json");
+            var importString = this.fileReader.ReadAllText(this.productsJSONPathString);
             var deserializedProducts = JsonConvert.DeserializeObject<ProductImportModel[]>(importString);
 
             var validProducts = new List<ProductImportModel>();
 
             foreach (var productDto in deserializedProducts)
             {
-                if (!this.IsValid(productDto))
+                if (!this.validator.IsValid(productDto))
                 {
                     importProductsResults.AppendLine(failureMessage);
                     continue;
@@ -90,14 +85,14 @@ namespace OnlineStore.Logic.Services
         {
             var importSuppliersResults = new StringBuilder();
 
-            var suppliersImportString = File.ReadAllText("../../../Datasets/Suppliers.json");
+            var suppliersImportString = this.fileReader.ReadAllText(this.suppliersJSONPathString);
             var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportModel[]>(suppliersImportString);
 
             var validSupplierModels = new List<SuppliersImportModel>();
 
             foreach (var supplierDto in deserializedSuppliers)
             {
-                if (!this.IsValid(supplierDto))
+                if (!this.validator.IsValid(supplierDto))
                 {
                     importSuppliersResults.AppendLine(failureMessage);
                     continue;
@@ -117,14 +112,14 @@ namespace OnlineStore.Logic.Services
         {
             var importCourierResults = new StringBuilder();
 
-            var importCouriersResults = File.ReadAllText("../../../Datasets/Couriers.json");
+            var importCouriersResults = this.fileReader.ReadAllText(this.couriersJSONPathString);
             var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportModel[]>(importCouriersResults);
 
             var validCouriers = new List<CourierImportModel>();
 
             foreach (var courierDto in deserializedCouriers)
             {
-                if (!this.IsValid(courierDto))
+                if (!this.validator.IsValid(courierDto))
                 {
                     importCourierResults.AppendLine(failureMessage);
                     continue;
@@ -137,15 +132,6 @@ namespace OnlineStore.Logic.Services
             this.courierService.AddCourierRange(validCouriers);
 
             return importCourierResults.ToString().Trim();
-        }
-
-        private bool IsValid(object obj)
-        {
-            var validationContext = new ValidationContext(obj);
-            var validationResults = new List<ValidationResult>();
-
-            var isValid = System.ComponentModel.DataAnnotations.Validator.TryValidateObject(obj, validationContext, validationResults, true);
-            return isValid;
         }
     }
 }

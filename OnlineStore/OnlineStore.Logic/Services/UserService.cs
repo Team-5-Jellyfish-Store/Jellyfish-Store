@@ -60,7 +60,7 @@ namespace OnlineStore.Logic.Services
             var userModel = this.context.Users.SingleOrDefault(x => x.Username == userName)
                 ?? throw new ArgumentException($"User with username {userName} don't exist!");
 
-            return mapper.Map<UserLoginModel>(userModel);
+            return this.mapper.Map<UserLoginModel>(userModel);
         }
     }
 }

@@ -64,7 +64,6 @@
     <Compile Include="Commands\AdminCommands\AddProductToProductsCommand.cs" />
     <Compile Include="Commands\AdminCommands\ImportExternalDataCommand.cs" />
     <Compile Include="Commands\AdminCommands\RemoveProductFromProductsCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\LogoutCommand.cs" />
     <Compile Include="Commands\PrintAvailableProductReportCommand.cs" />

@@ -5,7 +5,7 @@ using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO.SupplierModels
 {
-    public class SuppliersImportModel : IMapTo<Supplier>, IHaveCustomMappings
+    public class SuppliersImportModel : IMapTo<Supplier>
     {
         [Required]
         [MinLength(2, ErrorMessage = "Company name should be at least 2 characters")]
@@ -18,17 +18,10 @@ namespace OnlineStore.DTO.SupplierModels
 
         [Required]
         [StringLength(60, MinimumLength = 4)]
-        public string Address { get; set; }
+        public string AddressText { get; set; }
 
         [Required]
         [StringLength(30, MinimumLength = 2)]
-        public string Town { get; set; }
-
-        public void CreateMappings(IMapperConfigurationExpression configuration)
-        {
-            configuration.CreateMap<SuppliersImportModel, Supplier>()
-                .ForPath(x => x.Address.AddressText, cfg => cfg.MapFrom(x => x.Address))
-                .ForPath(x => x.Address.Town.Name, cfg => cfg.MapFrom(x => x.Town));
-        }
+        public string TownName { get; set; }
     }
 }

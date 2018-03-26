@@ -21,16 +21,14 @@ namespace OnlineStore.DTO.ProductModels
         [Required]
         [MinLength(3, ErrorMessage = "Category name should be at least 3 characters")]
         [MaxLength(30, ErrorMessage = "Category name should be shorter than 30 characters")]
-        public string Category { get; set; }
+        public string CategoryName { get; set; }
 
         [Required]
-        public string Supplier { get; set; }
+        public string SupplierName { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
             configuration.CreateMap<ProductImportModel, Product>()
-                .ForPath(x => x.Category.Name, cfg => cfg.MapFrom(x => x.Category))
-                .ForPath(x => x.Supplier.Name, cfg => cfg.MapFrom(x => x.Supplier))
                 .ForMember(x => x.SellingPrice, cfg => cfg.MapFrom(x => x.PurchasePrice * 1.5m));
         }
     }

@@ -3,7 +3,7 @@ using OnlineStore.DTO.UserModels;
 using OnlineStore.Models.Enums;
 using System;
 
-namespace OnlineStore.Core.Providers
+namespace OnlineStore.Core.Providers.Providers
 {
     public class UserSession : IUserSession
     {

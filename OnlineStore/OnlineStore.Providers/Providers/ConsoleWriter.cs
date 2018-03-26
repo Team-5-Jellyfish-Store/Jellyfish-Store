@@ -1,7 +1,7 @@
 ﻿using System;
 using OnlineStore.Core.Contracts;
 
-namespace OnlineStore.Core.Providers
+namespace OnlineStore.Core.Providers.Providers
 {
     public class ConsoleWriter : IWriter
     {

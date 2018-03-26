@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnlineStore.Core.Providers
+namespace OnlineStore.Core.Providers.Providers
 {
     public class DatetimeProvider
     {

@@ -38,29 +38,27 @@ namespace OnlineStore.Core.Commands.AdminCommands
                 return this.UserHasNoRightsFailMessage;
             }
 
+            var productModel = new ProductImportModel();
+
             this.writer.Write("Please enter product name: ");
             var productName = this.reader.Read();
+            productModel.Name = productName;
 
             this.writer.Write("Please enter product price: ");
             var purchasePrice = decimal.Parse(this.reader.Read());
+            productModel.PurchasePrice = purchasePrice;
 
             this.writer.Write("Please enter quantity: ");
             var quantity = int.Parse(this.reader.Read());
+            productModel.Quantity = quantity;
 
             this.writer.Write("Please enter category name: ");
             var categoryName = this.reader.Read();
+            productModel.CategoryName = categoryName;
 
             this.writer.Write("Please enter supplier name: ");
             var supplierName = this.reader.Read();
-
-            var productModel = new ProductImportModel()
-            {
-                Name = productName,
-                PurchasePrice = purchasePrice,
-                Quantity = quantity,
-                CategoryName = categoryName,
-                SupplierName = supplierName
-            };
+            productModel.SupplierName = supplierName;
 
             this.productService.AddProduct(productModel);
 

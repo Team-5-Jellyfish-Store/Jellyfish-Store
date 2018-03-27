@@ -10,6 +10,6 @@
 
         public int Quantity { get; set; }
 
-        public string CategoryName { get; set; } //navp
+        public string CategoryName { get; set; }
     }
 }

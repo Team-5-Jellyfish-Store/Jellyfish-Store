@@ -4,6 +4,7 @@ using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.Providers.Contracts;
 
 namespace OnlineStore.Tests.Commands.AddProductToProducts
 {
@@ -18,8 +19,10 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             var fakeWriter = new Mock<IWriter>();
             var fakeUserSession = new Mock<IUserSession>();
             var fakeProductService = new Mock<IProductService>();
+            var fakeValidator = new Mock<IValidator>();
+
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedMessage = "Login first!";
 
             //Act
@@ -37,9 +40,11 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             var fakeWriter = new Mock<IWriter>();
             var fakeUserSession = new Mock<IUserSession>();
             var fakeProductService = new Mock<IProductService>();
+            var fakeValidator = new Mock<IValidator>();
+
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(false);
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedMessage = "User is neither admin nor moderator and cannot add products!";
 
             //Act
@@ -63,12 +68,13 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
 
             var fakeWriter = new Mock<IWriter>();
             var fakeUserSession = new Mock<IUserSession>();
-
+            var fakeValidator = new Mock<IValidator>();
+            fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
             var fakeProductService = new Mock<IProductService>();
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
 
             //Act
             addProductCommand.ExecuteThisCommand();
@@ -90,12 +96,13 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
 
             var fakeWriter = new Mock<IWriter>();
             var fakeUserSession = new Mock<IUserSession>();
-
+            var fakeValidator = new Mock<IValidator>();
+            fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
             var fakeProductService = new Mock<IProductService>();
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedResult = $"Product test added successfully!";
             //Act
             var actualResult = addProductCommand.ExecuteThisCommand();

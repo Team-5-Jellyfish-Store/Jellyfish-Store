@@ -36,15 +36,15 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 
             //services
-            builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
-            builder.RegisterType<CategoryService>().As<ICategoryService>().SingleInstance();
-            builder.RegisterType<SupplierService>().As<ISupplierService>().SingleInstance();
-            builder.RegisterType<ImportService>().As<IImportService>().SingleInstance();
-            builder.RegisterType<CourierService>().As<ICourierService>().SingleInstance();
-            builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
-            builder.RegisterType<TownService>().As<ITownService>().SingleInstance();
-            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
-            builder.RegisterType<OrderService>().As<IOrderService>().SingleInstance();
+            builder.RegisterType<ProductService>().As<IProductService>();
+            builder.RegisterType<CategoryService>().As<ICategoryService>();
+            builder.RegisterType<SupplierService>().As<ISupplierService>();
+            builder.RegisterType<ImportService>().As<IImportService>();
+            builder.RegisterType<CourierService>().As<ICourierService>();
+            builder.RegisterType<AddressService>().As<IAddressService>();
+            builder.RegisterType<TownService>().As<ITownService>();
+            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<OrderService>().As<IOrderService>();
             builder.Register(x => Mapper.Instance);
 
             //Commands

@@ -1,14 +1,30 @@
 [
   {
-    "Name": "Kaspichanski ribi",
-    "Phone": "3598871010101",
-    "AddressText": "Kaspichanska gordost, 2000",
-    "TownName": "Kaspichan"
+	"Name": "Kaspichanski ribi",
+    "Phone" : "3598871010101",
+	"Address" : "Kaspichanska gordost, 2000",
+    "Town" : "Kaspichan"
   },
-  {
-    "Name": "TIM",
-    "Phone": "3598871010111",
-    "AddressText": "Pochivka 11",
-    "TownName": "Varna"
+  {	
+	"Name": "TIM",
+    "Phone" : "3598871010111",
+	"Address" : "Pochivka 11",
+    "Town" : "Varna"
+  },
+  {	
+	"Name": "A",
+    "Phone" : "3598871010111",
+	"Address" : "Tui li",
+    "Town" : "Varna22"
+  },
+  {	
+	"Name": "TIM",
+    "Phone" : "3598871010111",	
+  },
+  {	
+	"Name": "Tititititititititititi",
+    "Phone" : "3598871010111",
+	"Address" : "Pochivka 11",
+    "Town" : "Varna2222222"
   }
 ]

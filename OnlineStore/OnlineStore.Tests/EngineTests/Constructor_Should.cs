@@ -18,9 +18,10 @@ namespace OnlineStore.Tests.EngineTests
             var fakeProcessor = new Mock<ICommandProcessor>();
             var fakeWriter = new Mock<IWriter>();
             var fakeReader = new Mock<IReader>();
+            var fakeFileReader = new Mock<IFileReader>();
             
             //Act && Assert
-            Assert.IsInstanceOfType(new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object), typeof(IEngine));
+            Assert.IsInstanceOfType(new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object, fakeFileReader.Object), typeof(IEngine));
         }
 
 
@@ -31,9 +32,10 @@ namespace OnlineStore.Tests.EngineTests
             var fakeProcessor = new Mock<ICommandProcessor>();
             var fakeWriter = new Mock<IWriter>();
             var fakeReader = new Mock<IReader>();
+            var fakeFileReader = new Mock<IFileReader>();
 
             //Act && Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new Engine(null, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new Engine(null, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object, fakeFileReader.Object));
         }
 
         [TestMethod]
@@ -43,9 +45,10 @@ namespace OnlineStore.Tests.EngineTests
             var fakeParser = new Mock<ICommandParser>();
             var fakeWriter = new Mock<IWriter>();
             var fakeReader = new Mock<IReader>();
+            var fakeFileReader = new Mock<IFileReader>();
 
             //Act && Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, null, fakeWriter.Object, fakeReader.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, null, fakeWriter.Object, fakeReader.Object, fakeFileReader.Object));
         }
 
         [TestMethod]
@@ -55,9 +58,10 @@ namespace OnlineStore.Tests.EngineTests
             var fakeParser = new Mock<ICommandParser>();
             var fakeProcessor = new Mock<ICommandProcessor>();
             var fakeReader = new Mock<IReader>();
+            var fakeFileReader = new Mock<IFileReader>();
 
             //Act && Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, fakeProcessor.Object, null, fakeReader.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, fakeProcessor.Object, null, fakeReader.Object, fakeFileReader.Object));
         }
 
         [TestMethod]
@@ -67,11 +71,24 @@ namespace OnlineStore.Tests.EngineTests
             var fakeParser = new Mock<ICommandParser>();
             var fakeProcessor = new Mock<ICommandProcessor>();
             var fakeWriter = new Mock<IWriter>();
-            
-            //Act && Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, null));
-        }
+            var fakeFileReader = new Mock<IFileReader>();
 
+            //Act && Assert
+            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, null, fakeFileReader.Object));
+        }
+        [TestMethod]
+        public void Throw_WhenFileReaderIsNull()
+        {
+            //Arrange
+            var fakeParser = new Mock<ICommandParser>();
+            var fakeProcessor = new Mock<ICommandProcessor>();
+            var fakeReader = new Mock<IReader>();
+            var fakeWriter = new Mock<IWriter>();
+            var fakeFileReader = new Mock<IFileReader>();
+
+            //Act && Assert
+            Assert.ThrowsException<ArgumentNullException>(() => new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object, null));
+        }
         [TestMethod]
         public void SetsTheRightParserToProperty()
         {
@@ -80,7 +97,9 @@ namespace OnlineStore.Tests.EngineTests
             var stubWriter = new Mock<IWriter>();
             var stubReader = new Mock<IReader>();
             var stubProcessor = new Mock<ICommandProcessor>();
-            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object);
+            var stubFileReader = new Mock<IFileReader>();
+
+            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object, stubFileReader.Object);
 
             // Assert
             Assert.AreSame(stubParser.Object, engine.ExposedCommandParser);
@@ -94,7 +113,9 @@ namespace OnlineStore.Tests.EngineTests
             var stubWriter = new Mock<IWriter>();
             var stubReader = new Mock<IReader>();
             var stubProcessor = new Mock<ICommandProcessor>();
-            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object);
+            var stubFileReader = new Mock<IFileReader>();
+
+            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object, stubFileReader.Object);
 
             // Assert
             Assert.AreSame(stubWriter.Object, engine.ExposedWriter);
@@ -108,7 +129,9 @@ namespace OnlineStore.Tests.EngineTests
             var stubWriter = new Mock<IWriter>();
             var stubReader = new Mock<IReader>();
             var stubProcessor = new Mock<ICommandProcessor>();
-            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object);
+            var stubFileReader = new Mock<IFileReader>();
+
+            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object, stubFileReader.Object);
 
             // Assert
             Assert.AreSame(stubReader.Object, engine.ExposedReader);
@@ -122,10 +145,28 @@ namespace OnlineStore.Tests.EngineTests
             var stubWriter = new Mock<IWriter>();
             var stubReader = new Mock<IReader>();
             var stubProcessor = new Mock<ICommandProcessor>();
-            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object);
+            var stubFileReader = new Mock<IFileReader>();
+
+            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object, stubFileReader.Object);
 
             // Assert
             Assert.AreSame(stubProcessor.Object, engine.ExposedCommandProcessor);
+        }
+
+        [TestMethod]
+        public void SetsTheRightFileReaderToProperty()
+        {
+            // Arrange, Act
+            var stubParser = new Mock<ICommandParser>();
+            var stubWriter = new Mock<IWriter>();
+            var stubReader = new Mock<IReader>();
+            var stubProcessor = new Mock<ICommandProcessor>();
+            var stubFileReader = new Mock<IFileReader>();
+
+            var engine = new MockEngine(stubParser.Object, stubProcessor.Object, stubWriter.Object, stubReader.Object, stubFileReader.Object);
+
+            // Assert
+            Assert.AreSame(stubFileReader.Object, engine.ExposedFileReader);
         }
     }
 }

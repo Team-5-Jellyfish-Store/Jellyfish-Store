@@ -40,13 +40,13 @@ namespace OnlineStore.Tests.Factories.CommandParser
         public void ReturnICommand_WhenProvidedValidParameter()
         {
             //Arrange
-            var fakeContext = new Mock<IComponentContext>();
+            var fakeFactory = new Mock<ICommandFactory>();
             var fakeUserSession = new Mock<IUserSession>();
-            fakeContext.Setup(s => s.ResolveNamed<ICommand>(It.IsAny<string>())).Returns(new LogoutCommand(fakeUserSession.Object));
-            var factory = new Core.Factories.CommandFactory(fakeContext.Object);
+            fakeFactory.Setup(s => s.CreateCommand(It.IsAny<string>())).Returns(new LogoutCommand(fakeUserSession.Object));
+            var factory = new Core.Factories.CommandParser(fakeFactory.Object);
 
             //Act
-            var mockCommand = factory.CreateCommand("logout");
+            var mockCommand = factory.ParseCommand("logout");
 
             //Assert
             Assert.IsInstanceOfType(mockCommand, typeof(ICommand));

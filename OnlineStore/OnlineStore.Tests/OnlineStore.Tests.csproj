@@ -130,6 +130,10 @@
       <Project>{c507a94f-9f5b-4b0f-8467-3c3264a4b57f}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineStore.Providers\OnlineStore.Providers.csproj">
+      <Project>{dc741137-85a5-4a56-9ed4-3e4113c86646}</Project>
+      <Name>OnlineStore.Providers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

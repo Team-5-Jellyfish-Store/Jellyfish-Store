@@ -1,6 +1,7 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
 using System;
+using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.Commands
 {
@@ -25,13 +26,11 @@ namespace OnlineStore.Core.Commands
 
             var matchingProduct = productService.FindProductByName(searchedProduct);
 
-            writer.WriteLine("Name / SellingPrice / Category");
-            writer.Write(matchingProduct.Name + "  ");
-            writer.Write(matchingProduct.SellingPrice.ToString());
-            writer.WriteLine(matchingProduct.CategoryName);
+            var result = $"Name: {matchingProduct.Name}" + Environment.NewLine
+                + $"Selling price: ${matchingProduct.SellingPrice}" + Environment.NewLine
+                + $"Category: {matchingProduct.CategoryName}";
 
-
-            return "";
+            return result;
         }
     }
 }

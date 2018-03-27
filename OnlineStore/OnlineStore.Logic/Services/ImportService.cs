@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Newtonsoft.Json;
 using OnlineStore.Logic.Contracts;
-using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
 using OnlineStore.DTO.CourierModels;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.SupplierModels;
@@ -55,7 +53,7 @@ namespace OnlineStore.Logic.Services
             return importResults.ToString().Trim();
         }
 
-        private string ImportProducts()
+        protected string ImportProducts()
         {
             var importProductsResults = new StringBuilder();
 
@@ -72,16 +70,24 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
+                var productExists = this.productService.ProductExistsByName(productDto.Name);
+
+                if (productExists)
+                {
+                    importProductsResults.AppendLine($"Product {productDto.Name} already exists!");
+                    continue;
+                }
+
                 validProducts.Add(productDto);
                 importProductsResults.AppendLine($"{productDto.Quantity} items of product {productDto.Name} added successfully!");
             }
 
             this.productService.AddProductRange(validProducts);
 
-            return importProductsResults.ToString().Trim();
+            return importProductsResults.ToString();
         }
 
-        private string ImportSuppliers()
+        protected string ImportSuppliers()
         {
             var importSuppliersResults = new StringBuilder();
 
@@ -98,6 +104,13 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
+                var supplierExists = this.supplierService.SupplierExistsByName(supplierDto.Name);
+
+                if (supplierExists)
+                {
+                    importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} already exists!");
+                    continue;
+                }
                 validSupplierModels.Add(supplierDto);
 
                 importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} added successfully!");
@@ -108,7 +121,7 @@ namespace OnlineStore.Logic.Services
             return importSuppliersResults.ToString();
         }
 
-        private string ImportCouriers()
+        protected string ImportCouriers()
         {
             var importCourierResults = new StringBuilder();
 
@@ -125,13 +138,21 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
+                var courierExists = this.courierService.CourierExistsByName(courierDto.FirstName, courierDto.LastName);
+
+                if (courierExists)
+                {
+                    importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} already exists!");
+                    continue;
+                }
+
                 validCouriers.Add(courierDto);
                 importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
             }
 
             this.courierService.AddCourierRange(validCouriers);
 
-            return importCourierResults.ToString().Trim();
+            return importCourierResults.ToString();
         }
     }
 }

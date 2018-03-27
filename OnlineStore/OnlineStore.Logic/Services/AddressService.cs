@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
+﻿using OnlineStore.Data.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
@@ -31,7 +29,7 @@ namespace OnlineStore.Logic.Services
 
             if (!this.context.Towns.Any(x => x.Name == townName))
             {
-                throw new ArgumentException($"Town {townName} don't exists!");
+                throw new ArgumentException($"Town {townName} doesn't exist!");
             }
             var town = this.context.Towns.SingleOrDefault(x => x.Name == townName);
 

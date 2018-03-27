@@ -31,37 +31,44 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentNullException(nameof(courierModels));
             }
 
-            var couriers = new List<Courier>();
+            var couriersToAdd = new List<Courier>();
 
-            foreach (var courielModel in courierModels)
+            foreach (var courierModel in courierModels)
             {
-                var courierToAdd = this.mapper.Map<CourierImportModel, Courier>(courielModel);
+                var courierToAdd = this.mapper.Map<CourierImportModel, Courier>(courierModel);
 
-                if (!this.context.Towns.Any(x => x.Name == courielModel.TownName))
+                if (!this.context.Towns.Any(x => x.Name == courierModel.TownName))
                 {
-                    this.townService.Create(courielModel.TownName);
+                    this.townService.Create(courierModel.TownName);
                 }
-                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courielModel.TownName);
+                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courierModel.TownName);
 
-                if (!this.context.Addresses.Any(x => x.AddressText == courielModel.AddressText && x.Town.Name == courielModel.TownName))
+                if (!this.context.Addresses.Any(x => x.AddressText == courierModel.AddressText && x.Town.Name == courierModel.TownName))
                 {
-                    this.addressService.Create(courielModel.AddressText, supplierTown.Name);
+                    this.addressService.Create(courierModel.AddressText, supplierTown.Name);
                 }
-                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courielModel.AddressText && x.Town.Name == courielModel.TownName);
+                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courierModel.AddressText && x.Town.Name == courierModel.TownName);
 
                 courierToAdd.Address = courierAddress;
 
-                couriers.Add(courierToAdd);
+                couriersToAdd.Add(courierToAdd);
             }
 
-            var newCouriers = couriers
-                .FindAll(x => this.context.Couriers
-                                .All(y => y.FirstName != x.FirstName
-                                            ||
-                                            y.LastName != x.LastName));
-
-            newCouriers.ForEach(c => this.context.Couriers.Add(c));
+            couriersToAdd.ForEach(c => this.context.Couriers.Add(c));
             this.context.SaveChanges();
+        }
+
+        public bool CourierExistsByName(string firstName, string lastName)
+        {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var courierFound = this.context.Couriers
+                .FirstOrDefault(w => w.FirstName == firstName && w.LastName == lastName);
+
+            return courierFound != null;
         }
     }
 }

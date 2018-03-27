@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.DTO.UserModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;

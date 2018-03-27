@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Core;
-using OnlineStore.Core.Commands;
 using OnlineStore.Core.Contracts;
 
 namespace OnlineStore.Tests.EngineTests
@@ -17,10 +16,11 @@ namespace OnlineStore.Tests.EngineTests
             var fakeProcessor = new Mock<ICommandProcessor>();
             var fakeWriter = new Mock<IWriter>();
             var fakeReader = new Mock<IReader>();
+            var fakeFileReader = new Mock<IFileReader>();
             fakeReader.SetupSequence(s => s.Read()).Returns("login").Returns("exit");
 
             //Act
-            IEngine engine = new Engine(mockParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object);
+            IEngine engine = new Engine(mockParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object, fakeFileReader.Object);
             engine.Run();
 
             //Assert
@@ -37,10 +37,11 @@ namespace OnlineStore.Tests.EngineTests
             var fakeReader = new Mock<IReader>();
             fakeReader.SetupSequence(s => s.Read()).Returns("login").Returns("exit");
             var fakeCommand = new Mock<ICommand>();
+            var fakeFileReader = new Mock<IFileReader>();
             fakeParser.Setup(s => s.ParseCommand(It.IsAny<string>())).Returns(fakeCommand.Object);
 
             //Act
-            IEngine engine = new Engine(fakeParser.Object, mockProcessor.Object, fakeWriter.Object, fakeReader.Object);
+            IEngine engine = new Engine(fakeParser.Object, mockProcessor.Object, fakeWriter.Object, fakeReader.Object, fakeFileReader.Object);
             engine.Run();
 
             //Assert

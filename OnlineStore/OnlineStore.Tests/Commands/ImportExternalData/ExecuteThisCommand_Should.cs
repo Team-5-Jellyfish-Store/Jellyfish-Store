@@ -17,7 +17,7 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
             var fakeImportService = new Mock<IImportService>();
             var importCommand = new ImportExternalDataCommand(fakeImportService.Object, fakeUserSession.Object);
-            var expectedMessage = "Login First!";
+            var expectedMessage = "Login first!";
 
             //Act
             var actualMessage = importCommand.ExecuteThisCommand();
@@ -36,7 +36,7 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
 
             var fakeImportService = new Mock<IImportService>();
             var importCommand = new ImportExternalDataCommand(fakeImportService.Object, fakeUserSession.Object);
-            var expectedMessage = "User must be admin or moderator in order to import data!";
+            var expectedMessage = "User is neither admin nor moderator and cannot add products!";
 
             //Act
             var actualMessage = importCommand.ExecuteThisCommand();

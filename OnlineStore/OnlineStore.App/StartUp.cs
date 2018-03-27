@@ -1,9 +1,6 @@
 ﻿using Autofac;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Common.AutoMapperConfig;
-using AutoMapper;
-using OnlineStore.DTO.SupplierModels;
-using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.App
 {

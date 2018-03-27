@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using OnlineStore.Logic.Contracts;
-
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.Models.DataModels;
 using System;
 using System.Linq;
@@ -71,7 +68,7 @@ namespace OnlineStore.Logic.Services
 
             user.Orders.Add(order);
 
-            context.SaveChanges();
+           this.context.SaveChanges();
         }
 
         public IEnumerable<OrderModel> GetAllOrders()

@@ -1,6 +1,4 @@
-﻿using OnlineStore.DTO;
-using OnlineStore.DTO.ProductModels;
-using OnlineStore.Models.DataModels;
+﻿using OnlineStore.DTO.ProductModels;
 using System.Collections.Generic;
 
 namespace OnlineStore.Logic.Contracts
@@ -8,6 +6,7 @@ namespace OnlineStore.Logic.Contracts
     public interface IProductService
     {
         IEnumerable<ProductModel> GetAllProducts();
+        IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName);
 
         ProductModel FindProductByName(string name);
 
@@ -16,5 +15,7 @@ namespace OnlineStore.Logic.Contracts
         void AddProduct(ProductImportModel product);
 
         void AddProductRange(IList<ProductImportModel> products);
+
+        bool ProductExistsByName(string productName);
     }
 }

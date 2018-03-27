@@ -10,6 +10,7 @@ namespace OnlineStore.Logic.Contracts
 
         void AddSupplierRange(IList<SuppliersImportModel> suppliers);
 
-        void Create(string supplier);
+        bool SupplierExistsByName(string name);
+
     }
 }

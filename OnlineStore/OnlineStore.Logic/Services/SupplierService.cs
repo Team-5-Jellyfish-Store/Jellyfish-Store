@@ -4,7 +4,6 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.DTO.ProductModels;
@@ -39,7 +38,21 @@ namespace OnlineStore.Logic.Services
                 .ProjectTo<ProductModel>()
                 .FirstOrDefault();
 
-            return supplierFound ?? throw new ArgumentNullException();
+            return supplierFound ?? throw new ArgumentException("Supplier with that name not found");
+        }
+
+        public bool SupplierExistsByName(string name)
+        {
+
+            if (name == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var supplierFound = this.context.Suppliers
+                .FirstOrDefault(w => w.Name == name);
+
+            return supplierFound != null;
         }
 
         public void AddSupplierRange(IList<SuppliersImportModel> supplierModels)
@@ -49,7 +62,7 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentNullException(nameof(supplierModels));
             }
 
-            var suppliers = new List<Supplier>();
+            var suppliersToAdd = new List<Supplier>();
 
             foreach (var supplierModel in supplierModels)
             {
@@ -69,42 +82,12 @@ namespace OnlineStore.Logic.Services
 
                 supplierToAdd.Address = supplierAddress;
 
-                suppliers.Add(supplierToAdd);
+                suppliersToAdd.Add(supplierToAdd);
             }
-
-            var newSuppliers = suppliers
-                .FindAll(x => this.context.Suppliers
-                                .All(y => y.Name != x.Name));
-
-            newSuppliers.ForEach(s => this.context.Suppliers.Add(s));
+            
+            suppliersToAdd.ForEach(s => this.context.Suppliers.Add(s));
             this.context.SaveChanges();
         }
-
-        public void Create(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException("Supplier name is required!", nameof(name));
-            }
-
-            if (this.context.Suppliers.Any(x => x.Name == name))
-            {
-                throw new ArgumentException($"Supplier {name} already exists!");
-            }
-
-            var address = this.context.Addresses.FirstOrDefault();
-
-            var supplierToAdd = new Supplier
-            {
-                //Name = name,
-                //Phone = 
-                //Address = 
-
-
-            };
-
-            this.context.Suppliers.Add(supplierToAdd);
-            this.context.SaveChanges();
-        }
+        
     }
 }

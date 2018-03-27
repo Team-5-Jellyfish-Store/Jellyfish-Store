@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using AutoMapper;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;

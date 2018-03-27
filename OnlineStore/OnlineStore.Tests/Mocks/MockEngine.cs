@@ -9,9 +9,10 @@ namespace OnlineStore.Tests.Mocks
         public ICommandProcessor ExposedCommandProcessor => this.CommandProcessor;
         public IWriter ExposedWriter => this.Writer;
         public IReader ExposedReader => this.Reader;
+        public IFileReader ExposedFileReader => this.FileReader;
 
 
-        public MockEngine(ICommandParser commandParser, ICommandProcessor commandProcessor, IWriter writer, IReader reader) : base(commandParser, commandProcessor, writer, reader)
+        public MockEngine(ICommandParser commandParser, ICommandProcessor commandProcessor, IWriter writer, IReader reader, IFileReader fileReader) : base(commandParser, commandProcessor, writer, reader, fileReader)
         {
         }
     }

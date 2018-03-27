@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System.Collections.Generic;
@@ -28,7 +27,14 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<ProductModel> GetAllProducts()
         {
-            return context.Products.ProjectTo<ProductModel>();
+            return this.context.Products.ProjectTo<ProductModel>();
+        }
+
+        public IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName)
+        {
+            var filteredProducts = this.context.Products.Where(w => w.Category.Name == categoryName);
+
+            return filteredProducts.ProjectTo<ProductModel>();
         }
 
         public void AddProduct(ProductImportModel productModel)
@@ -38,7 +44,7 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentNullException(nameof(productModel));
             }
 
-            if (this.context.Products.Any(x => x.Name == productModel.Name))
+            if (this.ProductExistsByName(productModel.Name))
             {
                 throw new ArgumentException($"Product {productModel.Name} already exists!");
             }
@@ -63,7 +69,7 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException("Product name is required!", nameof(name));
             }
 
-            var product = context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!"); ;
+            var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!"); ;
 
             var productModel = mapper.Map<ProductModel>(product);
             return productModel;
@@ -76,9 +82,9 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException("Product name is required!", nameof(name));
             }
 
-            var productToRemove = context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");
-            context.Products.Remove(productToRemove);
-            context.SaveChanges();
+            var productToRemove = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");
+            this.context.Products.Remove(productToRemove);
+            this.context.SaveChanges();
         }
 
         public void AddProductRange(IList<ProductImportModel> productModels)
@@ -88,7 +94,7 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentNullException(nameof(productModels));
             }
 
-            var products = new List<Product>();
+            var productsToAdd = new List<Product>();
 
             foreach (var productModel in productModels)
             {
@@ -99,25 +105,29 @@ namespace OnlineStore.Logic.Services
                     this.categoryService.Create(productModel.CategoryName);
                 }
                 var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.CategoryName);
-
-                if (!this.context.Suppliers.Any(x => x.Name == productModel.SupplierName))
-                {
-                    this.supplierService.Create(productModel.SupplierName);
-                }
-                var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName);
-
+                var supplier = this.context.Suppliers.FirstOrDefault(x => x.Name == productModel.SupplierName);
                 productToAdd.Category = category;
-                productToAdd.Supplier = supplier;
+                productToAdd.Supplier = supplier ?? throw new ArgumentException("Supplier not found!");
 
-                products.Add(productToAdd);
+                productsToAdd.Add(productToAdd);
             }
 
-            var newProducts = products
-                .FindAll(x => this.context.Products
-                                .All(y => y.Name != x.Name));
 
-            newProducts.ForEach(p => this.context.Products.Add(p));
+            productsToAdd.ForEach(p => this.context.Products.Add(p));
             this.context.SaveChanges();
+        }
+
+        public bool ProductExistsByName(string productName)
+        {
+            if (string.IsNullOrEmpty(productName))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var productFound = this.context.Products
+                .FirstOrDefault(w => w.Name == productName);
+
+            return productFound != null;
         }
     }
 }

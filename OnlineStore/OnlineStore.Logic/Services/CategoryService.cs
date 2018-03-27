@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using OnlineStore.Data.Contracts;
-using OnlineStore.DTO;
 using OnlineStore.Logic.Contracts;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,10 @@ namespace OnlineStore.Logic.Services
 
         public CategoryModel FindCategoryByName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException();
+            }
             var category = context.Categories.FirstOrDefault(x => x.Name == name);
             if (category == null)
             {
@@ -55,7 +58,7 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<CategoryModel> GetAllCategories()
         {
-            return context.Categories.ProjectTo<CategoryModel>();
+            return this.context.Categories.ProjectTo<CategoryModel>();
         }
     }
 }

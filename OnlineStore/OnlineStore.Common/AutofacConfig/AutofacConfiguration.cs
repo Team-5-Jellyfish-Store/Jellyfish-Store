@@ -43,30 +43,23 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CourierService>().As<ICourierService>().SingleInstance();
             builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
             builder.RegisterType<TownService>().As<ITownService>().SingleInstance();
-
-            builder.RegisterType<UserService>().AsSelf().SingleInstance();
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<OrderService>().As<IOrderService>().SingleInstance();
             builder.Register(x => Mapper.Instance);
 
             //Commands
-            builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addProduct");
-            builder.RegisterType<ImportExternalDataCommand>().Named<ICommand>("import");
-            builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeProduct");
+            builder.RegisterType<AddProductToProductsCommand>().Named<ICommand>("addproduct");
+            builder.RegisterType<ImportExternalDataCommand>().Named<ICommand>("importexternaldata");
+            builder.RegisterType<RemoveProductFromProductsCommand>().Named<ICommand>("removeproduct");
             builder.RegisterType<LoginCommand>().Named<ICommand>("login");
             builder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             builder.RegisterType<RegisterUserCommand>().Named<ICommand>("register");
-            builder.RegisterType<PrintAvailableProductReportCommand>().Named<ICommand>("reportProducts");
-            builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportOrders");
-            builder.RegisterType<AddOrderCommand>().Named<ICommand>("addOrder");
+            builder.RegisterType<PrintAvailableProductReportCommand>().Named<ICommand>("reportproducts");
+            builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportorders");
+            builder.RegisterType<AddOrderCommand>().Named<ICommand>("addorder");
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
-
-            //Services
-            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
-            builder.RegisterType<AddressService>().As<IAddressService>().SingleInstance();
-            builder.RegisterType<OrderService>().As<IOrderService>().SingleInstance();
-
-            builder.Register(x => Mapper.Instance).SingleInstance();
         }
     }
 }

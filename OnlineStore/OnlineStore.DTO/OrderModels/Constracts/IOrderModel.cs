@@ -4,8 +4,6 @@ namespace OnlineStore.DTO.OrderModels.Constracts
 {
     public interface IOrderModel
     {
-        int ProductsCount { get; set; }
-
         string Comment { get; set; }
 
         DateTime OrderedOn { get; set; }

@@ -69,8 +69,8 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportorders");
             builder.RegisterType<AddOrderCommand>().Named<ICommand>("addorder");
 
-            builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
-            builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
+            builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchbycategory");
+            builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchbyname");
 
             //DTOs
             builder.RegisterType<CategoryModel>().As<ICategoryModel>();

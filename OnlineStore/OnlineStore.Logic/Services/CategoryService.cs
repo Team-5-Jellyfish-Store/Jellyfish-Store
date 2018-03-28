@@ -58,7 +58,7 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<ICategoryModel> GetAllCategories()
         {
-            return this.context.Categories.ProjectTo<ICategoryModel>();
+            return this.context.Categories.ProjectTo<CategoryModel>();
         }
     }
 }

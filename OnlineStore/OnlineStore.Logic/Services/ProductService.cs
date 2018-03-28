@@ -28,14 +28,14 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<IProductModel> GetAllProducts()
         {
-            return this.context.Products.ProjectTo<IProductModel>();
+            return this.context.Products.ProjectTo<ProductModel>();
         }
 
         public IEnumerable<IProductModel> GetProductsByCategoryName(string categoryName)
         {
             var filteredProducts = this.context.Products.Where(w => w.Category.Name == categoryName);
 
-            return filteredProducts.ProjectTo<IProductModel>();
+            return filteredProducts.ProjectTo<ProductModel>();
         }
 
         public void AddProduct(IProductImportModel productModel)
@@ -70,7 +70,7 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException("Product name is required!", nameof(name));
             }
 
-            var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!"); ;
+            var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");
 
             var productModel = mapper.Map<IProductModel>(product);
             return productModel;

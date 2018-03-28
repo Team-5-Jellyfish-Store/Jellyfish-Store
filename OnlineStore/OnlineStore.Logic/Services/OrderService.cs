@@ -76,7 +76,7 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<IOrderModel> GetAllOrders()
         {
-            return context.Orders.ProjectTo<IOrderModel>();
+            return context.Orders.ProjectTo<OrderModel>();
         }
     }
 }

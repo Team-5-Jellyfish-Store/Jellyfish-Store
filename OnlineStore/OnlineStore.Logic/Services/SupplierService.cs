@@ -36,7 +36,7 @@ namespace OnlineStore.Logic.Services
 
             var supplierFound = this.context.Suppliers
                 .Where(w => w.Name == name)
-                .ProjectTo<IProductModel>()
+                .ProjectTo<ProductModel>()
                 .FirstOrDefault();
 
             return supplierFound ?? throw new ArgumentException("Supplier with that name not found");

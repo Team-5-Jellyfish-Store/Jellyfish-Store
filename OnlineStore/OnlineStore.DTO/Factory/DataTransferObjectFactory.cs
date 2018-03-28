@@ -1,6 +1,8 @@
 ﻿using OnlineStore.DTO.OrderModels;
 using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 using OnlineStore.DTO.UserModels;
+using OnlineStore.DTO.UserModels.Contracts;
 using System;
 using System.Collections.Generic;
 
@@ -24,7 +26,7 @@ namespace OnlineStore.DTO.Factory
             };
         }
 
-        public ProductImportModel CreateProductImportModel(string productName, decimal purchasePrice, int quantity, string categoryName, string supplierName)
+        public IProductImportModel CreateProductImportModel(string productName, decimal purchasePrice, int quantity, string categoryName, string supplierName)
         {
             return new ProductImportModel()
             {
@@ -36,7 +38,7 @@ namespace OnlineStore.DTO.Factory
             };
         }
 
-        public UserRegisterModel CreateUserRegisterModel(string username, string email, string password, string firstName, string lastName, string townName, string addressText)
+        public IUserRegisterModel CreateUserRegisterModel(string username, string email, string password, string firstName, string lastName, string townName, string addressText)
         {
             if (firstName == string.Empty)
             {

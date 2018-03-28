@@ -5,7 +5,7 @@ using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO.SupplierModels
 {
-    public class SuppliersImportModel : IMapTo<Supplier>
+    public class SuppliersImportModel : ISuppliersImportModel, IMapTo<Supplier>
     {
         [Required]
         [MinLength(2, ErrorMessage = "Company name should be at least 2 characters")]

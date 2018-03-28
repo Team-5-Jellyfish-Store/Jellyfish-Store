@@ -4,6 +4,7 @@ using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.DTO.Factory;
 using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
 using System;
@@ -84,7 +85,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             //Act
             addProductCommand.ExecuteThisCommand();
             //Assert
-            fakeProductService.Verify(v => v.AddProduct(It.IsAny<ProductImportModel>()), Times.Once);
+            fakeProductService.Verify(v => v.AddProduct(It.IsAny<IProductImportModel>()), Times.Once);
         }
 
         [TestMethod]

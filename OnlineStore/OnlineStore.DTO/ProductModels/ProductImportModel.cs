@@ -2,10 +2,11 @@
 using AutoMapper;
 using OnlineStore.DTO.MappingContracts;
 using OnlineStore.Models.DataModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 
 namespace OnlineStore.DTO.ProductModels
 {
-    public class ProductImportModel : IMapTo<Product>, IHaveCustomMappings
+    public class ProductImportModel : IProductImportModel, IMapTo<Product>, IHaveCustomMappings
     {
         [Required]
         [StringLength(30, MinimumLength = 4)]
@@ -29,7 +30,7 @@ namespace OnlineStore.DTO.ProductModels
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            configuration.CreateMap<ProductImportModel, Product>()
+            configuration.CreateMap<IProductImportModel, Product>()
                 .ForMember(x => x.SellingPrice, cfg => cfg.MapFrom(x => x.PurchasePrice * 1.5m));
         }
     }

@@ -1,11 +1,12 @@
 ﻿using OnlineStore.DTO.UserModels;
+using OnlineStore.DTO.UserModels.Contracts;
 
 namespace OnlineStore.Logic.Contracts
 {
     public interface IUserService
     {
-        void RegisterUser(UserRegisterModel userRegisterModel);
+        void RegisterUser(IUserRegisterModel userRegisterModel);
 
-        UserLoginModel GetRegisteredUser(string userName);
+        IUserLoginModel GetRegisteredUser(string userName);
     }
 }

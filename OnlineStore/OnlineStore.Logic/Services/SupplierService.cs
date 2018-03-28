@@ -8,6 +8,7 @@ using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.SupplierModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 
 namespace OnlineStore.Logic.Services
 {
@@ -26,7 +27,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public ProductModel GetSupplierByName(string name)
+        public IProductModel GetSupplierByName(string name)
         {
             if (name == null)
             {
@@ -35,7 +36,7 @@ namespace OnlineStore.Logic.Services
 
             var supplierFound = this.context.Suppliers
                 .Where(w => w.Name == name)
-                .ProjectTo<ProductModel>()
+                .ProjectTo<IProductModel>()
                 .FirstOrDefault();
 
             return supplierFound ?? throw new ArgumentException("Supplier with that name not found");
@@ -55,7 +56,7 @@ namespace OnlineStore.Logic.Services
             return supplierFound != null;
         }
 
-        public void AddSupplierRange(IList<SuppliersImportModel> supplierModels)
+        public void AddSupplierRange(IList<ISuppliersImportModel> supplierModels)
         {
             if (supplierModels == null)
             {
@@ -66,7 +67,7 @@ namespace OnlineStore.Logic.Services
 
             foreach (var supplierModel in supplierModels)
             {
-                var supplierToAdd = this.mapper.Map<SuppliersImportModel, Supplier>(supplierModel);
+                var supplierToAdd = this.mapper.Map<ISuppliersImportModel, Supplier>(supplierModel);
 
                 if (!this.context.Towns.Any(x => x.Name == supplierModel.TownName))
                 {

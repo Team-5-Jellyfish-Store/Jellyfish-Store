@@ -24,7 +24,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddCourierRange(IList<CourierImportModel> courierModels)
+        public void AddCourierRange(IList<ICourierImportModel> courierModels)
         {
             if (courierModels == null)
             {
@@ -35,7 +35,7 @@ namespace OnlineStore.Logic.Services
 
             foreach (var courierModel in courierModels)
             {
-                var courierToAdd = this.mapper.Map<CourierImportModel, Courier>(courierModel);
+                var courierToAdd = this.mapper.Map<ICourierImportModel, Courier>(courierModel);
 
                 if (!this.context.Towns.Any(x => x.Name == courierModel.TownName))
                 {

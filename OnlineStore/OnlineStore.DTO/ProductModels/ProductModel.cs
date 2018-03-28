@@ -1,6 +1,8 @@
-﻿namespace OnlineStore.DTO.ProductModels
+﻿using OnlineStore.DTO.ProductModels.Contracts;
+
+namespace OnlineStore.DTO.ProductModels
 {
-    public class ProductModel
+    public class ProductModel : IProductModel
     {
         public string Name { get; set; }
 

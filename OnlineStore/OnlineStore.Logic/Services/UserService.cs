@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineStore.Data.Contracts;
 using OnlineStore.DTO.UserModels;
+using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Models.DataModels;
 using System;
@@ -19,7 +20,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void RegisterUser(UserRegisterModel userModel)
+        public void RegisterUser(IUserRegisterModel userModel)
         {
             if (userModel == null)
             {
@@ -49,7 +50,7 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public UserLoginModel GetRegisteredUser(string userName)
+        public IUserLoginModel GetRegisteredUser(string userName)
         {
             if (string.IsNullOrEmpty(userName))
             {
@@ -59,7 +60,7 @@ namespace OnlineStore.Logic.Services
             var userModel = this.context.Users.SingleOrDefault(x => x.Username == userName)
                 ?? throw new ArgumentException($"User with username {userName} don't exist!");
 
-            return this.mapper.Map<UserLoginModel>(userModel);
+            return this.mapper.Map<IUserLoginModel>(userModel);
         }
     }
 }

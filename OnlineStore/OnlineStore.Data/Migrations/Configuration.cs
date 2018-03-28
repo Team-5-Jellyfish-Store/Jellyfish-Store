@@ -1,12 +1,8 @@
-using OnlineStore.Models;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 
 namespace OnlineStore.Data.Migrations
 {
-    using OnlineStore.Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -41,6 +37,21 @@ namespace OnlineStore.Data.Migrations
                 };
                 context.Users.Add(adminUser);
                 context.Suppliers.Add(firstSupplier);
+                context.SaveChanges();
+
+                var demoClient = new User
+                {
+                    Username = "client1",
+                    Password = "C05D46B1DD08FEC5EF31770D187D09FC4A78EA881D65DB41AB2A86F0A3A718C6",
+                    FirstName = "Mara",
+                    LastName = "Hubavicata",
+                    EMail = "mara@mara.com",
+                    Role = UserRole.Client,
+                    ReferalUser = context.Users.First(),
+                    Address = new Address() { AddressText = "Carigradsko shose 1", Town = new Town() { Name = "Tutrakan" } }
+                };
+
+                context.Users.Add(demoClient);
                 context.SaveChanges();
             }
         }

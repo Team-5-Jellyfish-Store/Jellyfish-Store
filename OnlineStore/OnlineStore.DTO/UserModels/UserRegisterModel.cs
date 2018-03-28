@@ -2,157 +2,39 @@
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace OnlineStore.DTO.UserModels
 {
     public class UserRegisterModel : IMapTo<User>
     {
-        private readonly string emailPattern = @"^\S+@\S+$";
+        private const string emailPattern = @"^\S+@\S+$";
 
-        private string username;
-        private string email;
-        private string password;
-        private string firstName;
-        private string lastName;
-        private string addressText;
-        private string townName;
-        private UserRole role;
+        [Required(ErrorMessage = "Username is Required")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "Username must be between 5 and 20 characters long!")]
+        public string Username { get; set; }
 
-        public string Username
-        {
-            get
-            {
-                return this.username;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    throw new ArgumentException("Username is Required");
-                }
+        [Required(ErrorMessage = "Password is Required")]
+        public string Password { get; set; }
 
-                if (value.Length < 5 || value.Length > 20)
-                {
-                    throw new ArgumentException("Username must be between 5 and 20 characters long!");
-                }
+        [Required(ErrorMessage = "Email is Required")]
+        [StringLength(30, MinimumLength = 3)]
+        [RegularExpression(emailPattern, ErrorMessage = "Invalid email!")]
+        public string EMail { get; set; }
 
-                this.username = value;
-            }
-        }
+        [StringLength(30, MinimumLength = 2)]
+        public string FirstName { get; set; }
 
-        public string Password
-        {
-            get
-            {
-                return this.password;
-            }
-            set
-            {
-                this.password = value;
-            }
-        }
+        [StringLength(30, MinimumLength = 2)]
+        public string LastName { get; set; }
 
-        public string EMail
-        {
-            get
-            {
-                return this.email;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    throw new ArgumentException("Email is Required");
-                }
+        [Required(ErrorMessage = "Address is Required")]
+        public string AddressText { get; set; }
 
-                if (!Regex.IsMatch(value, emailPattern))
-                {
-                    throw new ArgumentException("Invalid email!");
-                }
+        [Required(ErrorMessage = "Town is Required")]
+        public string TownName { get; set; }
 
-                this.email = value;
-            }
-        }
-
-        public string FirstName
-        {
-            get
-            {
-                return this.firstName;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    value = null;
-                }
-
-                this.firstName = value;
-            }
-        }
-
-        public string LastName
-        {
-            get
-            {
-                return this.lastName;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    value = null;
-                }
-
-                this.lastName = value;
-            }
-        }
-
-        public string AddressText
-        {
-            get
-            {
-                return this.addressText;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    throw new ArgumentException("Address is Required");
-                }
-
-                this.addressText = value;
-            }
-        }
-
-        public string TownName
-        {
-            get
-            {
-                return this.townName;
-            }
-            set
-            {
-                if (value == string.Empty)
-                {
-                    throw new ArgumentException("Town is Required");
-                }
-
-                this.townName = value;
-            }
-        }
-
-        public UserRole Role
-        {
-            get
-            {
-                return this.role;
-            }
-            set
-            {
-                this.role = value;
-            }
-        }
+        public UserRole Role { get; set; }
     }
 }

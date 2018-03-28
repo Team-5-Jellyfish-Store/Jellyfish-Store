@@ -42,6 +42,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,6 +56,8 @@
   <ItemGroup>
     <Compile Include="CategoryModels\CategoryModel.cs" />
     <Compile Include="CourierModels\CourierImportModel.cs" />
+    <Compile Include="Factory\DataTransferObjectFactory.cs" />
+    <Compile Include="Factory\IDataTransferObjectFactory.cs" />
     <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
     <Compile Include="MappingContracts\IMapFrom.cs" />
     <Compile Include="MappingContracts\IMapTo.cs" />

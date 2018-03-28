@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using OnlineStore.DTO.OrderModels;
+using OnlineStore.DTO.OrderModels.Constracts;
 
 namespace OnlineStore.Logic.Services
 {
@@ -18,7 +19,7 @@ namespace OnlineStore.Logic.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void MakeOrder(OrderMakeModel orderModel)
+        public void MakeOrder(IOrderMakeModel orderModel)
         {
             if (orderModel == null)
             {
@@ -38,11 +39,9 @@ namespace OnlineStore.Logic.Services
                 User = user,
                 Courier = courier,
             };
-            this.context.Orders.Add(orderToAdd);
-            this.context.SaveChanges();
 
-            var order = this.context.Orders.FirstOrDefault(f => f.User.Username == orderModel.Username);
-            
+            this.context.Orders.Add(orderToAdd);
+
             var orderProducts = new List<OrderProduct>();
 
             foreach (var productNameAndCount in orderModel.ProductNameAndCounts)
@@ -60,7 +59,7 @@ namespace OnlineStore.Logic.Services
 
                 var orderProduct = new OrderProduct()
                 {
-                    Order = order,
+                    Order = orderToAdd,
                     Product = product,
                     ProductCount = productCount
                 };
@@ -72,12 +71,12 @@ namespace OnlineStore.Logic.Services
 
             orderProducts.ForEach(o => this.context.OrderProducts.Add(o));
 
-           this.context.SaveChanges();
+            this.context.SaveChanges();
         }
 
-        public IEnumerable<OrderModel> GetAllOrders()
+        public IEnumerable<IOrderModel> GetAllOrders()
         {
-            return context.Orders.ProjectTo<OrderModel>();
+            return context.Orders.ProjectTo<IOrderModel>();
         }
     }
 }

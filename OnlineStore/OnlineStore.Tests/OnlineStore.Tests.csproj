@@ -83,6 +83,7 @@
     <Compile Include="Commands\AddProductToProducts\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
     <Compile Include="Commands\ImportExternalData\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\RegisterUser\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\Constructor_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\ExecuteThisCommand_Should.cs" />
     <Compile Include="EngineTests\Constructor_Should.cs" />

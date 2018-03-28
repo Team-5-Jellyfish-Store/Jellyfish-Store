@@ -2,9 +2,11 @@
 using Moq;
 using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
+using OnlineStore.DTO.Factory;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
+using System;
 
 namespace OnlineStore.Tests.Commands.AddProductToProducts
 {
@@ -17,12 +19,13 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             //Arrange
             var fakeReader = new Mock<IReader>();
             var fakeWriter = new Mock<IWriter>();
+            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
             var fakeUserSession = new Mock<IUserSession>();
             var fakeProductService = new Mock<IProductService>();
             var fakeValidator = new Mock<IValidator>();
 
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedMessage = "Login first!";
 
             //Act
@@ -38,13 +41,14 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             //Arrange
             var fakeReader = new Mock<IReader>();
             var fakeWriter = new Mock<IWriter>();
+            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
             var fakeUserSession = new Mock<IUserSession>();
             var fakeProductService = new Mock<IProductService>();
             var fakeValidator = new Mock<IValidator>();
 
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(false);
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedMessage = "User is neither admin nor moderator and cannot add products!";
 
             //Act
@@ -68,13 +72,14 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
 
             var fakeWriter = new Mock<IWriter>();
             var fakeUserSession = new Mock<IUserSession>();
+            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
             var fakeProductService = new Mock<IProductService>();
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
 
             //Act
             addProductCommand.ExecuteThisCommand();
@@ -95,6 +100,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
                 .Returns("test");
 
             var fakeWriter = new Mock<IWriter>();
+            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
             var fakeUserSession = new Mock<IUserSession>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
@@ -102,12 +108,44 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
             var expectedResult = $"Product test added successfully!";
             //Act
             var actualResult = addProductCommand.ExecuteThisCommand();
             //Assert
             Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void Throw_ArgumentException_When_ProductModel_IsInvalid()
+        {
+            //Arrange
+            var fakeReader = new Mock<IReader>();
+            var fakeWriter = new Mock<IWriter>();
+            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
+            var fakeUserSession = new Mock<IUserSession>();
+            var fakeValidator = new Mock<IValidator>();
+            var fakeProductService = new Mock<IProductService>();
+
+            fakeReader.SetupSequence(s => s.Read())
+                .Returns("test")
+                .Returns("5.50")
+                .Returns("5")
+                .Returns("test")
+                .Returns("test");
+
+            fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(true);
+            fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
+
+            fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(false);
+
+            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
+
+            //Act
+            Action executingAddProductCmd = () => addProductCommand.ExecuteThisCommand();
+
+            //Assert
+            Assert.ThrowsException<ArgumentException>(executingAddProductCmd);
         }
     }
 }

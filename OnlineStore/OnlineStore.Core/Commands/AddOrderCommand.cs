@@ -1,8 +1,11 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Providers.Providers;
+using OnlineStore.DTO.Factory;
 using OnlineStore.DTO.OrderModels;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.Providers.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace OnlineStore.Core.Commands
@@ -13,19 +16,24 @@ namespace OnlineStore.Core.Commands
 
         private readonly string NoLoggedUserFailMessage = "Login first!";
         private readonly string NegativeProductCountFailMessage = "Product count cannot be negative!";
+        private readonly string InvalidValuesInModelFailMessage = "Invalid model! Please provide valid values!";
 
         private readonly IProductService productService;
         private readonly IOrderService orderService;
         private readonly IUserSession userSession;
+        private readonly IDataTransferObjectFactory dataTransferObjectFactory;
+        private readonly IValidator validator;
         private readonly IWriter writer;
         private readonly IReader reader;
         private readonly DatetimeProvider datetime;
 
-        public AddOrderCommand(IOrderService orderService, IProductService productService, IUserSession userSession, IWriter writer, IReader reader, DatetimeProvider datetime)
+        public AddOrderCommand(IOrderService orderService, IProductService productService, IUserSession userSession, IDataTransferObjectFactory dataTransferObjectFactory, IValidator validator, IWriter writer, IReader reader, DatetimeProvider datetime)
         {
             this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
+            this.dataTransferObjectFactory = dataTransferObjectFactory ?? throw new ArgumentNullException(nameof(dataTransferObjectFactory));
+            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
             this.datetime = datetime ?? throw new ArgumentNullException(nameof(datetime));
@@ -37,9 +45,10 @@ namespace OnlineStore.Core.Commands
             {
                 throw new ArgumentException(this.NoLoggedUserFailMessage);
             }
-
-            var orderModel = new OrderMakeModel();
+            
             var orderResult = new StringBuilder();
+
+            var productNameAndCounts = new Dictionary<string, int>();
 
             string productName = string.Empty;
             int productCount = new int();
@@ -50,19 +59,20 @@ namespace OnlineStore.Core.Commands
                 productName = this.reader.Read();
                 var product = this.productService.FindProductByName(productName);
 
-                if (!orderModel.ProductNameAndCounts.ContainsKey(product.Name))
+                if (!productNameAndCounts.ContainsKey(product.Name))
                 {
-                    orderModel.ProductNameAndCounts.Add(product.Name, 0);
+                    productNameAndCounts.Add(product.Name, 0);
                 }
 
                 this.writer.Write("Count: ");
                 productCount = int.Parse(this.reader.Read());
+
                 if (productCount < 1)
                 {
                     throw new ArgumentException(this.NegativeProductCountFailMessage);
                 }
 
-                orderModel.ProductNameAndCounts[product.Name] += productCount;
+                productNameAndCounts[product.Name] += productCount;
 
                 orderResult.AppendLine($"{product.Name}: {productCount}");
 
@@ -72,13 +82,17 @@ namespace OnlineStore.Core.Commands
 
             this.writer.Write("Comment: ");
             string comment = this.reader.Read();
-            orderModel.Comment = comment;
 
             var username = this.userSession.GetLoggedUserName();
-            orderModel.Username = username;
 
             var orderedOn = this.datetime.Now;
-            orderModel.OrderedOn = orderedOn;
+
+            var orderModel = this.dataTransferObjectFactory.CreateOrderMakeModel(productNameAndCounts, comment, username, orderedOn);
+
+            if (!this.validator.IsValid(orderModel))
+            {
+                throw new ArgumentException(this.InvalidValuesInModelFailMessage);
+            }
 
             this.orderService.MakeOrder(orderModel);
 

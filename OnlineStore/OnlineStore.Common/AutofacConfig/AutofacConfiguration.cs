@@ -8,6 +8,7 @@ using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers.Providers;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
+using OnlineStore.DTO.Factory;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Logic.Services;
 using OnlineStore.Providers.Contracts;
@@ -23,6 +24,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<CommandFactory>().As<ICommandFactory>();
             builder.RegisterType<CommandParser>().As<ICommandParser>();
             builder.RegisterType<CommandProcessor>().As<ICommandProcessor>();
+            builder.RegisterType<DataTransferObjectFactory>().As<IDataTransferObjectFactory>();
             builder.RegisterType<FileReader>().As<IFileReader>();
             builder.RegisterType<ConsoleReader>().As<IReader>();
             builder.RegisterType<ConsoleWriter>().As<IWriter>();

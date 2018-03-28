@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 
 namespace OnlineStore.Logic.Services
 {
@@ -14,15 +15,13 @@ namespace OnlineStore.Logic.Services
     {
         private readonly IOnlineStoreContext context;
         private readonly ICategoryService categoryService;
-        private readonly ISupplierService supplierService;
         private readonly IMapper mapper;
 
-        public ProductService(IOnlineStoreContext context, IMapper mapper, ICategoryService categoryService, ISupplierService supplierService)
+        public ProductService(IOnlineStoreContext context, IMapper mapper, ICategoryService categoryService)
         {
             this.context = context ?? throw new ArgumentNullException();
             this.mapper = mapper ?? throw new ArgumentNullException();
             this.categoryService = categoryService ?? throw new ArgumentNullException();
-            this.supplierService = supplierService ?? throw new ArgumentNullException();
         }
 
         public IEnumerable<ProductModel> GetAllProducts()
@@ -37,7 +36,7 @@ namespace OnlineStore.Logic.Services
             return filteredProducts.ProjectTo<ProductModel>();
         }
 
-        public void AddProduct(ProductImportModel productModel)
+        public void AddProduct(IProductImportModel productModel)
         {
             if (productModel == null)
             {
@@ -54,7 +53,7 @@ namespace OnlineStore.Logic.Services
             var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName)
                 ?? throw new ArgumentException("Supplier not found!");
 
-            var productToAdd = this.mapper.Map<ProductImportModel, Product>(productModel);
+            var productToAdd = this.mapper.Map<Product>(productModel);
             productToAdd.Category = category;
             productToAdd.Supplier = supplier;
 
@@ -62,16 +61,16 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public ProductModel FindProductByName(string name)
+        public IProductModel FindProductByName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Product name is required!", nameof(name));
             }
 
-            var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!"); ;
+            var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");
 
-            var productModel = mapper.Map<ProductModel>(product);
+            var productModel = mapper.Map<IProductModel>(product);
             return productModel;
         }
 
@@ -87,7 +86,7 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public void AddProductRange(IList<ProductImportModel> productModels)
+        public void AddProductRange(IList<IProductImportModel> productModels)
         {
             if (productModels == null)
             {
@@ -98,7 +97,7 @@ namespace OnlineStore.Logic.Services
 
             foreach (var productModel in productModels)
             {
-                var productToAdd = this.mapper.Map<ProductImportModel, Product>(productModel);
+                var productToAdd = this.mapper.Map<IProductImportModel, Product>(productModel);
 
                 if (!this.context.Categories.Any(x => x.Name == productModel.CategoryName))
                 {

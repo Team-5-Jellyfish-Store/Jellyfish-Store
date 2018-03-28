@@ -21,7 +21,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper;
         }
 
-        public CategoryModel FindCategoryByName(string name)
+        public ICategoryModel FindCategoryByName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -34,7 +34,7 @@ namespace OnlineStore.Logic.Services
 
             }
 
-            var categoryModel = this.mapper.Map<CategoryModel>(category);
+            var categoryModel = this.mapper.Map<ICategoryModel>(category);
             return categoryModel;
         }
 
@@ -56,7 +56,7 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public IEnumerable<CategoryModel> GetAllCategories()
+        public IEnumerable<ICategoryModel> GetAllCategories()
         {
             return this.context.Categories.ProjectTo<CategoryModel>();
         }

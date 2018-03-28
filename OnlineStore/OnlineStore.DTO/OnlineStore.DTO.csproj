@@ -55,18 +55,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryModels\CategoryModel.cs" />
+    <Compile Include="CategoryModels\ICategoryModel.cs" />
     <Compile Include="CourierModels\CourierImportModel.cs" />
+    <Compile Include="CourierModels\ICourierImportModel.cs" />
     <Compile Include="Factory\DataTransferObjectFactory.cs" />
     <Compile Include="Factory\IDataTransferObjectFactory.cs" />
     <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
     <Compile Include="MappingContracts\IMapFrom.cs" />
     <Compile Include="MappingContracts\IMapTo.cs" />
+    <Compile Include="OrderModels\Constracts\IOrderMakeModel.cs" />
+    <Compile Include="OrderModels\Constracts\IOrderModel.cs" />
     <Compile Include="OrderModels\OrderMakeModel.cs" />
     <Compile Include="OrderModels\OrderModel.cs" />
+    <Compile Include="ProductModels\Contracts\IProductImportModel.cs" />
+    <Compile Include="ProductModels\Contracts\IProductModel.cs" />
     <Compile Include="ProductModels\ProductImportModel.cs" />
     <Compile Include="ProductModels\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplierModels\ISuppliersImportModel.cs" />
     <Compile Include="SupplierModels\SuppliersImportModel.cs" />
+    <Compile Include="UserModels\Contracts\IUserLoginModel.cs" />
+    <Compile Include="UserModels\Contracts\IUserRegisterModel.cs" />
     <Compile Include="UserModels\UserLoginModel.cs" />
     <Compile Include="UserModels\UserRegisterModel.cs" />
   </ItemGroup>

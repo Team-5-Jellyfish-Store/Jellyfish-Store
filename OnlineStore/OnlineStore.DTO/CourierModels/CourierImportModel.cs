@@ -5,7 +5,7 @@ using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO.CourierModels
 {
-    public class CourierImportModel : IMapTo<Courier>
+    public class CourierImportModel : IMapTo<Courier>, ICourierImportModel
     {
         [Required]
         [MinLength(2, ErrorMessage = "First name should be atleast 2 characters")]

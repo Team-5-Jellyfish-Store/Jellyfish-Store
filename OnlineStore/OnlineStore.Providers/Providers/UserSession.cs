@@ -1,5 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.DTO.UserModels;
+using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Models.Enums;
 using System;
 
@@ -7,7 +8,7 @@ namespace OnlineStore.Core.Providers.Providers
 {
     public class UserSession : IUserSession
     {
-        private UserLoginModel loggedUser;
+        private IUserLoginModel loggedUser;
 
         public string GetLoggedUserName()
         {
@@ -34,7 +35,7 @@ namespace OnlineStore.Core.Providers.Providers
             return this.loggedUser != null;
         }
 
-        public void Login(UserLoginModel userToLogin)
+        public void Login(IUserLoginModel userToLogin)
         {
             if (this.loggedUser != null)
             {

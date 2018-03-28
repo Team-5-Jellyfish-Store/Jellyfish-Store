@@ -2,15 +2,12 @@
 using OnlineStore.Models.DataModels;
 using System;
 using AutoMapper;
+using OnlineStore.DTO.OrderModels.Constracts;
 
 namespace OnlineStore.DTO.OrderModels
 {
-    public class OrderModel : IMapFrom<Order>, IHaveCustomMappings
+    public class OrderModel : IMapFrom<Order>, IHaveCustomMappings, IOrderModel
     {
-        public int Id { get; set; }
-
-        public int ProductsCount { get; set; }
-
         public string Comment { get; set; }
 
         public DateTime OrderedOn { get; set; }

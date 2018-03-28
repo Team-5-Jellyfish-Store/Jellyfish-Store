@@ -3,11 +3,12 @@ using System.Text;
 using Newtonsoft.Json;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.DTO.CourierModels;
-using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.SupplierModels;
 using System;
 using OnlineStore.Core.Contracts;
+using OnlineStore.DTO.ProductModels;
 using OnlineStore.Providers.Contracts;
+using OnlineStore.DTO.ProductModels.Contracts;
 
 namespace OnlineStore.Logic.Services
 {
@@ -60,7 +61,7 @@ namespace OnlineStore.Logic.Services
             var importString = this.fileReader.ReadAllText(this.productsJSONPathString);
             var deserializedProducts = JsonConvert.DeserializeObject<ProductImportModel[]>(importString);
 
-            var validProducts = new List<ProductImportModel>();
+            var validProducts = new List<IProductImportModel>();
 
             foreach (var productDto in deserializedProducts)
             {
@@ -94,7 +95,7 @@ namespace OnlineStore.Logic.Services
             var suppliersImportString = this.fileReader.ReadAllText(this.suppliersJSONPathString);
             var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportModel[]>(suppliersImportString);
 
-            var validSupplierModels = new List<SuppliersImportModel>();
+            var validSupplierModels = new List<ISuppliersImportModel>();
 
             foreach (var supplierDto in deserializedSuppliers)
             {
@@ -128,7 +129,7 @@ namespace OnlineStore.Logic.Services
             var importCouriersResults = this.fileReader.ReadAllText(this.couriersJSONPathString);
             var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportModel[]>(importCouriersResults);
 
-            var validCouriers = new List<CourierImportModel>();
+            var validCouriers = new List<ICourierImportModel>();
 
             foreach (var courierDto in deserializedCouriers)
             {

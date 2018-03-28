@@ -1,4 +1,5 @@
 ﻿using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.ProductModels.Contracts;
 using System.Collections.Generic;
 
 namespace OnlineStore.Logic.Contracts
@@ -8,13 +9,13 @@ namespace OnlineStore.Logic.Contracts
         IEnumerable<ProductModel> GetAllProducts();
         IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName);
 
-        ProductModel FindProductByName(string name);
+        IProductModel FindProductByName(string name);
 
         void RemoveProductByName(string name);
 
-        void AddProduct(ProductImportModel product);
+        void AddProduct(IProductImportModel product);
 
-        void AddProductRange(IList<ProductImportModel> products);
+        void AddProductRange(IList<IProductImportModel> products);
 
         bool ProductExistsByName(string productName);
     }

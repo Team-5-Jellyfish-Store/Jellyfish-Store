@@ -1,7 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
 using System;
-using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.Core.Commands
 {

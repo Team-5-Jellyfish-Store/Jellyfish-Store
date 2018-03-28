@@ -7,9 +7,9 @@ namespace OnlineStore.Logic.Contracts
 {
     public interface ICategoryService
     {
-        IEnumerable<CategoryModel> GetAllCategories();
+        IEnumerable<ICategoryModel> GetAllCategories();
 
-        CategoryModel FindCategoryByName(string name);
+        ICategoryModel FindCategoryByName(string name);
         
         void Create(string name);
     }

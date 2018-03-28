@@ -1,13 +1,12 @@
 ﻿using OnlineStore.DTO.MappingContracts;
+using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 namespace OnlineStore.DTO.UserModels
 {
-    public class UserRegisterModel : IMapTo<User>
+    public class UserRegisterModel : IMapTo<User>, IUserRegisterModel
     {
         private const string emailPattern = @"^\S+@\S+$";
 

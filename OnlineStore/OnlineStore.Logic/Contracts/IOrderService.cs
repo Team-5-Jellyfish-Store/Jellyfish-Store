@@ -1,12 +1,13 @@
 ﻿using OnlineStore.DTO.OrderModels;
+using OnlineStore.DTO.OrderModels.Constracts;
 using System.Collections.Generic;
 
 namespace OnlineStore.Logic.Contracts
 {
     public interface IOrderService
     {
-        void MakeOrder(OrderMakeModel orderModel);
+        void MakeOrder(IOrderMakeModel orderModel);
 
-        IEnumerable<OrderModel> GetAllOrders();
+        IEnumerable<IOrderModel> GetAllOrders();
     }
 }

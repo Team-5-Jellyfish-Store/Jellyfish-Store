@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OnlineStore.DTO.OrderModels.Constracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore.DTO.OrderModels
 {
-    public class OrderMakeModel
+    public class OrderMakeModel : IOrderMakeModel
     {
         public OrderMakeModel()
         {

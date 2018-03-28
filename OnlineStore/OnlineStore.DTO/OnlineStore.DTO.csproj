@@ -63,6 +63,7 @@
     <Compile Include="MappingContracts\IHaveCustomMappings.cs" />
     <Compile Include="MappingContracts\IMapFrom.cs" />
     <Compile Include="MappingContracts\IMapTo.cs" />
+    <Compile Include="OrderModels\IOrderMakeModel.cs" />
     <Compile Include="OrderModels\OrderMakeModel.cs" />
     <Compile Include="OrderModels\OrderModel.cs" />
     <Compile Include="ProductModels\Contracts\IProductImportModel.cs" />

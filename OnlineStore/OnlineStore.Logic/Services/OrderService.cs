@@ -31,8 +31,18 @@ namespace OnlineStore.Logic.Services
             var courier = this.context.Couriers.FirstOrDefault()
                 ?? throw new ArgumentException("No couriers found!");
 
-            var order = new Order();
+            var orderToAdd = new Order()
+            {
+                Comment = orderModel.Comment,
+                OrderedOn = orderModel.OrderedOn,
+                User = user,
+                Courier = courier,
+            };
+            this.context.Orders.Add(orderToAdd);
+            this.context.SaveChanges();
 
+            var order = this.context.Orders.FirstOrDefault(f => f.User.Username == orderModel.Username);
+            
             var orderProducts = new List<OrderProduct>();
 
             foreach (var productNameAndCount in orderModel.ProductNameAndCounts)
@@ -60,13 +70,7 @@ namespace OnlineStore.Logic.Services
                 product.Quantity -= productCount;
             }
 
-            order.OrderProducts = orderProducts;
-            order.Comment = orderModel.Comment;
-            order.OrderedOn = orderModel.OrderedOn;
-            order.User = user;
-            order.Courier = courier;
-
-            user.Orders.Add(order);
+            orderProducts.ForEach(o => this.context.OrderProducts.Add(o));
 
            this.context.SaveChanges();
         }

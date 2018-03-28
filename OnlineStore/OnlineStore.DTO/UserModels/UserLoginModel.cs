@@ -5,7 +5,7 @@ using OnlineStore.Models.Enums;
 
 namespace OnlineStore.DTO.UserModels
 {
-    public class UserLoginModel : IUserLoginModel, IMapFrom<User>
+    public class UserLoginModel : IMapFrom<User>, IUserLoginModel
     {
         public string Username { get; set; }
         public string Password { get; set; }

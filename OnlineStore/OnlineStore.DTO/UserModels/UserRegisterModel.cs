@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace OnlineStore.DTO.UserModels
 {
-    public class UserRegisterModel : IUserRegisterModel, IMapTo<User>
+    public class UserRegisterModel : IMapTo<User>, IUserRegisterModel
     {
         private const string emailPattern = @"^\S+@\S+$";
 

@@ -8,7 +8,16 @@ using OnlineStore.Core.Factories;
 using OnlineStore.Core.Providers.Providers;
 using OnlineStore.Data;
 using OnlineStore.Data.Contracts;
+using OnlineStore.DTO.CategoryModels;
+using OnlineStore.DTO.CourierModels;
 using OnlineStore.DTO.Factory;
+using OnlineStore.DTO.OrderModels;
+using OnlineStore.DTO.OrderModels.Constracts;
+using OnlineStore.DTO.ProductModels;
+using OnlineStore.DTO.ProductModels.Contracts;
+using OnlineStore.DTO.SupplierModels;
+using OnlineStore.DTO.UserModels;
+using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Logic.Services;
 using OnlineStore.Providers.Contracts;
@@ -62,6 +71,17 @@ namespace OnlineStore.App.AutofacConfig
 
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchByCategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchByName");
+
+            //DTOs
+            builder.RegisterType<CategoryModel>().As<ICategoryModel>();
+            builder.RegisterType<CourierImportModel>().As<ICourierImportModel>();
+            builder.RegisterType<OrderModel>().As<IOrderModel>();
+            builder.RegisterType<OrderMakeModel>().As<IOrderMakeModel>();
+            builder.RegisterType<ProductImportModel>().As<IProductImportModel>();
+            builder.RegisterType<ProductModel>().As<IProductModel>();
+            builder.RegisterType<SuppliersImportModel>().As<ISuppliersImportModel>();
+            builder.RegisterType<UserLoginModel>().As<IUserLoginModel>();
+            builder.RegisterType<UserRegisterModel>().As<IUserRegisterModel>();
         }
     }
 }

@@ -6,7 +6,7 @@ using OnlineStore.DTO.ProductModels.Contracts;
 
 namespace OnlineStore.DTO.ProductModels
 {
-    public class ProductImportModel : IProductImportModel, IMapTo<Product>, IHaveCustomMappings
+    public class ProductImportModel : IMapTo<Product>, IHaveCustomMappings, IProductImportModel
     {
         [Required]
         [StringLength(30, MinimumLength = 4)]

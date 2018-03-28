@@ -1,4 +1,5 @@
 ﻿using OnlineStore.DTO.OrderModels;
+using OnlineStore.DTO.OrderModels.Constracts;
 using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.ProductModels.Contracts;
 using OnlineStore.DTO.UserModels;
@@ -10,7 +11,7 @@ namespace OnlineStore.DTO.Factory
 {
     public class DataTransferObjectFactory : IDataTransferObjectFactory
     {
-        public OrderMakeModel CreateOrderMakeModel(IDictionary<string, int> productNameAndCounts, string comment, string username, DateTime orderedOn)
+        public IOrderMakeModel CreateOrderMakeModel(IDictionary<string, int> productNameAndCounts, string comment, string username, DateTime orderedOn)
         {
             if (comment == string.Empty)
             {

@@ -103,8 +103,15 @@
     <Compile Include="Mocks\MockImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ImportService\Constructor_Should.cs" />
+    <Compile Include="Services\ImportService\ImportCouriers_Should.cs" />
     <Compile Include="Services\ImportService\ImportProducts_Should.cs" />
+    <Compile Include="Services\ImportService\ImportSuppliers_Should.cs" />
     <Compile Include="Services\ImportService\Import_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeCouriers_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeProducts_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeSuppliers_Should.cs" />
+    <Compile Include="Services\OrderService\Constructor_Should.cs" />
+    <Compile Include="Services\OrderService\MakeOrder_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -60,11 +60,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new ProductImportModel[1]{ new ProductImportModel()
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             }});
             var fakeFileReader = new Mock<IFileReader>();
             var mockValidator = new Mock<IValidator>();

@@ -23,11 +23,7 @@ namespace OnlineStore.Core.Commands
 
         public string ExecuteThisCommand()
         {
-            if (!this.userSession.HasSomeoneLogged())
-            {
-                return "Login first!";
-            }
-
+           
             if (this.userSession.HasAdminRights())
             {
                 var orders = orderService.GetAllOrders();

@@ -56,6 +56,7 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<TownService>().As<ITownService>();
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<OrderService>().As<IOrderService>();
+            builder.RegisterType<JsonService>().As<IJsonService>();
             builder.Register(x => Mapper.Instance);
 
             //Commands

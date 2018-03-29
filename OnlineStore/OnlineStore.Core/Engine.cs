@@ -37,7 +37,8 @@ namespace OnlineStore.Core
 
         public void Run()
         {
-            this.writer.WriteLine(this.fileReader.ReadAllText("../../../Datasets/WellcomeText.txt"));
+            string welcomeText = this.fileReader.ReadAllText("../../../Datasets/WellcomeText.txt");
+            this.writer.WriteLine(welcomeText);
 
             while (true)
             {

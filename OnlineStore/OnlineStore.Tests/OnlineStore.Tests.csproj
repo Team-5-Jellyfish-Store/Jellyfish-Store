@@ -96,7 +96,11 @@
     <Compile Include="Mocks\MockCommandFactory.cs" />
     <Compile Include="Mocks\MockCommandParser.cs" />
     <Compile Include="Mocks\MockEngine.cs" />
+    <Compile Include="Mocks\MockImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ImportService\Constructor_Should.cs" />
+    <Compile Include="Services\ImportService\ImportProducts_Should.cs" />
+    <Compile Include="Services\ImportService\Import_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

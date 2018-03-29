@@ -1,5 +1,4 @@
 ﻿using System;
-using Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Core.Commands.AdminCommands;
@@ -32,6 +31,7 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
             Assert.ThrowsException<ArgumentNullException>(() => new ImportExternalDataCommand(fakeImportService.Object, null ));
 
         }
+
         [TestMethod]
         public void Throw_WhenImportServiceIsNull()
         {
@@ -41,8 +41,6 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
 
             //Act && Assert
             Assert.ThrowsException<ArgumentNullException>(() => new ImportExternalDataCommand(null, fakeUserSession.Object));
-
         }
-
     }
 }

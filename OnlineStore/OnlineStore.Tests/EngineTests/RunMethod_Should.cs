@@ -9,6 +9,27 @@ namespace OnlineStore.Tests.EngineTests
     public class RunMethod_Should
     {
         [TestMethod]
+        public void InvokeFileReader_WhenProvidedValidParameter()
+        {
+            //Arrange
+            var fakeParser = new Mock<ICommandParser>();
+            var fakeProcessor = new Mock<ICommandProcessor>();
+            var fakeWriter = new Mock<IWriter>();
+            var fakeReader = new Mock<IReader>();
+            fakeReader.SetupSequence(s => s.Read()).Returns("login").Returns("exit");
+            var fakeCommand = new Mock<ICommand>();
+            var mockFileReader = new Mock<IFileReader>();
+            fakeParser.Setup(s => s.ParseCommand(It.IsAny<string>())).Returns(fakeCommand.Object);
+
+            //Act
+            IEngine engine = new Engine(fakeParser.Object, fakeProcessor.Object, fakeWriter.Object, fakeReader.Object, mockFileReader.Object);
+            engine.Run();
+
+            //Assert
+            mockFileReader.Verify(v => v.ReadAllText(It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
         public void InvokeParser_WhenProvidedValidParameter()
         {
             //Arrange

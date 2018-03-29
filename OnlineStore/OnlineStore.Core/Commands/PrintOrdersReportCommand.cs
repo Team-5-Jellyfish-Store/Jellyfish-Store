@@ -2,6 +2,7 @@
 using iTextSharp.text.pdf;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
+using OnlineStore.Providers.Contracts;
 using System;
 using System.IO;
 
@@ -11,11 +12,13 @@ namespace OnlineStore.Core.Commands
     {
         private readonly IOrderService orderService;
         private readonly IUserSession userSession;
+        private readonly IPDFExporter pdfExporter;
 
-        public PrintOrdersReportCommand(IOrderService orderService, IUserSession userSession)
+        public PrintOrdersReportCommand(IOrderService orderService, IUserSession userSession, IPDFExporter pdfExporter)
         {
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             this.userSession = userSession ?? throw new ArgumentNullException(nameof(userSession));
+            this.pdfExporter = pdfExporter ?? throw new ArgumentNullException(nameof(pdfExporter));
         }
 
         public string ExecuteThisCommand()
@@ -28,35 +31,7 @@ namespace OnlineStore.Core.Commands
             if (this.userSession.HasAdminRights())
             {
                 var orders = orderService.GetAllOrders();
-                string uniqueName =
-                    ($"y{DateTime.Now.Year}m{DateTime.Now.Month}d{DateTime.Now.Day}" +
-                    $"h{DateTime.Now.Hour}m{DateTime.Now.Minute}s{DateTime.Now.Second}.pdf");
-
-                string fileName = $"../../../OnlineStore.Core/PDFReports/OrdersReport{uniqueName}";
-                FileStream fs = new FileStream(fileName, FileMode.Create);
-                // Create an instance of the document class which represents the PDF document itself.
-                Document document = new Document(PageSize.A4, 25, 25, 30, 30);
-                // Create an instance to the PDF file by creating an instance of the PDF 
-                // Writer class using the document and the filestrem in the constructor.
-                PdfWriter writer = PdfWriter.GetInstance(document, fs);
-                document.AddSubject("This is a PDF showing current orders");
-                // Open the document to enable you to write to the document
-
-                document.Open();
-                // Add a simple and wellknown phrase to the document in a flow layout manner
-                document.Add(new Paragraph("Those are the current orders:"));
-                document.Add(new Paragraph(" Comment / ClientName / ItemDeliveredOn"));
-                foreach (var item in orders)
-                {
-                    document.Add(new Paragraph($"{item.Comment} {item.Username} {item.DeliveredOn}"));
-                }
-
-                // Close the document
-                document.Close();
-                // Close the writer instance
-                writer.Close();
-                // Always close open filehandles explicity
-                fs.Close();
+                pdfExporter.ExportOrders(orders);
                 return "Exported orders successful";
             }
             return "User must be admin or moderator in order to export data!";

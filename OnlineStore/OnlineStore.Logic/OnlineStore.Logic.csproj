@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IJsonService.cs" />
     <Compile Include="Contracts\ITownService.cs" />
     <Compile Include="Services\AddressService.cs" />
     <Compile Include="Services\CategoryService.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Contracts\IOrderService.cs" />
     <Compile Include="Contracts\IProductService.cs" />
     <Compile Include="Contracts\ISupplierService.cs" />
+    <Compile Include="Services\JsonService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Contracts\IUserService.cs" />

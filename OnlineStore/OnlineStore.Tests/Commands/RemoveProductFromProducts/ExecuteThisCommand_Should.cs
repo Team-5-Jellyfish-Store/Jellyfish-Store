@@ -84,7 +84,7 @@ namespace OnlineStore.Tests.Commands.RemoveProductFromProducts
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
             var removeProductCommand = new RemoveProductFromProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
-            var expectedResult = $"Product test removed successfully!";
+            var expectedResult = "Product test removed successfully!";
             //Act
             var actualResult = removeProductCommand.ExecuteThisCommand();
             //Assert

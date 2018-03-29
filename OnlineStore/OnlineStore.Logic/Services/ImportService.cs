@@ -20,46 +20,52 @@ namespace OnlineStore.Logic.Services
         private readonly string suppliersJSONPathString = "../../../Datasets/Suppliers.json";
         private readonly string couriersJSONPathString = "../../../Datasets/Couriers.json";
 
+        private Func<string> ImportSuppliersFunction => this.ImportSuppliers;
+        private Func<string> ImportCouriersFunction => this.ImportCouriers;
+        private Func<string> ImportProductsFunction => this.ImportProducts;
+
         private readonly ISupplierService supplierService;
         private readonly IFileReader fileReader;
         private readonly IValidator validator;
         private readonly IProductService productService;
         private readonly ICourierService courierService;
+        private readonly IJsonService jsonService;
 
-        public ImportService(IProductService productService, ICourierService courierService, ISupplierService supplierService, IFileReader fileReader, IValidator validator)
+        public ImportService(IProductService productService, ICourierService courierService, ISupplierService supplierService, IFileReader fileReader, IValidator validator, IJsonService jsonService)
         {
             this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
             this.courierService = courierService ?? throw new ArgumentNullException(nameof(courierService));
             this.supplierService = supplierService ?? throw new ArgumentNullException(nameof(supplierService));
             this.fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
             this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            this.jsonService = jsonService ?? throw new ArgumentNullException(nameof(validator));
         }
 
         public string Import()
         {
             var importResults = new StringBuilder();
 
-            var supplierImportResults = ImportSuppliers();
+            var supplierImportResults = ImportSuppliersFunction();
 
             importResults.AppendLine(supplierImportResults);
 
-            var courierImportResults = ImportCouriers();
+            var courierImportResults = ImportCouriersFunction();
 
             importResults.AppendLine(courierImportResults);
 
-            var productImportResults = ImportProducts();
+            var productImportResults = ImportProductsFunction();
 
             importResults.AppendLine(productImportResults);
 
             return importResults.ToString().Trim();
         }
 
-        protected string ImportProducts()
+        protected virtual string ImportProducts()
         {
             var importProductsResults = new StringBuilder();
 
-            var importString = this.fileReader.ReadAllText(this.productsJSONPathString);
-            var deserializedProducts = JsonConvert.DeserializeObject<ProductImportModel[]>(importString);
+            var importProductString = this.fileReader.ReadAllText(this.productsJSONPathString);
+            var deserializedProducts = this.jsonService.DeserializeProducts(importProductString);
 
             var validProducts = new List<IProductImportModel>();
 
@@ -88,12 +94,12 @@ namespace OnlineStore.Logic.Services
             return importProductsResults.ToString();
         }
 
-        protected string ImportSuppliers()
+        protected virtual string ImportSuppliers()
         {
             var importSuppliersResults = new StringBuilder();
 
             var suppliersImportString = this.fileReader.ReadAllText(this.suppliersJSONPathString);
-            var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportModel[]>(suppliersImportString);
+            var deserializedSuppliers = this.jsonService.DeserializeSuppliers(suppliersImportString);
 
             var validSupplierModels = new List<ISuppliersImportModel>();
 
@@ -122,12 +128,12 @@ namespace OnlineStore.Logic.Services
             return importSuppliersResults.ToString();
         }
 
-        protected string ImportCouriers()
+        protected virtual string ImportCouriers()
         {
             var importCourierResults = new StringBuilder();
 
-            var importCouriersResults = this.fileReader.ReadAllText(this.couriersJSONPathString);
-            var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportModel[]>(importCouriersResults);
+            var importCouriersString = this.fileReader.ReadAllText(this.couriersJSONPathString);
+            var deserializedCouriers = this.jsonService.DeserializeCouriers(importCouriersString);
 
             var validCouriers = new List<ICourierImportModel>();
 

@@ -3,7 +3,6 @@ using Moq;
 using OnlineStore.Core.Commands.AdminCommands;
 using OnlineStore.Core.Contracts;
 using OnlineStore.DTO.Factory;
-using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.ProductModels.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
@@ -110,7 +109,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
             fakeUserSession.Setup(s => s.HasAdminRights()).Returns(true);
 
             var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
-            var expectedResult = $"Product test added successfully!";
+            var expectedResult = "Product test added successfully!";
             //Act
             var actualResult = addProductCommand.ExecuteThisCommand();
             //Assert
@@ -118,7 +117,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_ArgumentException_When_ProductModel_IsInvalid()
+        public void ThrowArgumentException_WhenProductModelIsInvalid()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();

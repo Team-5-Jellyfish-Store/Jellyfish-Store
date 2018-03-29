@@ -28,7 +28,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenReaderIsNull()
+        public void ThrowArgumentNullException_WhenReaderIsNull()
         {
             //Arrange
             var fakeWriter = new Mock<IWriter>();
@@ -44,7 +44,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenWriterIsNull()
+        public void ThrowArgumentNullException_WhenWriterIsNull()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();
@@ -58,7 +58,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenUserSessionIsNull()
+        public void ThrowArgumentNullException_WhenUserSessionIsNull()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();
@@ -72,7 +72,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenProductServiceIsNull()
+        public void ThrowArgumentNullException_WhenProductServiceIsNull()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();
@@ -87,7 +87,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenValidatorIsNull()
+        public void ThrowArgumentNullException_WhenValidatorIsNull()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();
@@ -102,7 +102,7 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
         }
 
         [TestMethod]
-        public void Throw_WhenDTOFactoryIsNull()
+        public void ThrowArgumentNullException_WhenDTOFactoryIsNull()
         {
             //Arrange
             var fakeReader = new Mock<IReader>();

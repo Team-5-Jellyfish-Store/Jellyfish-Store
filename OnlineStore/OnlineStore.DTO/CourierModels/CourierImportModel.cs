@@ -5,7 +5,7 @@ using OnlineStore.Models.DataModels;
 
 namespace OnlineStore.DTO.CourierModels
 {
-    public class CourierImportModel : IMapTo<Courier>, ICourierImportModel
+    public class CourierImportModel : IMapTo<Courier>, IHaveCustomMappings, ICourierImportModel
     {
         [Required]
         [MinLength(2, ErrorMessage = "First name should be atleast 2 characters")]
@@ -23,10 +23,17 @@ namespace OnlineStore.DTO.CourierModels
 
         [Required]
         [StringLength(60, MinimumLength = 4)]
-        public string AddressText { get; set; }
+        public string Address { get; set; }
 
         [Required]
         [StringLength(30, MinimumLength = 2)]
-        public string TownName { get; set; }
+        public string Town { get; set; }
+
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<CourierImportModel, Courier>()
+                .ForPath(x => x.Address.AddressText, cfg => cfg.MapFrom(x => x.Address))
+                .ForPath(x => x.Address.Town.Name, cfg => cfg.MapFrom(x => x.Town));
+        }
     }
 }

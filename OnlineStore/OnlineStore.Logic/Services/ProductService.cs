@@ -48,9 +48,9 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException($"Product {productModel.Name} already exists!");
             }
 
-            var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.CategoryName)
+            var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.Category)
                 ?? throw new ArgumentException("Category not found!");
-            var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName)
+            var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.Supplier)
                 ?? throw new ArgumentException("Supplier not found!");
 
             var productToAdd = this.mapper.Map<Product>(productModel);
@@ -99,12 +99,12 @@ namespace OnlineStore.Logic.Services
             {
                 var productToAdd = this.mapper.Map<IProductImportModel, Product>(productModel);
 
-                if (!this.context.Categories.Any(x => x.Name == productModel.CategoryName))
+                if (!this.context.Categories.Any(x => x.Name == productModel.Category))
                 {
-                    this.categoryService.Create(productModel.CategoryName);
+                    this.categoryService.Create(productModel.Category);
                 }
-                var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.CategoryName);
-                var supplier = this.context.Suppliers.FirstOrDefault(x => x.Name == productModel.SupplierName);
+                var category = this.context.Categories.SingleOrDefault(x => x.Name == productModel.Category);
+                var supplier = this.context.Suppliers.FirstOrDefault(x => x.Name == productModel.Supplier);
                 productToAdd.Category = category;
                 productToAdd.Supplier = supplier ?? throw new ArgumentException("Supplier not found!");
 

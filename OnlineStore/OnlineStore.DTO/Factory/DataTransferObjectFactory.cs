@@ -34,8 +34,8 @@ namespace OnlineStore.DTO.Factory
                 Name = productName,
                 PurchasePrice = purchasePrice,
                 Quantity = quantity,
-                CategoryName = categoryName,
-                SupplierName = supplierName
+                Category = categoryName,
+                Supplier = supplierName
             };
         }
 

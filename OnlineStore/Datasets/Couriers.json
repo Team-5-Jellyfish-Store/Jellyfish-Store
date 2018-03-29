@@ -2,21 +2,21 @@
   {
     "FirstName": "Pesho",
     "LastName": "Goshov",
-    "AddressText": "Morska gara 1",
-    "TownName": "Varna",
+    "Address": "Morska gara 1",
+    "Town": "Varna",
     "Phone": "+35929876543"
   },
   {
     "FirstName": "Zahari",
     "LastName": "Bahari",
-    "AddressText": "Pechena batka 2",
-    "TownName": "Burgas",
+    "Address": "Pechena batka 2",
+    "Town": "Burgas",
     "Phone": "+35929876542"
   },
   {
     "LastName": "Pesho",
-    "AddressText": "Maina maina 2",
-    "TownName": "Asenovgrad",
+    "Address": "Maina maina 2",
+    "Town": "Asenovgrad",
     "Phone": "+35929876542"
   }
 ]

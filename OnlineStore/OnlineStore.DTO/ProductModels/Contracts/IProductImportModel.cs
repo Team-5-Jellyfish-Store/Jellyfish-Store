@@ -10,8 +10,8 @@ namespace OnlineStore.DTO.ProductModels.Contracts
 
         int Quantity { get; set; }
 
-        string CategoryName { get; set; }
+        string Category { get; set; }
 
-        string SupplierName { get; set; }
+        string Supplier { get; set; }
     }
 }

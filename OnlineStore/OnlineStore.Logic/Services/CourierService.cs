@@ -37,17 +37,17 @@ namespace OnlineStore.Logic.Services
             {
                 var courierToAdd = this.mapper.Map<ICourierImportModel, Courier>(courierModel);
 
-                if (!this.context.Towns.Any(x => x.Name == courierModel.TownName))
+                if (!this.context.Towns.Any(x => x.Name == courierModel.Town))
                 {
-                    this.townService.Create(courierModel.TownName);
+                    this.townService.Create(courierModel.Town);
                 }
-                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courierModel.TownName);
+                var supplierTown = this.context.Towns.SingleOrDefault(x => x.Name == courierModel.Town);
 
-                if (!this.context.Addresses.Any(x => x.AddressText == courierModel.AddressText && x.Town.Name == courierModel.TownName))
+                if (!this.context.Addresses.Any(x => x.AddressText == courierModel.Address && x.Town.Name == courierModel.Town))
                 {
-                    this.addressService.Create(courierModel.AddressText, supplierTown.Name);
+                    this.addressService.Create(courierModel.Address, supplierTown.Name);
                 }
-                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courierModel.AddressText && x.Town.Name == courierModel.TownName);
+                var courierAddress = this.context.Addresses.FirstOrDefault(x => x.AddressText == courierModel.Address && x.Town.Name == courierModel.Town);
 
                 courierToAdd.Address = courierAddress;
 

@@ -88,11 +88,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[]{ new ProductImportModel
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             }});
             var fakeFileReader = new Mock<IFileReader>();
             var mockValidator = new Mock<IValidator>();
@@ -117,11 +117,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[]{ new ProductImportModel
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             }});
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
@@ -146,11 +146,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[]{ new ProductImportModel
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             }});
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
@@ -208,11 +208,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             var fakeProduct = new ProductImportModel
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             };
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
             var fakeFileReader = new Mock<IFileReader>();
@@ -240,11 +240,11 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeJsonService = new Mock<IJsonService>();
             var fakeProduct = new ProductImportModel
             {
-                CategoryName = "test",
+                Category = "test",
                 Name = "test",
                 PurchasePrice = 5.5m,
                 Quantity = 1,
-                SupplierName = "Pesho"
+                Supplier = "Pesho"
             };
             fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
             var fakeFileReader = new Mock<IFileReader>();

@@ -71,6 +71,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
             string username = "testUser";
             string email = "test@Mail";
             string password = "testpassword";
+            string hashMock = "someHash";
             string firstName = "";
             string lastName = "";
             string town = "testTown";
@@ -88,9 +89,11 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, password, firstName, lastName, town, address)).Returns(userModelStub.Object);
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address)).Returns(userModelStub.Object);
 
             validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
@@ -104,13 +107,61 @@ namespace OnlineStore.Tests.Commands.RegisterUser
                 .Returns(town)
                 .Returns(address);
 
-            //readerMock.Setup(r => r.Read()).Verifiable();
-
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
             readerMock.Verify(r => r.Read(), Times.Exactly(8));
+        }
+
+        [TestMethod]
+        public void Invoke_Hasher_CreatePasswordMethod_When_()
+        {
+            // Arrange
+            string username = "testUser";
+            string email = "test@Mail";
+            string password = "testpassword";
+            string hashMock = "someHash";
+            string firstName = "";
+            string lastName = "";
+            string town = "testTown";
+            string address = "testAddress";
+
+            var userSessionMock = new Mock<IUserSession>();
+            var userServiceStub = new Mock<IUserService>();
+            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
+            var validatorMock = new Mock<IValidator>();
+            var writerStub = new Mock<IWriter>();
+            var readerMock = new Mock<IReader>();
+            var hasherMock = new Mock<IHasher>();
+
+            var userModelStub = new Mock<IUserRegisterModel>();
+
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address)).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+
+            readerMock.SetupSequence(r => r.Read())
+                .Returns(username)
+                .Returns(email)
+                .Returns(password)
+                .Returns(password)
+                .Returns(firstName)
+                .Returns(lastName)
+                .Returns(town)
+                .Returns(address);
+
+            // Act
+            registerUserCmd.ExecuteThisCommand();
+
+            // Assert
+            hasherMock.Verify(h => h.CreatePassword(password), Times.Once);
         }
     }
 }

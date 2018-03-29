@@ -40,6 +40,8 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<Hasher>().As<IHasher>();
             builder.RegisterType<Validator>().As<IValidator>();
             builder.RegisterType<DatetimeProvider>().AsSelf();
+            builder.RegisterType<PDFExporter>().As<IPDFExporter>();
+
 
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();
             builder.RegisterType<UserSession>().As<IUserSession>().SingleInstance();

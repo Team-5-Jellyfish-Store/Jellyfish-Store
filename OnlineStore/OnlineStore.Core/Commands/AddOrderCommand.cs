@@ -1,7 +1,6 @@
 ﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Core.Providers.Providers;
 using OnlineStore.DTO.Factory;
-using OnlineStore.DTO.OrderModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
 using System;
@@ -51,7 +50,7 @@ namespace OnlineStore.Core.Commands
             var productNameAndCounts = new Dictionary<string, int>();
 
             string productName = string.Empty;
-            int productCount = new int();
+            int productCount = 0;
             string moreProducts = string.Empty;
             do
             {

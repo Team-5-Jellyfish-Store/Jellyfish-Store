@@ -1,4 +1,6 @@
-﻿namespace OnlineStore.DTO.ProductModels.Contracts
+﻿using AutoMapper;
+
+namespace OnlineStore.DTO.ProductModels.Contracts
 {
     public interface IProductImportModel
     {

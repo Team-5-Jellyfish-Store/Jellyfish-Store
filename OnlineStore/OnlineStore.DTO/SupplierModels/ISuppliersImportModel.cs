@@ -6,8 +6,8 @@
 
         string Phone { get; set; }
 
-        string AddressText { get; set; }
+        string Address { get; set; }
 
-        string TownName { get; set; }
+        string Town { get; set; }
     }
 }

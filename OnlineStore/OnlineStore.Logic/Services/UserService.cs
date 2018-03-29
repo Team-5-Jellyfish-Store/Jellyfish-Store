@@ -13,11 +13,15 @@ namespace OnlineStore.Logic.Services
     {
         private readonly IOnlineStoreContext context;
         private readonly IMapper mapper;
+        private readonly ITownService townService;
+        private readonly IAddressService addressService;
 
-        public UserService(IOnlineStoreContext context, IMapper mapper)
+        public UserService(IOnlineStoreContext context, IMapper mapper, ITownService townService, IAddressService addressService)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.townService = townService ?? throw new ArgumentNullException(nameof(townService));
+            this.addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
         }
 
         public void RegisterUser(IUserRegisterModel userModel)
@@ -37,12 +41,24 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException("User with that email already exists!");
             }
 
-            var town = this.context.Towns.SingleOrDefault(x => x.Name == userModel.TownName)
-                ?? throw new ArgumentException("Town not found!");
-            var address = town.Addresses.FirstOrDefault(x => x.AddressText == userModel.AddressText)
-                ?? throw new ArgumentException("Address not found!");
+            var town = this.context.Towns.SingleOrDefault(x => x.Name == userModel.TownName);
 
+            if (town == null)
+            {
+                this.townService.Create(userModel.TownName);
+                town = this.context.Towns.SingleOrDefault(x => x.Name == userModel.TownName);
+            }
+
+            var address = town.Addresses.FirstOrDefault(x => x.AddressText == userModel.AddressText);
+
+            if (address == null)
+            {
+                this.addressService.Create(userModel.AddressText, userModel.TownName);
+                address = town.Addresses.FirstOrDefault(x => x.AddressText == userModel.AddressText);
+
+            }
             var userToRegister = this.mapper.Map<User>(userModel);
+
             userToRegister.Address = address;
 
             this.context.Users.Add(userToRegister);

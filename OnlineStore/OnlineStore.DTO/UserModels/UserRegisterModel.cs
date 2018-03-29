@@ -2,9 +2,7 @@
 using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Models.Enums;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 namespace OnlineStore.DTO.UserModels
 {

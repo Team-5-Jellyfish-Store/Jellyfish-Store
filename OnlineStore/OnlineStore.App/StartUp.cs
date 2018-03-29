@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using Autofac;
+﻿using Autofac;
 using OnlineStore.Core.Contracts;
 using OnlineStore.Common.AutoMapperConfig;
 

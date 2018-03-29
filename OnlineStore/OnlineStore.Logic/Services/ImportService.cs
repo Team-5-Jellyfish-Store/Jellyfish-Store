@@ -3,10 +3,10 @@ using System.Text;
 using Newtonsoft.Json;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.DTO.CourierModels;
-using OnlineStore.DTO.ProductModels;
 using OnlineStore.DTO.SupplierModels;
 using System;
 using OnlineStore.Core.Contracts;
+using OnlineStore.DTO.ProductModels;
 using OnlineStore.Providers.Contracts;
 using OnlineStore.DTO.ProductModels.Contracts;
 
@@ -59,7 +59,7 @@ namespace OnlineStore.Logic.Services
             var importProductsResults = new StringBuilder();
 
             var importString = this.fileReader.ReadAllText(this.productsJSONPathString);
-            var deserializedProducts = JsonConvert.DeserializeObject<IProductImportModel[]>(importString);
+            var deserializedProducts = JsonConvert.DeserializeObject<ProductImportModel[]>(importString);
 
             var validProducts = new List<IProductImportModel>();
 
@@ -93,7 +93,7 @@ namespace OnlineStore.Logic.Services
             var importSuppliersResults = new StringBuilder();
 
             var suppliersImportString = this.fileReader.ReadAllText(this.suppliersJSONPathString);
-            var deserializedSuppliers = JsonConvert.DeserializeObject<ISuppliersImportModel[]>(suppliersImportString);
+            var deserializedSuppliers = JsonConvert.DeserializeObject<SuppliersImportModel[]>(suppliersImportString);
 
             var validSupplierModels = new List<ISuppliersImportModel>();
 
@@ -127,7 +127,7 @@ namespace OnlineStore.Logic.Services
             var importCourierResults = new StringBuilder();
 
             var importCouriersResults = this.fileReader.ReadAllText(this.couriersJSONPathString);
-            var deserializedCouriers = JsonConvert.DeserializeObject<ICourierImportModel[]>(importCouriersResults);
+            var deserializedCouriers = JsonConvert.DeserializeObject<CourierImportModel[]>(importCouriersResults);
 
             var validCouriers = new List<ICourierImportModel>();
 

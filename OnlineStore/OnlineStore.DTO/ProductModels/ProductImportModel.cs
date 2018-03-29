@@ -27,10 +27,9 @@ namespace OnlineStore.DTO.ProductModels
         [Required]
         public string SupplierName { get; set; }
 
-
-        public void CreateMappings(IMapperConfigurationExpression configuration)
+       public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            configuration.CreateMap<IProductImportModel, Product>()
+            configuration.CreateMap<ProductImportModel, Product>()
                 .ForMember(x => x.SellingPrice, cfg => cfg.MapFrom(x => x.PurchasePrice * 1.5m));
         }
     }

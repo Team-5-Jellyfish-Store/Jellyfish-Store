@@ -15,23 +15,21 @@ namespace OnlineStore.Logic.Services
     {
         private readonly IOnlineStoreContext context;
         private readonly ICategoryService categoryService;
-        private readonly ISupplierService supplierService;
         private readonly IMapper mapper;
 
-        public ProductService(IOnlineStoreContext context, IMapper mapper, ICategoryService categoryService, ISupplierService supplierService)
+        public ProductService(IOnlineStoreContext context, IMapper mapper, ICategoryService categoryService)
         {
             this.context = context ?? throw new ArgumentNullException();
             this.mapper = mapper ?? throw new ArgumentNullException();
             this.categoryService = categoryService ?? throw new ArgumentNullException();
-            this.supplierService = supplierService ?? throw new ArgumentNullException();
         }
 
-        public IEnumerable<IProductModel> GetAllProducts()
+        public IEnumerable<ProductModel> GetAllProducts()
         {
             return this.context.Products.ProjectTo<ProductModel>();
         }
 
-        public IEnumerable<IProductModel> GetProductsByCategoryName(string categoryName)
+        public IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName)
         {
             var filteredProducts = this.context.Products.Where(w => w.Category.Name == categoryName);
 
@@ -55,7 +53,7 @@ namespace OnlineStore.Logic.Services
             var supplier = this.context.Suppliers.SingleOrDefault(x => x.Name == productModel.SupplierName)
                 ?? throw new ArgumentException("Supplier not found!");
 
-            var productToAdd = this.mapper.Map<IProductImportModel, Product>(productModel);
+            var productToAdd = this.mapper.Map<Product>(productModel);
             productToAdd.Category = category;
             productToAdd.Supplier = supplier;
 

@@ -8,14 +8,12 @@ namespace OnlineStore.Core.Commands
 {
     public class SearchCategoryCommand : ICommand
     {
-        private readonly ICategoryService categoryService;
         private readonly IProductService productService;
         private readonly IReader reader;
         private readonly IWriter writer;
 
-        public SearchCategoryCommand(ICategoryService categoryService, IProductService productService, IReader reader, IWriter writer)
+        public SearchCategoryCommand(IProductService productService, IReader reader, IWriter writer)
         {
-            this.categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
             this.productService = productService ?? throw new ArgumentNullException(nameof(productService));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));

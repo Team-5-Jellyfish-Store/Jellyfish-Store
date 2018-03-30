@@ -79,6 +79,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddOrder\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\Constructor_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Commands\PrintAvailableProductReport\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\PrintOrdersReport\Constructor_Should.cs" />
     <Compile Include="Commands\PrintOrdersReport\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\RegisterUser\Constructor_Should.cs" />
     <Compile Include="Commands\RegisterUser\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\Constructor_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\ExecuteThisCommand_Should.cs" />

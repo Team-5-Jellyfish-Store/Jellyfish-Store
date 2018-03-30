@@ -68,6 +68,45 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         }
 
         [TestMethod]
+        public void Throw_ArgumentException_When_CreatedUserRegisterModel_IsInvalid()
+        {
+            // Arrange
+            string password = "testpassword";
+            string hashMock = "someHash";
+
+            var userSessionMock = new Mock<IUserSession>();
+            var userServiceStub = new Mock<IUserService>();
+            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
+            var validatorMock = new Mock<IValidator>();
+            var writerStub = new Mock<IWriter>();
+            var readerMock = new Mock<IReader>();
+            var hasherMock = new Mock<IHasher>();
+
+            var userModelStub = new Mock<IUserRegisterModel>();
+
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+
+            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+
+            readerMock.SetupSequence(r => r.Read())
+                .Returns(It.IsAny<string>())
+                .Returns(It.IsAny<string>())
+                .Returns(password)
+                .Returns(password);
+
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(false);
+
+            Action executingRegisterUserCmd = () => registerUserCmd.ExecuteThisCommand();
+
+            // Act & Assert
+            Assert.ThrowsException<ArgumentException>(executingRegisterUserCmd);
+        }
+
+        [TestMethod]
         public void Get_Eight_ReadValues_From_Reader()
         {
             // Arrange
@@ -86,19 +125,19 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
-
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
-
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
-
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             readerMock.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
                 .Returns(password)
                 .Returns(password);
+
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
@@ -126,19 +165,19 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
-
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
-
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
-
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             readerMock.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
                 .Returns(password)
                 .Returns(password);
+
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
@@ -166,19 +205,19 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
-
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
-
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
-
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             readerMock.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
                 .Returns(password)
                 .Returns(password);
+
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
@@ -212,13 +251,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
-
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
-
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address)).Returns(userModelStub.Object);
-
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             readerMock.SetupSequence(r => r.Read())
                 .Returns(username)
@@ -230,6 +263,12 @@ namespace OnlineStore.Tests.Commands.RegisterUser
                 .Returns(town)
                 .Returns(address);
 
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address)).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+
             // Act
             registerUserCmd.ExecuteThisCommand();
 
@@ -238,14 +277,14 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         }
 
         [TestMethod]
-        public void Throw_ArgumentException_When_CreatedUserRegisterModel_IsInvalid()
+        public void Invoke_Service_RegisterUser_With_ValidUserModel()
         {
             // Arrange
             string password = "testpassword";
             string hashMock = "someHash";
 
             var userSessionMock = new Mock<IUserSession>();
-            var userServiceStub = new Mock<IUserService>();
+            var userServiceMock = new Mock<IUserService>();
             var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
             var validatorMock = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
@@ -254,15 +293,9 @@ namespace OnlineStore.Tests.Commands.RegisterUser
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
-
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            var registerUserCmd = new RegisterUserCommand(userServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
 
             userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
-
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
-
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(false);
 
             readerMock.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
@@ -270,11 +303,17 @@ namespace OnlineStore.Tests.Commands.RegisterUser
                 .Returns(password)
                 .Returns(password);
 
+            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+
+            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+
+            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+
             // Act
-            Action executingRegisterUserCmd = () => registerUserCmd.ExecuteThisCommand();
+            registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            Assert.ThrowsException<ArgumentException>(executingRegisterUserCmd);
+            userServiceMock.Verify(us => us.RegisterUser(userModelStub.Object), Times.Once);
         }
     }
 }

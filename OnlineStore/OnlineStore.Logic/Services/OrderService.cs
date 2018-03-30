@@ -28,6 +28,7 @@ namespace OnlineStore.Logic.Services
 
             var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
                 ?? throw new ArgumentException("User not found!");
+                
 
             var courier = this.context.Couriers.FirstOrDefault()
                 ?? throw new ArgumentException("No couriers found!");

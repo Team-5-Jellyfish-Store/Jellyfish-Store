@@ -41,6 +41,9 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -104,6 +107,7 @@
     <Compile Include="Factories\CommandParser\Constructor_Should.cs" />
     <Compile Include="Factories\CommandParser\ParseCommand_Should.cs" />
     <Compile Include="Factories\CommandProcessor\ProcessSingleCommand_Should.cs" />
+    <Compile Include="Mocks\DbSetExtensions.cs" />
     <Compile Include="Mocks\MockAddOrderCommand.cs" />
     <Compile Include="Mocks\MockCommandFactory.cs" />
     <Compile Include="Mocks\MockCommandParser.cs" />

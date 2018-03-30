@@ -19,12 +19,12 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Throw_ArgumentException_When_UserName_IsNullOrEmpty()
         {
             // Arrange
-            var ctxMock = new Mock<IOnlineStoreContext>();
-            var mapperMock = new Mock<IMapper>();
-            var townServiceMock = new Mock<ITownService>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
+            var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperMock.Object, townServiceMock.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
             Action executingGetRegisteredUserMethod = () => userService.GetRegisteredUser(null);
 
@@ -36,7 +36,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Throw_ArgumentException_When_Username_DoesNot_Exists_InDatabse()
         {
             // Arrange
-            string username = "testUsername";
+            string fakeUsername = "testUsername";
             var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
 
             var ctxStub = new Mock<IOnlineStoreContext>();
@@ -50,7 +50,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Setup(ctx => ctx.Users)
                 .Returns(fakeUsers.Object);
 
-            Action executingGetRegisteredUserMethod = () => userService.GetRegisteredUser(username);
+            Action executingGetRegisteredUserMethod = () => userService.GetRegisteredUser(fakeUsername);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(executingGetRegisteredUserMethod);
@@ -60,30 +60,30 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Invoke_MapperMap_WithUser_FromDatabase()
         {
             // Arrange
-            string username = "testUsername";
-            var fakeUser = new User() { Username = username };
+            string fakeUsername = "testUsername";
+            var fakeUser = new User() { Username = fakeUsername };
             var fakeUsers = new List<User>() { fakeUser }.GetQueryableMockDbSet();
 
             var ctxStub = new Mock<IOnlineStoreContext>();
-            var mapperStub = new Mock<IMapper>();
+            var mockMapper = new Mock<IMapper>();
             var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mockMapper.Object, townServiceStub.Object, addressServiceStub.Object);
 
             ctxStub
                 .Setup(ctx => ctx.Users)
                 .Returns(fakeUsers.Object);
 
-            mapperStub
+            mockMapper
                 .Setup(m => m.Map<IUserLoginModel>(fakeUser))
                 .Verifiable();
 
             // Act
-            userService.GetRegisteredUser(username);
+            userService.GetRegisteredUser(fakeUsername);
 
             // Assert
-            mapperStub.Verify(m => m.Map<IUserLoginModel>(fakeUser), Times.Once);
+            mockMapper.Verify(m => m.Map<IUserLoginModel>(fakeUser), Times.Once);
         }
     }
 }

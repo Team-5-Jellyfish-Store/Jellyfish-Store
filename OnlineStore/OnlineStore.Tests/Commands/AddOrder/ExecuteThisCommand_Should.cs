@@ -23,16 +23,16 @@ namespace OnlineStore.Tests.Commands.AddOrder
             // Arrange
             var orderServiceStub = new Mock<IOrderService>();
             var productServiceStub = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
             var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
             var readerStub = new Mock<IReader>();
             var dateTimeStub = new Mock<DatetimeProvider>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionMock.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
             Action executingAddOrderCmd = () => addOrderCmd.ExecuteThisCommand();
 
@@ -44,32 +44,32 @@ namespace OnlineStore.Tests.Commands.AddOrder
         public void Throw_ArgumentException_When_ProductCount_IsNegative()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "-2";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "-2";
 
             var orderServiceStub = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
             var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
             var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
+            var readerStub = new Mock<IReader>();
             var dateTimeStub = new Mock<DatetimeProvider>();
 
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerMock.Object, dateTimeStub.Object);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            productModelMock.SetupGet(pm => pm.Name)
-                .Returns(productName);
+            productModelStub.SetupGet(pm => pm.Name)
+                .Returns(fakeProductName);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(true);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(true);
 
-            readerMock.SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount);
+            readerStub.SetupSequence(r => r.Read())
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount);
 
-            productServiceMock.Setup(ps => ps.FindProductByName(productName)).Returns(productModelMock.Object);
+            productServiceStub.Setup(ps => ps.FindProductByName(fakeProductName)).Returns(productModelStub.Object);
 
             Action executingAddOrderCmd = () => addOrderCmd.ExecuteThisCommand();
 
@@ -81,39 +81,39 @@ namespace OnlineStore.Tests.Commands.AddOrder
         public void Throw_ArgumentException_When_OrderModel_IsInvalid()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "4";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
             var rejectMoreProducts = "n";
 
-            var orderServiceStub = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var dateTimeStub = new Mock<DatetimeProvider>();
-
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
             var orderModelStub = new Mock<IOrderMakeModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, dateTimeStub.Object);
+            var orderServiceStub = new Mock<IOrderService>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
+            var writerStub = new Mock<IWriter>();
+            var readerStub = new Mock<IReader>();
+            var dateTimeStub = new Mock<DatetimeProvider>();
 
-            productModelMock.SetupGet(pm => pm.Name)
-                .Returns(productName);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(true);
+            productModelStub.SetupGet(pm => pm.Name)
+                .Returns(fakeProductName);
 
-            readerMock.SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount)
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(true);
+
+            readerStub.SetupSequence(r => r.Read())
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
                 .Returns(rejectMoreProducts);
 
-            productServiceMock.Setup(ps => ps.FindProductByName(productName)).Returns(productModelMock.Object);
+            productServiceStub.Setup(ps => ps.FindProductByName(fakeProductName)).Returns(productModelStub.Object);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(orderModelStub.Object)).Returns(false);
+            validatorStub.Setup(v => v.IsValid(orderModelStub.Object)).Returns(false);
 
             Action executingAddOrderCmd = () => addOrderCmd.ExecuteThisCommand();
 
@@ -125,149 +125,149 @@ namespace OnlineStore.Tests.Commands.AddOrder
         public void Invoke_ReaderRead_ThreeTimes_PerProduct_PlusOneForComment()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "4";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
             var rejectMoreProducts = "n";
 
-            var orderServiceStub = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var dateTimeStub = new Mock<DatetimeProvider>();
-
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
             var orderModelStub = new Mock<IOrderMakeModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, dateTimeStub.Object);
+            var orderServiceStub = new Mock<IOrderService>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
+            var writerStub = new Mock<IWriter>();
+            var mockReader = new Mock<IReader>();
+            var dateTimeStub = new Mock<DatetimeProvider>();
 
-            productModelMock.SetupGet(pm => pm.Name)
-                .Returns(productName);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, mockReader.Object, dateTimeStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(true);
+            productModelStub.SetupGet(pm => pm.Name)
+                .Returns(fakeProductName);
 
-            readerMock.SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount)
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(true);
+
+            mockReader.SetupSequence(r => r.Read())
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
                 .Returns(rejectMoreProducts);
 
-            productServiceMock.Setup(ps => ps.FindProductByName(productName)).Returns(productModelMock.Object);
+            productServiceStub.Setup(ps => ps.FindProductByName(fakeProductName)).Returns(productModelStub.Object);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(orderModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(orderModelStub.Object)).Returns(true);
 
             // Act
             addOrderCmd.ExecuteThisCommand();
 
             // Assert
-            readerMock.Verify(r => r.Read(), Times.Exactly(4));
+            mockReader.Verify(r => r.Read(), Times.Exactly(4));
         }
 
         [TestMethod]
         public void Invoke_UserSession_GetLoggedUser_When_Products_AreRead()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "4";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
             var rejectMoreProducts = "n";
 
             var orderServiceStub = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var productServiceStub = new Mock<IProductService>();
+            var mockUserSession = new Mock<IUserSession>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
+            var readerStub = new Mock<IReader>();
             var dateTimeStub = new Mock<DatetimeProvider>();
 
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
             var orderModelStub = new Mock<IOrderMakeModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, dateTimeStub.Object);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, mockUserSession.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            productModelMock.SetupGet(pm => pm.Name)
-                .Returns(productName);
+            productModelStub.SetupGet(pm => pm.Name)
+                .Returns(fakeProductName);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(true);
+            mockUserSession.Setup(us => us.HasSomeoneLogged()).Returns(true);
 
-            readerMock.SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount)
+            readerStub.SetupSequence(r => r.Read())
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
                 .Returns(rejectMoreProducts);
 
-            productServiceMock.Setup(ps => ps.FindProductByName(productName)).Returns(productModelMock.Object);
+            productServiceStub.Setup(ps => ps.FindProductByName(fakeProductName)).Returns(productModelStub.Object);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(orderModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(orderModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(orderModelStub.Object)).Returns(true);
 
             // Act
             addOrderCmd.ExecuteThisCommand();
 
             // Assert
-            userSessionMock.Verify(us => us.GetLoggedUserName(), Times.Once);
+            mockUserSession.Verify(us => us.GetLoggedUserName(), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_DTOFactory_CreateOrderMakeModel_With_CorrectValues()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "4";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
             var rejectMoreProducts = "n";
-            var comment = "testComment";
-            var username = "testUser";
-            var orderedOn = DateTime.Now;
+            var fakeComment = "testComment";
+            var fakeUsername = "testUser";
+            var fakeOrderedOnDate = DateTime.Now;
 
             var orderServiceStub = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
+            var mockDtoFactory = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var dateTimeMock = new Mock<DatetimeProvider>();
+            var readerStub = new Mock<IReader>();
+            var dateTimeStub = new Mock<DatetimeProvider>();
 
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
             var orderModelStub = new Mock<IOrderMakeModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, dateTimeMock.Object);
+            var addOrderCmd = new AddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, mockDtoFactory.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            productModelMock
+            productModelStub
                 .SetupGet(pm => pm.Name)
-                .Returns(productName);
+                .Returns(fakeProductName);
 
-            userSessionMock
+            userSessionStub
                 .Setup(us => us.HasSomeoneLogged())
                 .Returns(true);
 
-            readerMock
+            readerStub
                 .SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount)
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
                 .Returns(rejectMoreProducts)
-                .Returns(comment);
+                .Returns(fakeComment);
 
-            productServiceMock
-                .Setup(ps => ps.FindProductByName(productName))
-                .Returns(productModelMock.Object);
+            productServiceStub
+                .Setup(ps => ps.FindProductByName(fakeProductName))
+                .Returns(productModelStub.Object);
 
-            userSessionMock
+            userSessionStub
                 .Setup(us => us.GetLoggedUserName())
-                .Returns(username);
+                .Returns(fakeUsername);
 
-            dateTimeMock
+            dateTimeStub
                 .SetupGet(dt => dt.Now)
-                .Returns(orderedOn);
+                .Returns(fakeOrderedOnDate);
 
-            dtoFactoryMock
-                .Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), comment, username, orderedOn))
+            mockDtoFactory
+                .Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), fakeComment, fakeUsername, fakeOrderedOnDate))
                 .Returns(orderModelStub.Object);
 
-            validatorMock
+            validatorStub
                 .Setup(v => v.IsValid(orderModelStub.Object))
                 .Returns(true);
 
@@ -275,54 +275,54 @@ namespace OnlineStore.Tests.Commands.AddOrder
             addOrderCmd.ExecuteThisCommand();
 
             // Assert
-            dtoFactoryMock.Verify(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), comment, username, orderedOn), Times.Once);
+            mockDtoFactory.Verify(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), fakeComment, fakeUsername, fakeOrderedOnDate), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_OrderService_MakeOrder_WithValid_OrderModel()
         {
             // Arrange
-            var productName = "testProduct";
-            var productCount = "4";
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
             var rejectMoreProducts = "n";
 
-            var orderServiceMock = new Mock<IOrderService>();
-            var productServiceMock = new Mock<IProductService>();
-            var userSessionMock = new Mock<IUserSession>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var mockOrderService = new Mock<IOrderService>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
+            var readerStub = new Mock<IReader>();
             var dateTimeStub = new Mock<DatetimeProvider>();
 
-            var productModelMock = new Mock<IProductModel>();
+            var productModelStub = new Mock<IProductModel>();
             var orderModelStub = new Mock<IOrderMakeModel>();
 
-            var addOrderCmd = new AddOrderCommand(orderServiceMock.Object, productServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, dateTimeStub.Object);
+            var addOrderCmd = new AddOrderCommand(mockOrderService.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
 
-            productModelMock
+            productModelStub
                 .SetupGet(pm => pm.Name)
-                .Returns(productName);
+                .Returns(fakeProductName);
 
-            userSessionMock
+            userSessionStub
                 .Setup(us => us.HasSomeoneLogged())
                 .Returns(true);
 
-            readerMock
+            readerStub
                 .SetupSequence(r => r.Read())
-                .Returns(productName)
-                .Returns(productCount)
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
                 .Returns(rejectMoreProducts);
 
-            productServiceMock
-                .Setup(ps => ps.FindProductByName(productName))
-                .Returns(productModelMock.Object);
+            productServiceStub
+                .Setup(ps => ps.FindProductByName(fakeProductName))
+                .Returns(productModelStub.Object);
 
-            dtoFactoryMock
+            dtoFactoryStub
                 .Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Returns(orderModelStub.Object);
 
-            validatorMock
+            validatorStub
                 .Setup(v => v.IsValid(orderModelStub.Object))
                 .Returns(true);
 
@@ -330,7 +330,7 @@ namespace OnlineStore.Tests.Commands.AddOrder
             addOrderCmd.ExecuteThisCommand();
 
             // Assert
-            orderServiceMock.Verify(os => os.MakeOrder(orderModelStub.Object), Times.Once);
+            mockOrderService.Verify(os => os.MakeOrder(orderModelStub.Object), Times.Once);
         }
     }
 }

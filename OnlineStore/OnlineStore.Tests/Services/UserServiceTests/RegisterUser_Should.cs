@@ -19,12 +19,12 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Throw_ArgumentNullException_When_UserRegisterModel_IsNull()
         {
             // Arrange
-            var ctxMock = new Mock<IOnlineStoreContext>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
             var mapperStub = new Mock<IMapper>();
             var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
             Action executingRegisterUserMethod = () => userService.RegisterUser(null);
 
@@ -36,24 +36,24 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Throw_ArgumentException_When_Username_AlreadyExists_InDatabase()
         {
             // Arrange
-            var username = "testUsername";
-            var userRegisterModel = new UserRegisterModel() { Username = username };
+            var fakeUsername = "testUsername";
+            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername };
 
-            var users = new List<User>() { new User() { Username = username } };
-            var usersMock = users.GetQueryableMockDbSet<User>();
+            var fakeUser = new User() { Username = fakeUsername };
+            var fakeUsers = new List<User>() { fakeUser }.GetQueryableMockDbSet();
 
-            var ctxMock = new Mock<IOnlineStoreContext>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
             var mapperStub = new Mock<IMapper>();
             var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(x => x.Users)
-                .Returns(usersMock.Object);
+                .Returns(fakeUsers.Object);
 
-            Action executingRegisterUserMethod = () => userService.RegisterUser(userRegisterModel);
+            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(executingRegisterUserMethod);
@@ -63,29 +63,29 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Throw_ArgumentException_When_Email_AlreadyExists_InDatabase()
         {
             // Arrange
-            var username = "testUsername";
-            var email = "test@email";
-            var userRegisterModel = new UserRegisterModel()
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeUserRegisterModel = new UserRegisterModel()
             {
-                Username = username,
-                EMail = email
+                Username = fakeUsername,
+                EMail = fakeEmail
             };
 
-            var users = new List<User>() { new User() { EMail = email } };
-            var usersMock = users.GetQueryableMockDbSet<User>();
+            var fakeUser = new User() { EMail = fakeEmail };
+            var fakeUsers = new List<User>() { fakeUser }.GetQueryableMockDbSet();
 
-            var ctxMock = new Mock<IOnlineStoreContext>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
             var mapperStub = new Mock<IMapper>();
             var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(x => x.Users)
-                .Returns(usersMock.Object);
+                .Returns(fakeUsers.Object);
 
-            Action executingRegisterUserMethod = () => userService.RegisterUser(userRegisterModel);
+            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(executingRegisterUserMethod);
@@ -95,164 +95,165 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         public void Invoke_TownServiceCreate_When_TownName_DoesNotExists_InDatabase()
         {
             // Arrange
-            var username = "testUsername";
-            var email = "test@email";
-            var townName = "testTownName";
-            var addressText = "testAdress";
-            var userRegisterModel = new UserRegisterModel()
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeTownName = "testTownName";
+            var fakeAddressText = "testAdress";
+            var fakeUserRegisterModel = new UserRegisterModel()
             {
-                Username = username,
-                EMail = email,
-                TownName = townName,
-                AddressText = addressText
+                Username = fakeUsername,
+                EMail = fakeEmail,
+                TownName = fakeTownName,
+                AddressText = fakeAddressText
             };
 
-            var townToAdd = new Town() { Name = townName };
-            var addressToAdd = new Address() { AddressText = addressText };
+            var fakeTown = new Town() { Name = fakeTownName };
+            var fakeAddress = new Address() { AddressText = fakeAddressText };
 
-            var usersMock = new List<User>() { }.GetQueryableMockDbSet();
-            var townsMock = new List<Town> { }.GetQueryableMockDbSet();
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
+            var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
 
-            var userToRegister = new User();
+            var userToRegisterStub = new User();
 
-            var ctxMock = new Mock<IOnlineStoreContext>();
-            var mapperMock = new Mock<IMapper>();
-            var townServiceMock = new Mock<ITownService>();
-            var addressServiceMock = new Mock<IAddressService>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
+            var mockTownService = new Mock<ITownService>();
+            var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperMock.Object, townServiceMock.Object, addressServiceMock.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, mockTownService.Object, addressServiceStub.Object);
 
-            Action addingTownToTownsMock =
+            var newFakeTowns = new List<Town> { fakeTown }.GetQueryableMockDbSet();
+            Action addingTownToTowns =
                 () =>
-                    ctxMock
+                    ctxStub
                         .Setup(x => x.Towns)
-                        .Returns((townsMock = new List<Town> { townToAdd }.GetQueryableMockDbSet()).Object);
+                        .Returns(newFakeTowns.Object);
 
             Action addingAddressToTown =
-                () => townToAdd.Addresses.Add(addressToAdd);
+                () => fakeTown.Addresses.Add(fakeAddress);
 
-            ctxMock
+            ctxStub
                 .Setup(x => x.Users)
-                .Returns(usersMock.Object);
+                .Returns(fakeUsers.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(x => x.Towns)
-                .Returns(townsMock.Object);
+                .Returns(fakeTowns.Object);
 
-            townServiceMock
-                .Setup(ts => ts.Create(userRegisterModel.TownName))
-                .Callback(addingTownToTownsMock);
+            mockTownService
+                .Setup(ts => ts.Create(fakeUserRegisterModel.TownName))
+                .Callback(addingTownToTowns);
 
-            addressServiceMock
-                .Setup(addServ => addServ.Create(userRegisterModel.AddressText, userRegisterModel.TownName))
+            addressServiceStub
+                .Setup(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName))
                 .Callback(addingAddressToTown);
 
-            mapperMock
-                .Setup(m => m.Map<User>(userRegisterModel))
-                .Returns(userToRegister);
+            mapperStub
+                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Returns(userToRegisterStub);
 
             // Act
-            userService.RegisterUser(userRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel);
 
             // Assert
-            townServiceMock.Verify(ts => ts.Create(userRegisterModel.TownName), Times.Once);
+            mockTownService.Verify(ts => ts.Create(fakeUserRegisterModel.TownName), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_AddressServiceCreate_When_Address_DoesNotExists_InTownFound()
         {
             // Arrange
-            var username = "testUsername";
-            var email = "test@email";
-            var townName = "testTownName";
-            var address = "testAdress";
-            var userRegisterModel = new UserRegisterModel() { Username = username, EMail = email, TownName = townName, AddressText = address };
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeTownName = "testTownName";
+            var fakeAddressText = "testAdress";
+            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
 
-            var addressToAdd = new Address() { AddressText = address };
-            var town = new Town() { Name = townName };
-            var townsMock = new List<Town>() { town }.GetQueryableMockDbSet();
-            var usersMock = new List<User>() { }.GetQueryableMockDbSet();
+            var fakeAddress = new Address() { AddressText = fakeAddressText };
+            var fakeTown = new Town() { Name = fakeTownName };
+            var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
 
-            var userToRegister = new User();
+            var userToRegisterStub = new User();
 
-            var ctxMock = new Mock<IOnlineStoreContext>();
-            var mapperMock = new Mock<IMapper>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
             var townServiceStub = new Mock<ITownService>();
-            var addressServiceMock = new Mock<IAddressService>();
+            var mockAddressService = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperMock.Object, townServiceStub.Object, addressServiceMock.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, mockAddressService.Object);
 
             Action addingAddressToTown =
-                () => town.Addresses.Add(addressToAdd);
+                () => fakeTown.Addresses.Add(fakeAddress);
 
-            ctxMock
+            ctxStub
                 .Setup(ctx => ctx.Users)
-                .Returns(usersMock.Object);
+                .Returns(fakeUsers.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(ctx => ctx.Towns)
-                .Returns(townsMock.Object);
+                .Returns(fakeTowns.Object);
 
-            addressServiceMock
-                .Setup(addServ => addServ.Create(userRegisterModel.AddressText, userRegisterModel.TownName))
+            mockAddressService
+                .Setup(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName))
                 .Callback(addingAddressToTown);
 
-            mapperMock
-                .Setup(m => m.Map<User>(userRegisterModel))
-                .Returns(userToRegister);
+            mapperStub
+                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Returns(userToRegisterStub);
 
             // Act
-            userService.RegisterUser(userRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel);
 
             // Assert
-            addressServiceMock.Verify(addServ => addServ.Create(userRegisterModel.AddressText, userRegisterModel.TownName), Times.Once);
+            mockAddressService.Verify(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName), Times.Once);
         }
 
         [TestMethod]
-        public void AddUser_ToDatabase_Validations_Pass()
+        public void AddUser_ToDatabase_When_Validations_Pass()
         {
             // Arrange
-            var username = "testUsername";
-            var email = "test@email";
-            var townName = "testTownName";
-            var address = "testAdress";
-            var userRegisterModel = new UserRegisterModel() { Username = username, EMail = email, TownName = townName, AddressText = address };
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeTownName = "testTownName";
+            var fakeAddressText = "testAdress";
+            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
 
-            var addressToAdd = new Address() { AddressText = address };
-            var town = new Town() { Name = townName, Addresses = new List<Address>() { addressToAdd } };
-            var townsMock = new List<Town>() { town }.GetQueryableMockDbSet();
-            var usersMock = new List<User>() { }.GetQueryableMockDbSet();
+            var fakeAddress = new Address() { AddressText = fakeAddressText };
+            var fakeTown = new Town() { Name = fakeTownName, Addresses = new List<Address>() { fakeAddress } };
+            var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
+            var mockUsers = new List<User>() { }.GetQueryableMockDbSet();
 
-            var userToRegister = new User();
+            var userToRegisterStub = new User();
 
-            var ctxMock = new Mock<IOnlineStoreContext>();
-            var mapperMock = new Mock<IMapper>();
-            var townServiceMock = new Mock<ITownService>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
+            var townServiceStub = new Mock<ITownService>();
             var addressServiceStub = new Mock<IAddressService>();
 
-            var userService = new UserService(ctxMock.Object, mapperMock.Object, townServiceMock.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(ctx => ctx.Users)
-                .Returns(usersMock.Object);
+                .Returns(mockUsers.Object);
 
-            ctxMock
+            ctxStub
                 .Setup(ctx => ctx.Towns)
-                .Returns(townsMock.Object);
+                .Returns(fakeTowns.Object);
 
-            mapperMock
-                .Setup(m => m.Map<User>(userRegisterModel))
-                .Returns(userToRegister);
+            mapperStub
+                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Returns(userToRegisterStub);
 
-            usersMock
-                .Setup(u => u.Add(userToRegister))
+            mockUsers
+                .Setup(u => u.Add(userToRegisterStub))
                 .Verifiable();
 
             // Act
-            userService.RegisterUser(userRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel);
 
             // Assert
-            usersMock.Verify(u => u.Add(userToRegister), Times.Once);
+            mockUsers.Verify(u => u.Add(userToRegisterStub), Times.Once);
         }
     }
 }

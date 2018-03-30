@@ -18,7 +18,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         public void Throw_ArgumentException_When_Someone_Is_LoggedIn()
         {
             // Arrange
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
             var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
             var validatorStub = new Mock<IValidator>();
@@ -26,9 +26,9 @@ namespace OnlineStore.Tests.Commands.RegisterUser
             var readerStub = new Mock<IReader>();
             var hasherStub = new Mock<IHasher>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(true);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(true);
 
             Action executingRegisterCmd = () => registerUserCmd.ExecuteThisCommand();
 
@@ -43,19 +43,19 @@ namespace OnlineStore.Tests.Commands.RegisterUser
             var password = "testpassword";
             var confirmedPassword = "testpassworddifferent";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
             var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
             var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
+            var readerStub = new Mock<IReader>();
             var hasherStub = new Mock<IHasher>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerMock.Object, hasherStub.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            readerStub.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
                 .Returns(password)
@@ -71,34 +71,34 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         public void Throw_ArgumentException_When_CreatedUserRegisterModel_IsInvalid()
         {
             // Arrange
-            string password = "testpassword";
-            string hashMock = "someHash";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var readerStub = new Mock<IReader>();
+            var hasherStub = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            readerStub.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
-                .Returns(password)
-                .Returns(password);
+                .Returns(fakePassword)
+                .Returns(fakePassword);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            hasherStub.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), fakeHash, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(false);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(false);
 
             Action executingRegisterUserCmd = () => registerUserCmd.ExecuteThisCommand();
 
@@ -110,210 +110,210 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         public void Get_Eight_ReadValues_From_Reader()
         {
             // Arrange
-            string password = "testpassword";
-            string hashMock = "someHash";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var mockReader = new Mock<IReader>();
+            var hasherStub = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, mockReader.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            mockReader.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
-                .Returns(password)
-                .Returns(password);
+                .Returns(fakePassword)
+                .Returns(fakePassword);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            hasherStub.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), fakeHash, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            readerMock.Verify(r => r.Read(), Times.Exactly(8));
+            mockReader.Verify(r => r.Read(), Times.Exactly(8));
         }
 
         [TestMethod]
         public void Invoke_Hasher_CreatePasswordMethod_When_EnteredPasswords_AreEqual()
         {
             // Arrange
-            string password = "testpassword";
-            string hashMock = "someHash";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var readerStub = new Mock<IReader>();
+            var mockHasher = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, mockHasher.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            readerStub.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
-                .Returns(password)
-                .Returns(password);
+                .Returns(fakePassword)
+                .Returns(fakePassword);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            mockHasher.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), fakeHash, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            hasherMock.Verify(h => h.CreatePassword(password), Times.Once);
+            mockHasher.Verify(h => h.CreatePassword(fakePassword), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_Hasher_ValidatePassword_When_Password_IsEntered()
         {
             // Arrange
-            string password = "testpassword";
-            string hashMock = "someHash";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var readerStub = new Mock<IReader>();
+            var mockHasher = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, mockHasher.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            readerStub.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
-                .Returns(password)
-                .Returns(password);
+                .Returns(fakePassword)
+                .Returns(fakePassword);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            mockHasher.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), fakeHash, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            hasherMock.Verify(h => h.ValidatePassword(password), Times.Once);
+            mockHasher.Verify(h => h.ValidatePassword(fakePassword), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_CreateUserRegisterModel_With_CorrectValues()
         {
             // Arrange
-            string username = "testUser";
-            string email = "test@Mail";
-            string password = "testpassword";
-            string hashMock = "someHash";
-            string firstName = "";
-            string lastName = "";
-            string town = "testTown";
-            string address = "testAddress";
+            string fakeUsername = "testUser";
+            string fakeEmail = "test@Mail";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
+            string fakeFirstName = "";
+            string fakeLastName = "";
+            string fakeTown = "testTown";
+            string fakeAddress = "testAddress";
 
-            var userSessionMock = new Mock<IUserSession>();
+            var userSessionStub = new Mock<IUserSession>();
             var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var mockDtoFactory = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var readerStub = new Mock<IReader>();
+            var hasherStub = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, mockDtoFactory.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
-                .Returns(username)
-                .Returns(email)
-                .Returns(password)
-                .Returns(password)
-                .Returns(firstName)
-                .Returns(lastName)
-                .Returns(town)
-                .Returns(address);
+            readerStub.SetupSequence(r => r.Read())
+                .Returns(fakeUsername)
+                .Returns(fakeEmail)
+                .Returns(fakePassword)
+                .Returns(fakePassword)
+                .Returns(fakeFirstName)
+                .Returns(fakeLastName)
+                .Returns(fakeTown)
+                .Returns(fakeAddress);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            hasherStub.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address)).Returns(userModelStub.Object);
+            mockDtoFactory.Setup(dtoFac => dtoFac.CreateUserRegisterModel(fakeUsername, fakeEmail, fakeHash, fakeFirstName, fakeLastName, fakeTown, fakeAddress)).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            dtoFactoryMock.Verify(dtoFac => dtoFac.CreateUserRegisterModel(username, email, hashMock, firstName, lastName, town, address), Times.Once);
+            mockDtoFactory.Verify(dtoFac => dtoFac.CreateUserRegisterModel(fakeUsername, fakeEmail, fakeHash, fakeFirstName, fakeLastName, fakeTown, fakeAddress), Times.Once);
         }
 
         [TestMethod]
         public void Invoke_Service_RegisterUser_With_ValidUserModel()
         {
             // Arrange
-            string password = "testpassword";
-            string hashMock = "someHash";
+            string fakePassword = "testpassword";
+            string fakeHash = "someHash";
 
-            var userSessionMock = new Mock<IUserSession>();
-            var userServiceMock = new Mock<IUserService>();
-            var dtoFactoryMock = new Mock<IDataTransferObjectFactory>();
-            var validatorMock = new Mock<IValidator>();
+            var userSessionStub = new Mock<IUserSession>();
+            var mockUserService = new Mock<IUserService>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
             var writerStub = new Mock<IWriter>();
-            var readerMock = new Mock<IReader>();
-            var hasherMock = new Mock<IHasher>();
+            var readerStub = new Mock<IReader>();
+            var hasherStub = new Mock<IHasher>();
 
             var userModelStub = new Mock<IUserRegisterModel>();
 
-            var registerUserCmd = new RegisterUserCommand(userServiceMock.Object, userSessionMock.Object, dtoFactoryMock.Object, validatorMock.Object, writerStub.Object, readerMock.Object, hasherMock.Object);
+            var registerUserCmd = new RegisterUserCommand(mockUserService.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
-            userSessionMock.Setup(us => us.HasSomeoneLogged()).Returns(false);
+            userSessionStub.Setup(us => us.HasSomeoneLogged()).Returns(false);
 
-            readerMock.SetupSequence(r => r.Read())
+            readerStub.SetupSequence(r => r.Read())
                 .Returns(It.IsAny<string>())
                 .Returns(It.IsAny<string>())
-                .Returns(password)
-                .Returns(password);
+                .Returns(fakePassword)
+                .Returns(fakePassword);
 
-            hasherMock.Setup(h => h.CreatePassword(password)).Returns(hashMock);
+            hasherStub.Setup(h => h.CreatePassword(fakePassword)).Returns(fakeHash);
 
-            dtoFactoryMock.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), hashMock, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
+            dtoFactoryStub.Setup(dtoFac => dtoFac.CreateUserRegisterModel(It.IsAny<string>(), It.IsAny<string>(), fakeHash, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(userModelStub.Object);
 
-            validatorMock.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
+            validatorStub.Setup(v => v.IsValid(userModelStub.Object)).Returns(true);
 
             // Act
             registerUserCmd.ExecuteThisCommand();
 
             // Assert
-            userServiceMock.Verify(us => us.RegisterUser(userModelStub.Object), Times.Once);
+            mockUserService.Verify(us => us.RegisterUser(userModelStub.Object), Times.Once);
         }
     }
 }

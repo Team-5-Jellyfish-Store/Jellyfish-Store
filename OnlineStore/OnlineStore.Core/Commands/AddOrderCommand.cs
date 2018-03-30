@@ -97,7 +97,7 @@ namespace OnlineStore.Core.Commands
 
             this.orderService.MakeOrder(orderModel);
 
-            return string.Format(this.UserOrderSuccessMessage, username, orderResult.ToString(), orderModel.OrderedOn);
+            return string.Format(this.UserOrderSuccessMessage, username, orderResult, orderModel.OrderedOn);
         }
     }
 }

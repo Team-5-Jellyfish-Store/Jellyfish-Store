@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using AutoMapper;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Data.Contracts;
 using OnlineStore.DTO.OrderModels;
-using OnlineStore.DTO.OrderModels.Constracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Tests.Mocks;
 
@@ -31,16 +29,14 @@ namespace OnlineStore.Tests.Services.OrderService
         {
             // Arrange
             var mockContext = new Mock<IOnlineStoreContext>();
-            List<User> users = new List<User>() { new User() { Username = "Pesho" } };
-
-            var usersMock = users.GetQueryableMockDbSet<User>();
+            var usersMock = new List<User>().GetQueryableMockDbSet();
 
             mockContext.Setup(x => x.Users).Returns(usersMock.Object);
 
             var service = new Logic.Services.OrderService(mockContext.Object);
-            var orderToMake = new OrderMakeModel()
+            var orderToMake = new OrderMakeModel
             {
-                Username = "pp"
+                Username = "test"
             };
 
             // Act & Assert
@@ -52,17 +48,14 @@ namespace OnlineStore.Tests.Services.OrderService
         {
             // Arrange
             var mockContext = new Mock<IOnlineStoreContext>();
-            List<User> users = new List<User>() { new User() { Username = "Pesho" } };
-            List<Courier> couriers = new List<Courier>();
-
-            var usersMock = users.GetQueryableMockDbSet<User>();
-            var couriersMock = couriers.GetQueryableMockDbSet<Courier>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier>().GetQueryableMockDbSet();
 
             mockContext.Setup(x => x.Users).Returns(usersMock.Object);
             mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
 
             var service = new Logic.Services.OrderService(mockContext.Object);
-            var orderToMake = new OrderMakeModel()
+            var orderToMake = new OrderMakeModel
             {
                 Username = "Pesho"
             };
@@ -71,58 +64,334 @@ namespace OnlineStore.Tests.Services.OrderService
             Assert.ThrowsException<ArgumentException>(() => service.MakeOrder(orderToMake));
         }
 
+        [TestMethod]
+        public void InvokeAddMethodOnOrders_WhenCourierFoundAndUsernameExists()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            ordersMock.Verify(v => v.Add(It.IsNotNull<Order>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void AddOrderToOrders_WhenCourierFoundAndUsernameExists()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            Assert.AreEqual(1, mockContext.Object.Orders.Count());
+        }
+
+        [TestMethod]
+        public void ThrowArgumentException_WhenProductDoesNotExist()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproducttt", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            //Act && Assert
+            Assert.ThrowsException<ArgumentException>(() => service.MakeOrder(orderToMake));
+        }
+
+        [TestMethod]
+        public void ThrowArgumentException_WhenQuantityIsNotEnough()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 7);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            //Act && Assert
+            Assert.ThrowsException<ArgumentException>(() => service.MakeOrder(orderToMake));
+        }
+
+        [TestMethod]
+        public void AddOrderProductToOrderProducts_WhenCourierFoundAndUsernameExistsAndQuantityIsAvailableAndProductIsFound()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            Assert.AreEqual(1, mockContext.Object.Orders.Count());
+        }
+
+        [TestMethod]
+        public void ReduceTheAvailableProductQuantity_WhenOrderIsFinished()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            Assert.AreEqual(3, mockContext.Object.Products.FirstOrDefault(f => f.Name == "Testproduct").Quantity);
+        }
+
+        [TestMethod]
+        public void InvokeAddMethodOnOrderProducts_WhenCourierFoundAndUsernameExists()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            orderProductsMock.Verify(v => v.Add(It.IsNotNull<OrderProduct>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void InvokeSaveChanges_WhenMethodIsFinished()
+        {
+            // Arrange
+            var mockContext = new Mock<IOnlineStoreContext>();
+            var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+            var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+            var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+            var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+            var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
+
+            IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+            productsCounts.Add("Testproduct", 2);
+            var mockDateTimeProvider = new MockDateTimeProvider();
+
+            mockContext.Setup(x => x.Users).Returns(usersMock.Object);
+            mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
+            mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+            mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+            mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
+
+            var service = new Logic.Services.OrderService(mockContext.Object);
+            var orderToMake = new OrderMakeModel
+            {
+                Username = "Pesho",
+                OrderedOn = mockDateTimeProvider.Now,
+                Comment = "Tralala",
+                ProductNameAndCounts = productsCounts
+            };
+
+            // Act
+            service.MakeOrder(orderToMake);
+
+            //Assert
+            mockContext.Verify(v => v.SaveChanges(), Times.Once);
+        }
+
         //[TestMethod]
-        //public void InvokesOrderMethod_WhenCourierFoundAndUsernameExists()
+        //public void SetTheRightCommentFromTheModel_WhenMakingTheOrder()
         //{
         //    // Arrange
         //    var mockContext = new Mock<IOnlineStoreContext>();
-        //    List<User> users = new List<User>() { new User { Username = "Pesho" } };
-        //    List<Courier> couriers = new List<Courier>{new Courier {FirstName = "Peshko", LastName = "Peshkov"}};
-        //    List<Order> orders = new List<Order>{new Order()};
+        //    var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
+        //    var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
+        //    var ordersMock = new List<Order> { new Order() }.GetQueryableMockDbSet();
+        //    var productsMock = new List<Product> { new Product { Name = "Testproduct", Quantity = 5 } }.GetQueryableMockDbSet();
+        //    var orderProductsMock = new List<OrderProduct> { new OrderProduct() }.GetQueryableMockDbSet();
 
-        //    var usersMock = users.GetQueryableMockDbSet<User>();
-        //    var couriersMock = couriers.GetQueryableMockDbSet<Courier>();
-        //    var ordersMock = orders.GetQueryableMockDbSet<Order>();
+        //    IDictionary<string, int> productsCounts = new Dictionary<string, int>();
+        //    productsCounts.Add("Testproduct", 2);
+        //    var mockDateTimeProvider = new MockDateTimeProvider();
 
         //    mockContext.Setup(x => x.Users).Returns(usersMock.Object);
         //    mockContext.Setup(x => x.Couriers).Returns(couriersMock.Object);
-        //    ordersMock.Setup(x => x.Add(It.IsNotNull<Order>())).Verifiable();
-
+        //    mockContext.Setup(s => s.Orders).Returns(ordersMock.Object);
+        //    mockContext.Setup(s => s.Products).Returns(productsMock.Object);
+        //    mockContext.Setup(s => s.OrderProducts).Returns(orderProductsMock.Object);
 
         //    var service = new Logic.Services.OrderService(mockContext.Object);
-        //    var orderToMake = new OrderMakeModel()
+        //    var orderToMake = new OrderMakeModel
         //    {
-        //        Username = "Pesho"
+        //        Username = "Pesho",
+        //        OrderedOn = mockDateTimeProvider.Now,
+        //        Comment = "Tralala",
+        //        ProductNameAndCounts = productsCounts
         //    };
+        //    var expectedComment = orderToMake.Comment;
 
         //    // Act
         //    service.MakeOrder(orderToMake);
 
+        //    var actualComment = mockContext.Object.Orders.FirstOrDefault(f => f.User.Username == "Pesho").Comment;
+
         //    //Assert
-
-        //    ordersMock.Verify(v => v.Add(It.IsAny<Order>()), Times.Once);
-            
-        //}
-
-        //[TestMethod]
-        //public void InvokesUsersCollection_WhenOrderIsNotNull()
-        //{
-        //    // Arrange
-        //    var mockContext = new Mock<IOnlineStoreContext>();
-        //    List<User> users = new List<User>() { new User() { Username = "Pesho" } };
-
-        //    var usersMock = users.GetQueryableMockDbSet<User>();
-        //    mockContext.Setup(s => s.Users).Verifiable();
-        //    var service = new Logic.Services.OrderService(mockContext.Object);
-        //    var orderToMake = new OrderMakeModel()
-        //    {
-        //        Username = "pp"
-        //    };
-
-        //    //Act && Assert
-
-        //    mockContext.Verify(v => v.Users, Times.Once);
-
+        //    Assert.AreEqual(expectedComment, actualComment);
         //}
     }
 }

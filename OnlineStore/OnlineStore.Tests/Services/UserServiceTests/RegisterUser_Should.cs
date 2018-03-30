@@ -99,20 +99,15 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeEmail = "test@email";
             var fakeTownName = "testTownName";
             var fakeAddressText = "testAdress";
-            var fakeUserRegisterModel = new UserRegisterModel()
-            {
-                Username = fakeUsername,
-                EMail = fakeEmail,
-                TownName = fakeTownName,
-                AddressText = fakeAddressText
-            };
+            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
 
-            var fakeTown = new Town() { Name = fakeTownName };
             var fakeAddress = new Address() { AddressText = fakeAddressText };
 
-            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
+            var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
+            var newFakeTowns = new List<Town> { fakeTown }.GetQueryableMockDbSet();
 
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
             var userToRegisterStub = new User();
 
             var ctxStub = new Mock<IOnlineStoreContext>();
@@ -122,7 +117,6 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             var userService = new UserService(ctxStub.Object, mapperStub.Object, mockTownService.Object, addressServiceStub.Object);
 
-            var newFakeTowns = new List<Town> { fakeTown }.GetQueryableMockDbSet();
             Action addingTownToTowns =
                 () =>
                     ctxStub
@@ -170,11 +164,12 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
 
             var fakeAddress = new Address() { AddressText = fakeAddressText };
+
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
-            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
 
             var userToRegisterStub = new User();
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
 
             var ctxStub = new Mock<IOnlineStoreContext>();
             var mapperStub = new Mock<IMapper>();
@@ -210,7 +205,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         }
 
         [TestMethod]
-        public void AddUser_ToDatabase_When_Validations_Pass()
+        public void Invoke_AddMethod_ToAddUser_ToUsers_When_Validations_Pass()
         {
             // Arrange
             var fakeUsername = "testUsername";
@@ -222,9 +217,9 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeAddress = new Address() { AddressText = fakeAddressText };
             var fakeTown = new Town() { Name = fakeTownName, Addresses = new List<Address>() { fakeAddress } };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
-            var mockUsers = new List<User>() { }.GetQueryableMockDbSet();
 
             var userToRegisterStub = new User();
+            var mockUsers = new List<User>() { }.GetQueryableMockDbSet();
 
             var ctxStub = new Mock<IOnlineStoreContext>();
             var mapperStub = new Mock<IMapper>();
@@ -254,6 +249,53 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             // Assert
             mockUsers.Verify(u => u.Add(userToRegisterStub), Times.Once);
+        }
+
+        [TestMethod]
+        public void Invode_ContextSaveChanges_When_Validations_Pass()
+        {
+            // Arrange
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeTownName = "testTownName";
+            var fakeAddressText = "testAdress";
+            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
+
+            var fakeAddress = new Address() { AddressText = fakeAddressText };
+            var fakeTown = new Town() { Name = fakeTownName, Addresses = new List<Address>() { fakeAddress } };
+            var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
+
+            var userToRegisterStub = new User();
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
+
+            var mockCtx = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
+            var townServiceStub = new Mock<ITownService>();
+            var addressServiceStub = new Mock<IAddressService>();
+
+            var userService = new UserService(mockCtx.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
+
+            mockCtx
+                .Setup(ctx => ctx.Users)
+                .Returns(fakeUsers.Object);
+
+            mockCtx
+                .Setup(ctx => ctx.Towns)
+                .Returns(fakeTowns.Object);
+
+            mapperStub
+                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Returns(userToRegisterStub);
+
+            fakeUsers
+                .Setup(u => u.Add(userToRegisterStub))
+                .Verifiable();
+
+            // Act
+            userService.RegisterUser(fakeUserRegisterModel);
+
+            // Assert
+            mockCtx.Verify(ctx => ctx.SaveChanges(), Times.Once);
         }
     }
 }

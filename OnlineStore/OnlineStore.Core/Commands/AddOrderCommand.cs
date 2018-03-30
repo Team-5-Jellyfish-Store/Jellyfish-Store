@@ -38,16 +38,18 @@ namespace OnlineStore.Core.Commands
             this.datetime = datetime ?? throw new ArgumentNullException(nameof(datetime));
         }
 
+        protected IDictionary<string, int> ProductNameAndCounts { get; set; }
+
         public string ExecuteThisCommand()
         {
             if (!this.userSession.HasSomeoneLogged())
             {
                 throw new ArgumentException(this.NoLoggedUserFailMessage);
             }
-            
+
             var orderResult = new StringBuilder();
 
-            var productNameAndCounts = new Dictionary<string, int>();
+            this.ProductNameAndCounts = new Dictionary<string, int>();
 
             string productName = string.Empty;
             int productCount = 0;
@@ -58,9 +60,9 @@ namespace OnlineStore.Core.Commands
                 productName = this.reader.Read();
                 var product = this.productService.FindProductByName(productName);
 
-                if (!productNameAndCounts.ContainsKey(product.Name))
+                if (!this.ProductNameAndCounts.ContainsKey(product.Name))
                 {
-                    productNameAndCounts.Add(product.Name, 0);
+                    this.ProductNameAndCounts.Add(product.Name, 0);
                 }
 
                 this.writer.Write("Count: ");
@@ -71,7 +73,7 @@ namespace OnlineStore.Core.Commands
                     throw new ArgumentException(this.NegativeProductCountFailMessage);
                 }
 
-                productNameAndCounts[product.Name] += productCount;
+                this.ProductNameAndCounts[product.Name] += productCount;
 
                 orderResult.AppendLine($"{product.Name}: {productCount}");
 
@@ -86,7 +88,7 @@ namespace OnlineStore.Core.Commands
 
             var orderedOn = this.datetime.Now;
 
-            var orderModel = this.dataTransferObjectFactory.CreateOrderMakeModel(productNameAndCounts, comment, username, orderedOn);
+            var orderModel = this.dataTransferObjectFactory.CreateOrderMakeModel(this.ProductNameAndCounts, comment, username, orderedOn);
 
             if (!this.validator.IsValid(orderModel))
             {

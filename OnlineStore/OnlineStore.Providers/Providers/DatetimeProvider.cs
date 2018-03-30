@@ -4,7 +4,7 @@ namespace OnlineStore.Core.Providers.Providers
 {
     public class DatetimeProvider
     {
-        public DateTime Now
+        public virtual DateTime Now
         {
             get
             {

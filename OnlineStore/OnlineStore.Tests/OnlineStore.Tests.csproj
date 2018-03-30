@@ -84,6 +84,7 @@
     <Compile Include="Commands\AddProductToProducts\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
     <Compile Include="Commands\ImportExternalData\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\Login\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\PrintAvailableProductReport\Constructor_Should.cs" />
     <Compile Include="Commands\PrintAvailableProductReport\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\PrintOrdersReport\Constructor_Should.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Factories\CommandParser\Constructor_Should.cs" />
     <Compile Include="Factories\CommandParser\ParseCommand_Should.cs" />
     <Compile Include="Factories\CommandProcessor\ProcessSingleCommand_Should.cs" />
+    <Compile Include="Mocks\MockAddOrderCommand.cs" />
     <Compile Include="Mocks\MockCommandFactory.cs" />
     <Compile Include="Mocks\MockCommandParser.cs" />
     <Compile Include="Mocks\MockEngine.cs" />

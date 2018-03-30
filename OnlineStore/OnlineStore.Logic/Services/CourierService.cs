@@ -24,7 +24,7 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public void AddCourierRange(IList<ICourierImportModel> courierModels)
+        public void AddCourierRange(IEnumerable<ICourierImportModel> courierModels)
         {
             if (courierModels == null)
             {

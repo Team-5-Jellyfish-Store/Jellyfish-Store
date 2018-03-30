@@ -5,7 +5,7 @@ namespace OnlineStore.Logic.Contracts
 {
     public interface ICourierService
     {
-        void AddCourierRange(IList<ICourierImportModel> courier);
+        void AddCourierRange(IEnumerable<ICourierImportModel> courier);
 
         bool CourierExistsByName(string firstName, string lastName);
     }

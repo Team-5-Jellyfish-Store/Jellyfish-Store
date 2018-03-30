@@ -86,7 +86,7 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public void AddProductRange(IList<IProductImportModel> productModels)
+        public void AddProductRange(IEnumerable<IProductImportModel> productModels)
         {
             if (productModels == null)
             {

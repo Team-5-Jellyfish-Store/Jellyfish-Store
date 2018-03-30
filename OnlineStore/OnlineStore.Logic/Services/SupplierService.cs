@@ -56,7 +56,7 @@ namespace OnlineStore.Logic.Services
             return supplierFound != null;
         }
 
-        public void AddSupplierRange(IList<ISuppliersImportModel> supplierModels)
+        public void AddSupplierRange(IEnumerable<ISuppliersImportModel> supplierModels)
         {
             if (supplierModels == null)
             {
@@ -85,10 +85,10 @@ namespace OnlineStore.Logic.Services
 
                 suppliersToAdd.Add(supplierToAdd);
             }
-            
+
             suppliersToAdd.ForEach(s => this.context.Suppliers.Add(s));
             this.context.SaveChanges();
         }
-        
+
     }
 }

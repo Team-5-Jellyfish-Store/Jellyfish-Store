@@ -15,7 +15,7 @@ namespace OnlineStore.Logic.Contracts
 
         void AddProduct(IProductImportModel product);
 
-        void AddProductRange(IList<IProductImportModel> products);
+        void AddProductRange(IEnumerable<IProductImportModel> products);
 
         bool ProductExistsByName(string productName);
     }

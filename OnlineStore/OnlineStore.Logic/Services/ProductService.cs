@@ -29,7 +29,7 @@ namespace OnlineStore.Logic.Services
             return this.context.Products.ProjectTo<ProductModel>();
         }
 
-        public IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName)
+        public IEnumerable<IProductModel> GetProductsByCategoryName(string categoryName)
         {
             var filteredProducts = this.context.Products.Where(w => w.Category.Name == categoryName);
 

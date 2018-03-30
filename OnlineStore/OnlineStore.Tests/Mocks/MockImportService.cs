@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using OnlineStore.Core.Contracts;
+using OnlineStore.DTO.CourierModels;
+using OnlineStore.DTO.ProductModels.Contracts;
+using OnlineStore.DTO.SupplierModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Logic.Services;
 using OnlineStore.Providers.Contracts;
@@ -14,10 +18,17 @@ namespace OnlineStore.Tests.Mocks
         }
 
         internal Func<string> ExposedImportProductsFunction => base.ImportProducts;
+        internal Func<string> ExposedImportSuppliersFunction => base.ImportSuppliers;
+        internal Func<string> ExposedImportCouriersFunction => base.ImportCouriers;
+
+        internal IList<IProductImportModel> ExposedValidProducts => new List<IProductImportModel>(base.ValidProducts);
+        internal IList<ISuppliersImportModel> ExposedValidSuppliers => new List<ISuppliersImportModel>(base.ValidSuppliers);
+        internal IList<ICourierImportModel> ExposedValidCouriers => new List<ICourierImportModel>(base.ValidCouriers);
 
         protected override string ImportCouriers()
         {
             return "Courier method invoked!";
+            
         }
 
         protected override string ImportProducts()

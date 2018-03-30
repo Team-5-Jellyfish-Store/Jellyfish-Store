@@ -92,6 +92,10 @@
     <Compile Include="Commands\RegisterUser\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\Constructor_Should.cs" />
     <Compile Include="Commands\RemoveProductFromProducts\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\SearchCategory\Constructor_Should.cs" />
+    <Compile Include="Commands\SearchCategory\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\SearchProduct\Constructor_Should.cs" />
+    <Compile Include="Commands\SearchProduct\ExecuteThisCommand_Should.cs" />
     <Compile Include="EngineTests\Constructor_Should.cs" />
     <Compile Include="EngineTests\RunMethod_Should.cs" />
     <Compile Include="Factories\CommandFactory\Constructor_Should.cs" />
@@ -105,8 +109,15 @@
     <Compile Include="Mocks\MockImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ImportService\Constructor_Should.cs" />
+    <Compile Include="Services\ImportService\ImportCouriers_Should.cs" />
     <Compile Include="Services\ImportService\ImportProducts_Should.cs" />
+    <Compile Include="Services\ImportService\ImportSuppliers_Should.cs" />
     <Compile Include="Services\ImportService\Import_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeCouriers_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeProducts_Should.cs" />
+    <Compile Include="Services\JsonService\DeserializeSuppliers_Should.cs" />
+    <Compile Include="Services\OrderService\Constructor_Should.cs" />
+    <Compile Include="Services\OrderService\MakeOrder_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -146,10 +157,7 @@
       <Name>OnlineStore.Providers</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\SearchCategory\" />
-    <Folder Include="Commands\SearchProduct\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

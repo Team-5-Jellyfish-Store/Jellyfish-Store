@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.DTO.CourierModels;
 using OnlineStore.DTO.SupplierModels;
 using System;
 using OnlineStore.Core.Contracts;
-using OnlineStore.DTO.ProductModels;
 using OnlineStore.Providers.Contracts;
 using OnlineStore.DTO.ProductModels.Contracts;
 
@@ -41,6 +39,10 @@ namespace OnlineStore.Logic.Services
             this.jsonService = jsonService ?? throw new ArgumentNullException(nameof(validator));
         }
 
+        protected IList<IProductImportModel> ValidProducts { get; private set; }
+        protected IList<ISuppliersImportModel> ValidSuppliers { get; private set; }
+        protected IList<ICourierImportModel> ValidCouriers { get; private set; }
+
         public string Import()
         {
             var importResults = new StringBuilder();
@@ -67,7 +69,7 @@ namespace OnlineStore.Logic.Services
             var importProductString = this.fileReader.ReadAllText(this.productsJSONPathString);
             var deserializedProducts = this.jsonService.DeserializeProducts(importProductString);
 
-            var validProducts = new List<IProductImportModel>();
+            this.ValidProducts = new List<IProductImportModel>();
 
             foreach (var productDto in deserializedProducts)
             {
@@ -85,11 +87,12 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
-                validProducts.Add(productDto);
+                this.ValidProducts.Add(productDto);
+                
                 importProductsResults.AppendLine($"{productDto.Quantity} items of product {productDto.Name} added successfully!");
             }
 
-            this.productService.AddProductRange(validProducts);
+            this.productService.AddProductRange(ValidProducts);
 
             return importProductsResults.ToString();
         }
@@ -101,8 +104,9 @@ namespace OnlineStore.Logic.Services
             var suppliersImportString = this.fileReader.ReadAllText(this.suppliersJSONPathString);
             var deserializedSuppliers = this.jsonService.DeserializeSuppliers(suppliersImportString);
 
-            var validSupplierModels = new List<ISuppliersImportModel>();
+            this.ValidSuppliers = new List<ISuppliersImportModel>();
 
+          
             foreach (var supplierDto in deserializedSuppliers)
             {
                 if (!this.validator.IsValid(supplierDto))
@@ -118,12 +122,12 @@ namespace OnlineStore.Logic.Services
                     importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} already exists!");
                     continue;
                 }
-                validSupplierModels.Add(supplierDto);
+                this.ValidSuppliers.Add(supplierDto);
 
                 importSuppliersResults.AppendLine($"Supplier {supplierDto.Name} added successfully!");
             }
 
-            this.supplierService.AddSupplierRange(validSupplierModels);
+            this.supplierService.AddSupplierRange(this.ValidSuppliers);
 
             return importSuppliersResults.ToString();
         }
@@ -135,7 +139,7 @@ namespace OnlineStore.Logic.Services
             var importCouriersString = this.fileReader.ReadAllText(this.couriersJSONPathString);
             var deserializedCouriers = this.jsonService.DeserializeCouriers(importCouriersString);
 
-            var validCouriers = new List<ICourierImportModel>();
+            this.ValidCouriers = new List<ICourierImportModel>();
 
             foreach (var courierDto in deserializedCouriers)
             {
@@ -153,11 +157,11 @@ namespace OnlineStore.Logic.Services
                     continue;
                 }
 
-                validCouriers.Add(courierDto);
+                this.ValidCouriers.Add(courierDto);
                 importCourierResults.AppendLine($"Courier {courierDto.FirstName} {courierDto.LastName} added successfully!");
             }
 
-            this.courierService.AddCourierRange(validCouriers);
+            this.courierService.AddCourierRange(this.ValidCouriers);
 
             return importCourierResults.ToString();
         }

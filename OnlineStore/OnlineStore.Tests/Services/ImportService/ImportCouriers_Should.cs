@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Core.Contracts;
-using OnlineStore.DTO.ProductModels;
-using OnlineStore.DTO.ProductModels.Contracts;
+using OnlineStore.DTO.CourierModels;
+using OnlineStore.DTO.SupplierModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
 using OnlineStore.Tests.Mocks;
@@ -12,7 +12,7 @@ using OnlineStore.Tests.Mocks;
 namespace OnlineStore.Tests.Services.ImportService
 {
     [TestClass]
-    public class ImportProducts_Should
+    public class ImportCouriers_Should
     {
         [TestMethod]
         public void InvokeFileRead_ToReadImportString()
@@ -27,7 +27,7 @@ namespace OnlineStore.Tests.Services.ImportService
             var importService = new MockImportService(fakeProductService.Object, fakeCourierService.Object,
                 fakeSupplierService.Object, mockFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
             mockFileReader.Verify(v => v.ReadAllText(It.IsAny<string>()), Times.Exactly(1));
@@ -45,11 +45,12 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeValidator = new Mock<IValidator>();
             var importService = new MockImportService(fakeProductService.Object, fakeCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, mockJsonService.Object);
+
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
-            mockJsonService.Verify(v => v.DeserializeProducts(It.IsAny<string>()), Times.Exactly(1));
+            mockJsonService.Verify(v => v.DeserializeCouriers(It.IsAny<string>()), Times.Exactly(1));
         }
 
         [TestMethod]
@@ -60,13 +61,13 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
             var fakeJsonService = new Mock<IJsonService>();
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { new ProductImportModel() });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { new CourierImportModel() });
             var fakeFileReader = new Mock<IFileReader>();
             var mockValidator = new Mock<IValidator>();
             var importService = new MockImportService(fakeProductService.Object, fakeCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, mockValidator.Object, fakeJsonService.Object);
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
             mockValidator.Verify(v => v.IsValid(It.IsAny<object>()), Times.Exactly(1));
@@ -80,7 +81,7 @@ namespace OnlineStore.Tests.Services.ImportService
             var fakeCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
             var fakeJsonService = new Mock<IJsonService>();
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { new ProductImportModel() });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { new CourierImportModel() });
             var fakeFileReader = new Mock<IFileReader>();
             var mockValidator = new Mock<IValidator>();
             mockValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(false);
@@ -88,110 +89,112 @@ namespace OnlineStore.Tests.Services.ImportService
                 fakeSupplierService.Object, fakeFileReader.Object, mockValidator.Object, fakeJsonService.Object);
             string expectedMessage = "Import rejected. Input is with invalid format.\r\n";
             //Act
-            string actualMessage = importService.ExposedImportProductsFunction();
+            string actualMessage = importService.ExposedImportCouriersFunction();
 
             //Assert
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 
         [TestMethod]
-        public void InvokeProductExistsByName_WhenModelIsValid()
+        public void InvokeCourierExistsByName_WhenModelIsValid()
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
             var fakeJsonService = new Mock<IJsonService>();
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { new ProductImportModel() });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { new CourierImportModel() });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
-            mockProductService.Verify(v => v.ProductExistsByName(It.IsAny<string>()), Times.Exactly(1));
+            mockCourierService.Verify(v => v.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(1));
         }
 
         [TestMethod]
-        public void ReturnsCorrectMessage_WhenModelIsValidAndProductExists()
+        public void ReturnsCorrectMessage_WhenModelIsValidAndCourierExists()
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(s => s.ProductExistsByName(It.IsAny<string>())).Returns(true);
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
+            mockCourierService.Setup(s => s.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var fakeJsonService = new Mock<IJsonService>();
-            var fakeProduct = new ProductImportModel
+            var fakeCourier = new CourierImportModel()
             {
-                Name = "test"
+                FirstName = "Pesho",
+                LastName = "Goshov"
             };
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { fakeCourier });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
-            string expectedMessage = $"Product {fakeProduct.Name} already exists!\r\n";
+            string expectedMessage = $"Courier {fakeCourier.FirstName} {fakeCourier.LastName} already exists!\r\n";
             //Act
-            string actualMessage = importService.ExposedImportProductsFunction();
+            string actualMessage = importService.ExposedImportCouriersFunction();
 
             //Assert
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 
         [TestMethod]
-        public void AddsTheProductToListOfValidProducts_WhenModelIsValidAndProductDoesNotExist()
+        public void AddsTheCourierToListOfValidCouriers_WhenModelIsValidAndCourierDoesNotExist()
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(s => s.ProductExistsByName(It.IsAny<string>())).Returns(false);
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
+            mockCourierService.Setup(s => s.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var fakeJsonService = new Mock<IJsonService>();
-            var fakeProduct = new ProductImportModel
+            var fakeCourier = new CourierImportModel()
             {
-                Name = "test"
+                FirstName = "Pesho",
+                LastName = "Goshov"
             };
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { fakeCourier });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
 
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
-            Assert.IsTrue(importService.ExposedValidProducts.Any(a => a.Name == fakeProduct.Name));
+            Assert.IsTrue(importService.ExposedValidCouriers.Any(a => a.FirstName == fakeCourier.FirstName && a.LastName == fakeCourier.LastName));
         }
 
         [TestMethod]
-        public void ReturnsValidMessage_WhenProductIsAdded()
+        public void ReturnsValidMessage_WhenCourierIsAdded()
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(s => s.ProductExistsByName(It.IsAny<string>())).Returns(false);
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
+            mockCourierService.Setup(s => s.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var fakeJsonService = new Mock<IJsonService>();
-            var fakeProduct = new ProductImportModel
+            var fakeCourier = new CourierImportModel()
             {
-                Name = "test",
-                Quantity = 5
+                FirstName = "Pesho",
+                LastName = "Goshov"
             };
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { fakeCourier });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
-            string expectedMessage = $"{fakeProduct.Quantity} items of product {fakeProduct.Name} added successfully!\r\n";
+            string expectedMessage = $"Courier {fakeCourier.FirstName} {fakeCourier.LastName} added successfully!\r\n";
             //Act
-            string actualMessage = importService.ExposedImportProductsFunction();
+            string actualMessage = importService.ExposedImportCouriersFunction();
 
             //Assert
 
@@ -199,54 +202,52 @@ namespace OnlineStore.Tests.Services.ImportService
         }
 
         [TestMethod]
-        public void InvokeAddProductRange_WhenAllProductsAreValidated()
+        public void InvokeAddCourierRange_WhenAllCouriersAreValidated()
         {
-            //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(s => s.ProductExistsByName(It.IsAny<string>())).Returns(false);
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
+            mockCourierService.Setup(s => s.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var fakeJsonService = new Mock<IJsonService>();
-            var fakeProduct = new ProductImportModel();
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct });
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { new CourierImportModel() });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.Setup(s => s.IsValid(It.IsAny<object>())).Returns(true);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
             //Act
-            importService.ExposedImportProductsFunction();
+            importService.ExposedImportCouriersFunction();
 
             //Assert
-            mockProductService.Verify(v => v.AddProductRange(It.IsAny<IList<IProductImportModel>>()), Times.Once);
+            mockCourierService.Verify(v => v.AddCourierRange(It.IsAny<IList<ICourierImportModel>>()), Times.Once);
         }
 
         [TestMethod]
         public void ReturnCorrectMessage_WhenMethodReturns()
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(s => s.ProductExistsByName(It.IsAny<string>())).Returns(false);
-            var fakeCourierService = new Mock<ICourierService>();
+            var fakeProductService = new Mock<IProductService>();
+            var mockCourierService = new Mock<ICourierService>();
             var fakeSupplierService = new Mock<ISupplierService>();
+            mockCourierService.Setup(s => s.CourierExistsByName(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var fakeJsonService = new Mock<IJsonService>();
-            var fakeProduct1 = new ProductImportModel
+            var fakeCourier1 = new CourierImportModel()
             {
-                Name = "test",
-                Quantity = 1
+                FirstName = "Pesho",
+                LastName = "Goshov"
             };
-            var fakeProduct2 = new ProductImportModel ();
-            fakeJsonService.Setup(s => s.DeserializeProducts(It.IsAny<string>())).Returns(new[] { fakeProduct1, fakeProduct2 });
+            var fakeCourier2 = new CourierImportModel();
+            fakeJsonService.Setup(s => s.DeserializeCouriers(It.IsAny<string>())).Returns(new[] { fakeCourier1, fakeCourier2 });
             var fakeFileReader = new Mock<IFileReader>();
             var fakeValidator = new Mock<IValidator>();
             fakeValidator.SetupSequence(s => s.IsValid(It.IsAny<object>())).Returns(true).Returns(false);
-            var importService = new MockImportService(mockProductService.Object, fakeCourierService.Object,
+            var importService = new MockImportService(fakeProductService.Object, mockCourierService.Object,
                 fakeSupplierService.Object, fakeFileReader.Object, fakeValidator.Object, fakeJsonService.Object);
             string expectedMessage =
-                $"{fakeProduct1.Quantity} items of product {fakeProduct1.Name} added successfully!\r\n" +
+                $"Courier {fakeCourier1.FirstName} {fakeCourier1.LastName} added successfully!\r\n" +
                 "Import rejected. Input is with invalid format.\r\n";
             //Act
-            string actualMessage = importService.ExposedImportProductsFunction();
+            string actualMessage = importService.ExposedImportCouriersFunction();
 
             //Assert
             Assert.AreEqual(expectedMessage, actualMessage);

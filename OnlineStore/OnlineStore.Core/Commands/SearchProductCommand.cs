@@ -24,10 +24,14 @@ namespace OnlineStore.Core.Commands
             var searchedProduct = reader.Read();
 
             var matchingProduct = productService.FindProductByName(searchedProduct);
+            var result = string.Empty;
+            if (matchingProduct != null)
+            {
+                result = $"Name: {matchingProduct.Name}" + Environment.NewLine
+              + $"Selling price: ${matchingProduct.SellingPrice}" + Environment.NewLine
+              + $"Category: {matchingProduct.CategoryName}";
+            }
 
-            var result = $"Name: {matchingProduct.Name}" + Environment.NewLine
-                + $"Selling price: ${matchingProduct.SellingPrice}" + Environment.NewLine
-                + $"Category: {matchingProduct.CategoryName}";
 
             return result;
         }

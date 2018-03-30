@@ -88,6 +88,7 @@
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
     <Compile Include="Commands\ImportExternalData\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\Login\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\Logout\Constructor_Should.cs" />
     <Compile Include="Commands\Logout\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\PrintAvailableProductReport\Constructor_Should.cs" />
     <Compile Include="Commands\PrintAvailableProductReport\ExecuteThisCommand_Should.cs" />

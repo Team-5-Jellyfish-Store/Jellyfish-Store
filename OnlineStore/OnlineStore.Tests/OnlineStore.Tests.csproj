@@ -153,6 +153,8 @@
     <Compile Include="Services\SupplierServiceTests\AddSupplierRange_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\SupplierExistsByName_Should.cs" />
+    <Compile Include="Services\TownServiceTests\Constructor_Should.cs" />
+    <Compile Include="Services\TownServiceTests\Create_Should.cs" />
     <Compile Include="Services\UserServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\UserServiceTests\GetRegisteredUser_Should.cs" />
     <Compile Include="Services\UserServiceTests\RegisterUser_Should.cs" />

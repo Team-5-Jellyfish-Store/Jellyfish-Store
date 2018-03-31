@@ -32,5 +32,7 @@ namespace OnlineStore.Logic.Services
             this.context.Towns.Add(townModel);
             this.context.SaveChanges();
         }
+
+     
     }
 }

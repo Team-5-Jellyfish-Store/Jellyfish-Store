@@ -10,7 +10,7 @@ using OnlineStore.DTO.OrderModels.Constracts;
 using OnlineStore.Models.DataModels;
 using OnlineStore.Tests.Mocks;
 
-namespace OnlineStore.Tests.Services.OrderService
+namespace OnlineStore.Tests.Services.OrderServiceTests
 {
     [TestClass]
     public class GetAllOrders_Should
@@ -54,29 +54,54 @@ namespace OnlineStore.Tests.Services.OrderService
         [TestMethod]
         public void ReturnCorrectData_WhenInvoked()
         {
-            // Arrange
-            Mapper.Reset();
-            AutomapperConfiguration.Initialize();
-            var mockContext = new Mock<IOnlineStoreContext>();
-            var stubDateTimeProvider = new MockDateTimeProvider();
-            var orders = new List<Order> { new Order { Comment = "Patka", CourierId = 1, OrderedOn = stubDateTimeProvider.Now, UserId = 1, User = new User(){Username = "Pesho"}}  };
+            //// Arrange
 
-           
-            var mockSet = new Mock<DbSet<Order>>();
+            //var stubContext = new Mock<IOnlineStoreContext>();
+            //var stubDateTimeProvider = new MockDateTimeProvider();
+            //var orders = new List<Order>
+            //{
+            //    new Order { Comment = "Patka", CourierId = 1, OrderedOn = stubDateTimeProvider.Now, UserId = 1 }
+            //};
 
-            mockSet.SetupData(orders);
+            //var mockSet = new Mock<DbSet<Order>>();
 
-            
-            mockContext.Setup(s => s.Orders).Returns(mockSet.Object);
+            //mockSet.SetupData(orders);
 
-            var service = new Logic.Services.OrderService(mockContext.Object);
+            //stubContext.Setup(s => s.Orders).Returns(mockSet.Object);
+            //var service = new Logic.Services.OrderService(stubContext.Object);
 
-
-            // Act
-            var ordersGot = service.GetAllOrders();
+            //// Act
+            //var ordersGot = service.GetAllOrders();
 
             //Assert
-            Assert.AreEqual(orders.Count, ordersGot.Count());
+            //Assert.AreEqual(orders.Count(), ordersGot.Count());
+
+            //GO TO ORDERMODEL AND DELETE THE CUSTOM MAPPINGS. THEN IT WORKS (REALLY)
+            var stubContext = new Mock<IOnlineStoreContext>();
+            var stubDateTimeProvider = new MockDateTimeProvider();
+            var stubDBContext = new Mock<IOnlineStoreContext>();
+            var fakeOrderService = new Logic.Services.OrderService(stubDBContext.Object);
+            var data = new List<Order>
+            {
+                new Order
+                {
+                    Comment = "Patka",
+                    CourierId = 1,
+                    OrderedOn = stubDateTimeProvider.Now,
+                    UserId = 1 }
+            };
+            var stubDbSet = new Mock<DbSet<Order>>();
+            stubDbSet.SetupData(data);
+            stubDBContext.Setup(x => x.Orders).Returns(stubDbSet.Object);
+
+            Mapper.Reset();
+            AutomapperConfiguration.Initialize();
+            //Act 
+            var foundCategories = fakeOrderService.GetAllOrders();
+
+            //Assert
+            Assert.AreEqual(data.Count, foundCategories.Count());
+
         }
     }
 }

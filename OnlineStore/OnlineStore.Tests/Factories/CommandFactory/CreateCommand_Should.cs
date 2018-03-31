@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Core.Commands;
 using OnlineStore.Core.Contracts;
+using OnlineStore.App.AutofacConfig;
 
 namespace OnlineStore.Tests.Factories.CommandFactory
 {

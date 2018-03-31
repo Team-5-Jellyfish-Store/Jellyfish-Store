@@ -77,11 +77,12 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<OrderModel> GetAllOrders()
         {
-            var allOrders = this.context.Orders;
+            //var allOrders = this.context.Orders;
 
-            var allordersDto = allOrders.ProjectTo<OrderModel>();
+            //var allordersDto = allOrders.ProjectTo<OrderModel>();
 
-            return allordersDto;
+            //return allordersDto;
+            return this.context.Orders.ProjectTo<OrderModel>();
         }
     }
 }

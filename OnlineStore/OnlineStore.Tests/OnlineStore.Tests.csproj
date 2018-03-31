@@ -128,6 +128,7 @@
     <Compile Include="Services\JsonService\DeserializeSuppliers_Should.cs" />
     <Compile Include="Services\OrderService\Constructor_Should.cs" />
     <Compile Include="Services\OrderService\MakeOrder_Should.cs" />
+    <Compile Include="Services\SupplierServiceTests\GetSupplierByName_Should.cs" />
     <Compile Include="Services\UserServiceTests\GetRegisteredUser_Should.cs" />
     <Compile Include="Services\UserServiceTests\RegisterUser_Should.cs" />
   </ItemGroup>

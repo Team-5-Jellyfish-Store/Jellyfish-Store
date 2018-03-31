@@ -252,7 +252,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         }
 
         [TestMethod]
-        public void Invode_ContextSaveChanges_When_Validations_Pass()
+        public void Invoke_ContextSaveChanges_When_Validations_Pass()
         {
             // Arrange
             var fakeUsername = "testUsername";

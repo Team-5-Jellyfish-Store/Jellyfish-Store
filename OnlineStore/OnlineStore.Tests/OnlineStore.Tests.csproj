@@ -132,6 +132,8 @@
     <Compile Include="Mocks\MockEngine.cs" />
     <Compile Include="Mocks\MockImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdressServiceTests\Constructor_Should.cs" />
+    <Compile Include="Services\AdressServiceTests\Create_Should.cs" />
     <Compile Include="Services\CategoryServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\CategoryServiceTests\Create_Should.cs" />
     <Compile Include="Services\CategoryServiceTests\FindCategoryByName.cs" />

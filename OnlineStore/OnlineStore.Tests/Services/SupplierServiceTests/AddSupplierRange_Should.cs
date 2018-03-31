@@ -38,8 +38,8 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeSupplierImportModel = new SuppliersImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeSupplierImportModels = new List<SuppliersImportModel>() { fakeSupplierImportModel };
+            var fakeSupplierImportModel = new Mock<ISuppliersImportModel>();
+            var fakeSupplierImportModels = new List<ISuppliersImportModel>() { fakeSupplierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
@@ -71,8 +71,16 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
                         .Setup(ctx => ctx.Addresses)
                         .Returns(newfakeAddresses.Object);
 
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Address)
+                .Returns(fakeAddressText);
+
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel))
+                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel.Object))
                 .Returns(fakeSupplier.Object);
 
             ctxStub
@@ -108,8 +116,8 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeSupplierImportModel = new SuppliersImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeSupplierImportModels = new List<SuppliersImportModel>() { fakeSupplierImportModel };
+            var fakeSupplierImportModel = new Mock<ISuppliersImportModel>();
+            var fakeSupplierImportModels = new List<ISuppliersImportModel>() { fakeSupplierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -134,8 +142,16 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
                         .Setup(ctx => ctx.Addresses)
                         .Returns(newfakeAddresses.Object);
 
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Address)
+                .Returns(fakeAddressText);
+
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel))
+                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel.Object))
                 .Returns(fakeSupplier.Object);
 
             ctxStub
@@ -167,8 +183,8 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeSupplierImportModel = new SuppliersImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeSupplierImportModels = new List<SuppliersImportModel>() { fakeSupplierImportModel };
+            var fakeSupplierImportModel = new Mock<ISuppliersImportModel>();
+            var fakeSupplierImportModels = new List<ISuppliersImportModel>() { fakeSupplierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -186,8 +202,16 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
 
             var supplierService = new SupplierService(ctxStub.Object, addressServiceStub.Object, townServiceStub.Object, mapperStub.Object);
 
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Address)
+                .Returns(fakeAddressText);
+
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel))
+                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel.Object))
                 .Returns(fakeSupplier.Object);
 
             ctxStub
@@ -215,8 +239,8 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeSupplierImportModel = new SuppliersImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeSupplierImportModels = new List<SuppliersImportModel>() { fakeSupplierImportModel };
+            var fakeSupplierImportModel = new Mock<ISuppliersImportModel>();
+            var fakeSupplierImportModels = new List<ISuppliersImportModel>() { fakeSupplierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -234,8 +258,16 @@ namespace OnlineStore.Tests.Services.SupplierServiceTests
 
             var supplierService = new SupplierService(mockCtx.Object, addressServiceStub.Object, townServiceStub.Object, mapperStub.Object);
 
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Address)
+                .Returns(fakeAddressText);
+
+            fakeSupplierImportModel
+                .SetupGet(sim => sim.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel))
+                .Setup(m => m.Map<ISuppliersImportModel, Supplier>(fakeSupplierImportModel.Object))
                 .Returns(fakeSupplier.Object);
 
             mockCtx

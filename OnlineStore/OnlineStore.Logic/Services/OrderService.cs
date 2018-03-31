@@ -75,7 +75,7 @@ namespace OnlineStore.Logic.Services
             this.context.SaveChanges();
         }
 
-        public IEnumerable<IOrderModel> GetAllOrders()
+        public IEnumerable<OrderModel> GetAllOrders()
         {
             //var allOrders = this.context.Orders;
 

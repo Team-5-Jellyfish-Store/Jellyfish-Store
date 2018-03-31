@@ -8,6 +8,6 @@ namespace OnlineStore.Logic.Contracts
     {
         void MakeOrder(IOrderMakeModel orderModel);
 
-        IEnumerable<IOrderModel> GetAllOrders();
+        IEnumerable<OrderModel> GetAllOrders();
     }
 }

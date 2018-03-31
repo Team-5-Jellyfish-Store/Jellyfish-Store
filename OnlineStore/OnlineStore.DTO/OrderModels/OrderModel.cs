@@ -12,9 +12,9 @@ namespace OnlineStore.DTO.OrderModels
 
         public DateTime OrderedOn { get; set; }
 
-        public Nullable<DateTime> DeliveredOn { get; set; }
+        public DateTime? DeliveredOn { get; set; }
 
-        public string Username { get; set; } //navprop
+        public string Username { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {

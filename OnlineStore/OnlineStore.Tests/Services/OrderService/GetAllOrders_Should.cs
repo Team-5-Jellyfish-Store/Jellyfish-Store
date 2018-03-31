@@ -15,16 +15,18 @@ namespace OnlineStore.Tests.Services.OrderService
     [TestClass]
     public class GetAllOrders_Should
     {
-        [ClassInitialize]
-        public static void InitilizeAutomapper(TestContext context)
-        {
-            AutomapperConfiguration.Initialize();
-        }
+        //[ClassInitialize]
+        //public static void InitilizeAutomapper(TestContext context)
+        //{
+        //    AutomapperConfiguration.Initialize();
+        //}
 
         [TestMethod]
         public void ReturnInstanceOfTypeIEnumerableIOrderProduct_WhenInvoked()
         {
             // Arrange
+            Mapper.Reset();
+            AutomapperConfiguration.Initialize();
             var mockContext = new Mock<IOnlineStoreContext>();
             var usersMock = new List<User> { new User { Username = "Pesho" } }.GetQueryableMockDbSet();
             var couriersMock = new List<Courier> { new Courier { FirstName = "Peshko", LastName = "Peshkov" } }.GetQueryableMockDbSet();
@@ -53,18 +55,18 @@ namespace OnlineStore.Tests.Services.OrderService
         public void ReturnCorrectData_WhenInvoked()
         {
             // Arrange
-            
+            Mapper.Reset();
+            AutomapperConfiguration.Initialize();
             var mockContext = new Mock<IOnlineStoreContext>();
             var stubDateTimeProvider = new MockDateTimeProvider();
-            var orders = new List<Order> { new Order { Comment = "Patka", CourierId = 1, OrderedOn = stubDateTimeProvider.Now, UserId = 1 } };
+            var orders = new List<Order> { new Order { Comment = "Patka", CourierId = 1, OrderedOn = stubDateTimeProvider.Now, UserId = 1, User = new User(){Username = "Pesho"}}  };
 
            
             var mockSet = new Mock<DbSet<Order>>();
 
             mockSet.SetupData(orders);
 
-            Mapper.Reset();
-            AutomapperConfiguration.Initialize();
+            
             mockContext.Setup(s => s.Orders).Returns(mockSet.Object);
 
             var service = new Logic.Services.OrderService(mockContext.Object);

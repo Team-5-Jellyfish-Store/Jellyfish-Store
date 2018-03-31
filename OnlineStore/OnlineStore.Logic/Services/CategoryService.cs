@@ -17,8 +17,8 @@ namespace OnlineStore.Logic.Services
 
         public CategoryService(IOnlineStoreContext context, IMapper mapper)
         {
-            this.context = context;
-            this.mapper = mapper;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public ICategoryModel FindCategoryByName(string name)
@@ -31,7 +31,6 @@ namespace OnlineStore.Logic.Services
             if (category == null)
             {
                 throw new ArgumentNullException("No such category!");
-
             }
 
             var categoryModel = this.mapper.Map<ICategoryModel>(category);

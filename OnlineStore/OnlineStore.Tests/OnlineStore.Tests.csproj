@@ -131,8 +131,10 @@
     <Compile Include="Mocks\MockDateTimeProvider.cs" />
     <Compile Include="Mocks\MockEngine.cs" />
     <Compile Include="Mocks\MockImportService.cs" />
+    <Compile Include="Mocks\MockUserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryServiceTests\Constructor_Should.cs" />
+    <Compile Include="Services\CategoryServiceTests\Create_Should.cs" />
     <Compile Include="Services\CategoryServiceTests\FindCategoryByName.cs" />
     <Compile Include="Services\CategoryServiceTests\GetAllCategories.cs" />
     <Compile Include="Services\CourierServiceTests\AddCourierRange_Should.cs" />
@@ -160,9 +162,15 @@
     <Compile Include="Services\SupplierServiceTests\AddSupplierRange_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\SupplierExistsByName_Should.cs" />
+    <Compile Include="Services\TownServiceTests\Constructor_Should.cs" />
+    <Compile Include="Services\TownServiceTests\Create_Should.cs" />
     <Compile Include="Services\UserServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\UserServiceTests\GetRegisteredUser_Should.cs" />
     <Compile Include="Services\UserServiceTests\RegisterUser_Should.cs" />
+    <Compile Include="UserSessionTests\GetLoggedUserName_Should.cs" />
+    <Compile Include="UserSessionTests\HasAdminRights_Should.cs" />
+    <Compile Include="UserSessionTests\HasSomeoneLogged_Should.cs" />
+    <Compile Include="UserSessionTests\Logout_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

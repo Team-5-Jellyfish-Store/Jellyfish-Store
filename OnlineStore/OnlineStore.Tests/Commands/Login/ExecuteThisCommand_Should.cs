@@ -71,7 +71,7 @@ namespace OnlineStore.Tests.Commands.Login
         }
 
         [TestMethod]
-        public void Invoke_UserSession_Login_When_PasswordIsCorrect()
+        public void Invoke_UserSession_Login_When_Password_IsCorrect()
         {
             // Arrange
             var userServiceMock = new Mock<IUserService>();

@@ -27,25 +27,9 @@ namespace OnlineStore.Logic.Services
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public IProductModel GetSupplierByName(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var supplierFound = this.context.Suppliers
-                .Where(w => w.Name == name)
-                .ProjectTo<ProductModel>()
-                .FirstOrDefault();
-
-            return supplierFound ?? throw new ArgumentException("Supplier with that name not found");
-        }
-
         public bool SupplierExistsByName(string name)
         {
-
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException();
             }
@@ -67,7 +51,7 @@ namespace OnlineStore.Logic.Services
 
             foreach (var supplierModel in supplierModels)
             {
-                var supplierToAdd = this.mapper.Map<Supplier>(supplierModel);
+                var supplierToAdd = this.mapper.Map<ISuppliersImportModel, Supplier>(supplierModel);
 
                 if (!this.context.Towns.Any(x => x.Name == supplierModel.Town))
                 {
@@ -89,6 +73,5 @@ namespace OnlineStore.Logic.Services
             suppliersToAdd.ForEach(s => this.context.Suppliers.Add(s));
             this.context.SaveChanges();
         }
-
     }
 }

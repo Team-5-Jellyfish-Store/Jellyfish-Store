@@ -95,11 +95,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddOrder\Constructor_Should.cs" />
     <Compile Include="Commands\AddOrder\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\Constructor_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
     <Compile Include="Commands\ImportExternalData\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\Login\Constructor_Should.cs" />
     <Compile Include="Commands\Login\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\Logout\Constructor_Should.cs" />
     <Compile Include="Commands\Logout\ExecuteThisCommand_Should.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Services\CategoryServiceTests\FindCategoryByName.cs" />
     <Compile Include="Services\CategoryServiceTests\GetAllCategories.cs" />
     <Compile Include="Services\CourierServiceTests\AddCourierRange_Should.cs" />
+    <Compile Include="Services\CourierServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\CourierServiceTests\CourierExistsByName_Should.cs" />
     <Compile Include="Services\ImportService\Constructor_Should.cs" />
     <Compile Include="Services\ImportService\ImportCouriers_Should.cs" />
@@ -146,7 +149,10 @@
     <Compile Include="Services\OrderServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\OrderServiceTests\GetAllOrders_Should.cs" />
     <Compile Include="Services\OrderServiceTests\MakeOrder_Should.cs" />
-    <Compile Include="Services\SupplierServiceTests\GetSupplierByName_Should.cs" />
+    <Compile Include="Services\SupplierServiceTests\AddSupplierRange_Should.cs" />
+    <Compile Include="Services\SupplierServiceTests\Constructor_Should.cs" />
+    <Compile Include="Services\SupplierServiceTests\SupplierExistsByName_Should.cs" />
+    <Compile Include="Services\UserServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\UserServiceTests\GetRegisteredUser_Should.cs" />
     <Compile Include="Services\UserServiceTests\RegisterUser_Should.cs" />
   </ItemGroup>

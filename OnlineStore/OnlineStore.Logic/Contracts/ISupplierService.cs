@@ -6,8 +6,6 @@ namespace OnlineStore.Logic.Contracts
 {
     public interface ISupplierService
     {
-        IProductModel GetSupplierByName(string name);
-
         void AddSupplierRange(IEnumerable<ISuppliersImportModel> suppliers);
 
         bool SupplierExistsByName(string name);

@@ -73,10 +73,10 @@ namespace OnlineStore.Logic.Services
                 throw new ArgumentException("Username is required!", nameof(userName));
             }
 
-            var userModel = this.context.Users.SingleOrDefault(x => x.Username == userName)
+            var user = this.context.Users.SingleOrDefault(x => x.Username == userName)
                 ?? throw new ArgumentException($"User with username {userName} don't exist!");
 
-            return this.mapper.Map<IUserLoginModel>(userModel);
+            return this.mapper.Map<IUserLoginModel>(user);
         }
     }
 }

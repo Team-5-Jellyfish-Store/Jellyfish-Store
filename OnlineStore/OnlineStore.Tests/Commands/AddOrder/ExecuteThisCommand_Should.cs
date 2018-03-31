@@ -332,5 +332,65 @@ namespace OnlineStore.Tests.Commands.AddOrder
             // Assert
             mockOrderService.Verify(os => os.MakeOrder(orderModelStub.Object), Times.Once);
         }
+
+        [TestMethod]
+        public void Adds_ProductNameAndCount_ToDictionaty_OfProductsAndCounts_When_CountIsValidAndProductExist()
+        {
+            // Arrange
+            var fakeProductName = "testProduct";
+            var fakeProductCount = "4";
+            var rejectMoreProducts = "n";
+
+            var orderServiceStub = new Mock<IOrderService>();
+            var productServiceStub = new Mock<IProductService>();
+            var userSessionStub = new Mock<IUserSession>();
+            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            var validatorStub = new Mock<IValidator>();
+            var writerStub = new Mock<IWriter>();
+            var readerStub = new Mock<IReader>();
+            var dateTimeStub = new Mock<DatetimeProvider>();
+
+            var productModelStub = new Mock<IProductModel>();
+            var orderModelStub = new Mock<IOrderMakeModel>();
+
+            var addOrderCmd = new MockAddOrderCommand(orderServiceStub.Object, productServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, dateTimeStub.Object);
+
+            productModelStub
+                .SetupGet(pm => pm.Name)
+                .Returns(fakeProductName);
+
+            userSessionStub
+                .Setup(us => us.HasSomeoneLogged())
+                .Returns(true);
+
+            readerStub
+                .SetupSequence(r => r.Read())
+                .Returns(fakeProductName)
+                .Returns(fakeProductCount)
+                .Returns(rejectMoreProducts);
+
+            productServiceStub
+                .Setup(ps => ps.FindProductByName(fakeProductName))
+                .Returns(productModelStub.Object);
+
+            dtoFactoryStub
+                .Setup(dtoFac => dtoFac.CreateOrderMakeModel(It.IsAny<IDictionary<string, int>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(orderModelStub.Object);
+
+            validatorStub
+                .Setup(v => v.IsValid(orderModelStub.Object))
+                .Returns(true);
+
+            // Act
+            addOrderCmd.ExecuteThisCommand();
+
+            var productsAndCountAfterExecuting = addOrderCmd.ExposedProductNameAndCounts;
+            var isResultContainsProductName = productsAndCountAfterExecuting.ContainsKey(fakeProductName);
+            var expectedProductCount = int.Parse(fakeProductCount);
+
+            // Assert
+            Assert.IsTrue(isResultContainsProductName);
+            Assert.AreEqual(expectedProductCount, productsAndCountAfterExecuting[fakeProductName]);
+        }
     }
 }

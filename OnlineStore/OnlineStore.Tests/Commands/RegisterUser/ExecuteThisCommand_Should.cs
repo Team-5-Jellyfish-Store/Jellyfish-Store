@@ -227,7 +227,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         }
 
         [TestMethod]
-        public void Invoke_CreateUserRegisterModel_With_CorrectValues()
+        public void Invoke_DTOFactory_CreateUserRegisterModel_With_CorrectValues()
         {
             // Arrange
             string fakeUsername = "testUser";

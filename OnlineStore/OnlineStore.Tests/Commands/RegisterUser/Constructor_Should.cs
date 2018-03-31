@@ -12,16 +12,30 @@ namespace OnlineStore.Tests.Commands.RegisterUser
     [TestClass]
     public class Constructor_Should
     {
+        private Mock<IUserService> userServiceStub;
+        private Mock<IUserSession> userSessionStub;
+        private Mock<IDataTransferObjectFactory> dtoFactoryStub;
+        private Mock<IValidator> validatorStub;
+        private Mock<IWriter> writerStub;
+        private Mock<IReader> readerStub;
+        private Mock<IHasher> hasherStub;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            userServiceStub = new Mock<IUserService>();
+            userSessionStub = new Mock<IUserSession>();
+            dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
+            validatorStub = new Mock<IValidator>();
+            writerStub = new Mock<IWriter>();
+            readerStub = new Mock<IReader>();
+            hasherStub = new Mock<IHasher>();
+        }
+
         [TestMethod]
         public void Throw_ArgumentNullException_When_UserService_IsNull()
         {
-            var userSessionStub = new Mock<IUserSession>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var validatorStub = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerStub = new Mock<IReader>();
-            var hasherStub = new Mock<IHasher>();
-
+            //Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(null, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
             // Act & Assert
@@ -31,13 +45,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_UserSession_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var validatorStub = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerStub = new Mock<IReader>();
-            var hasherStub = new Mock<IHasher>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, null, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
             // Act & Assert
@@ -47,13 +55,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_DTOFactory_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var userSessionStub = new Mock<IUserSession>();
-            var validatorStub = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerStub = new Mock<IReader>();
-            var hasherStub = new Mock<IHasher>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, null, validatorStub.Object, writerStub.Object, readerStub.Object, hasherStub.Object);
 
             // Act & Assert
@@ -63,13 +65,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_Validator_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var userSessionStub = new Mock<IUserSession>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var writerStub = new Mock<IWriter>();
-            var readerStub = new Mock<IReader>();
-            var hasherStub = new Mock<IHasher>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, null, writerStub.Object, readerStub.Object, hasherStub.Object);
 
             // Act & Assert
@@ -79,13 +75,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_Writer_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var userSessionStub = new Mock<IUserSession>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var validatorStub = new Mock<IValidator>();
-            var readerStub = new Mock<IReader>();
-            var hasherStub = new Mock<IHasher>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, null, readerStub.Object, hasherStub.Object);
 
             // Act & Assert
@@ -95,13 +85,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_Reader_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var userSessionStub = new Mock<IUserSession>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var validatorStub = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var hasherStub = new Mock<IHasher>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, null, hasherStub.Object);
 
             // Act & Assert
@@ -111,13 +95,7 @@ namespace OnlineStore.Tests.Commands.RegisterUser
         [TestMethod]
         public void Throw_ArgumentNullException_When_Hasher_IsNull()
         {
-            var userServiceStub = new Mock<IUserService>();
-            var userSessionStub = new Mock<IUserSession>();
-            var dtoFactoryStub = new Mock<IDataTransferObjectFactory>();
-            var validatorStub = new Mock<IValidator>();
-            var writerStub = new Mock<IWriter>();
-            var readerStub = new Mock<IReader>();
-
+            // Arrange
             Action creatingRegisterUserCmd = () => new RegisterUserCommand(userServiceStub.Object, userSessionStub.Object, dtoFactoryStub.Object, validatorStub.Object, writerStub.Object, readerStub.Object, null);
 
             // Act & Assert

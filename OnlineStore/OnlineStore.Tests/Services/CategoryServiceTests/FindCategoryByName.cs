@@ -50,13 +50,14 @@ namespace OnlineStore.Tests.Services.CategoryServiceTests
         }
 
         [TestMethod]
-        public void Returns_CorrectCategoryDTO()
+      
+        public void CategoryDTO_IsInstanceOfCorrectType()
         {
             //Arrange
             var stubDBContext = new Mock<IOnlineStoreContext>();
             var stubMapper = new Mock<IMapper>();
             var fakeCategoryService = new CategoryService(stubDBContext.Object, stubMapper.Object);
-            var fakeCategoryModel = new Mock<ICategoryModel>();
+            var stubCategoryModel = new Mock<ICategoryModel>();
             
             var data = new List<Category>
             {
@@ -71,7 +72,8 @@ namespace OnlineStore.Tests.Services.CategoryServiceTests
             stubDbSet.SetupData(data);
             stubDBContext.Setup(x => x.Categories).Returns(stubDbSet.Object);
 
-            stubMapper.Setup(x => x.Map<ICategoryModel>(It.IsAny<Category>())).Returns(fakeCategoryModel.Object);
+            stubMapper.Setup(x => x.Map<ICategoryModel>(It.IsAny<Category>()))
+                .Returns(stubCategoryModel.Object);
             //Act 
             var foundCategory =  fakeCategoryService.FindCategoryByName("test");
 
@@ -80,13 +82,13 @@ namespace OnlineStore.Tests.Services.CategoryServiceTests
         }
 
         [TestMethod]
-        public void CategoryDTO_IsInstanceOfCorrectType()
+        public void Returns_CorrectCategoryDTO()
         {
             //Arrange
             var stubDBContext = new Mock<IOnlineStoreContext>();
             var stubMapper = new Mock<IMapper>();
             var fakeCategoryService = new CategoryService(stubDBContext.Object, stubMapper.Object);
-            var expected = new CategoryModel { Name = "test" };
+            var stubCategoryModel = new Mock<ICategoryModel>();
             var data = new List<Category>
             {
                 new Category
@@ -100,12 +102,13 @@ namespace OnlineStore.Tests.Services.CategoryServiceTests
             stubDbSet.SetupData(data);
             stubDBContext.Setup(x => x.Categories).Returns(stubDbSet.Object);
 
-            stubMapper.Setup(x => x.Map<ICategoryModel>(It.IsAny<Category>())).Returns(expected);
+            stubMapper.Setup(x => x.Map<ICategoryModel>(It.IsAny<Category>()))
+                .Returns(stubCategoryModel.Object);
             //Act 
             var foundCategory = fakeCategoryService.FindCategoryByName("test");
 
             //Assert
-            Assert.AreEqual(expected, foundCategory);
+            Assert.AreEqual(stubCategoryModel.Object, foundCategory);
         }
 
 

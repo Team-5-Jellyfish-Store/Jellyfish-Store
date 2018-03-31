@@ -32,6 +32,18 @@ namespace OnlineStore.Tests.Services.CategoryServiceTests
                 Id = 1,
                 Name = "test",
                 Products = new Collection<Product>()
+                },
+                new Category
+                {
+                Id = 1,
+                Name = "test",
+                Products = new Collection<Product>()
+                },
+                new Category
+                {
+                Id = 1,
+                Name = "test",
+                Products = new Collection<Product>()
                 }
             };
             var stubDbSet = new Mock<DbSet<Category>>();

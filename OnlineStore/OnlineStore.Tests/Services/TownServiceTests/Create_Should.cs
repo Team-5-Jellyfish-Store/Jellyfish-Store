@@ -32,8 +32,10 @@ namespace OnlineStore.Tests.Services.TownServiceTests
             //Arrange
             var stubDBContext = new Mock<IOnlineStoreContext>();
             var fakeTownService = new TownService(stubDBContext.Object);
-            var fakeTown = new Town();
-            fakeTown.Name = "test";
+            var fakeTown = new Town
+            {
+                Name = "test"
+            };
 
             var data = new List<Town> { fakeTown };
             var stubDBSet = new Mock<DbSet<Town>>();

@@ -28,17 +28,17 @@ namespace OnlineStore.Logic.Services
 
             var user = this.context.Users.SingleOrDefault(x => x.Username == orderModel.Username)
                 ?? throw new ArgumentException("User not found!");
-                
+
 
             var courier = this.context.Couriers.FirstOrDefault()
                 ?? throw new ArgumentException("No couriers found!");
 
-            var orderToAdd = new Order()
+            var orderToAdd = new Order
             {
                 Comment = orderModel.Comment,
                 OrderedOn = orderModel.OrderedOn,
                 User = user,
-                Courier = courier,
+                Courier = courier
             };
 
             this.context.Orders.Add(orderToAdd);
@@ -51,7 +51,7 @@ namespace OnlineStore.Logic.Services
                 var productCount = productNameAndCount.Value;
 
                 var product = this.context.Products.SingleOrDefault(x => x.Name == productName)
-                    ?? throw new ArgumentException($"Product with name {productName} don't exists!");
+                    ?? throw new ArgumentException($"Product with name {productName} doesn't exist!");
 
                 if (product.Quantity < productCount)
                 {
@@ -77,7 +77,12 @@ namespace OnlineStore.Logic.Services
 
         public IEnumerable<IOrderModel> GetAllOrders()
         {
-            return context.Orders.ProjectTo<OrderModel>();
+            //var allOrders = this.context.Orders;
+
+            //var allordersDto = allOrders.ProjectTo<OrderModel>();
+
+            //return allordersDto;
+            return this.context.Orders.ProjectTo<OrderModel>();
         }
     }
 }

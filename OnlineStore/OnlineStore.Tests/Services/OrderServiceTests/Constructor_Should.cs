@@ -22,7 +22,7 @@ namespace OnlineStore.Tests.Services.OrderService
         [TestMethod]
         public void ThrowArgumentNullException_WhenContextIsNull()
         {
-           //Arrange && Act && Assert
+            //Arrange && Act && Assert
             Assert.ThrowsException<ArgumentNullException>(() => new Logic.Services.OrderService(null));
         }
     }

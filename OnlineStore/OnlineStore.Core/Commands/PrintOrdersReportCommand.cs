@@ -1,10 +1,7 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using OnlineStore.Core.Contracts;
+﻿using OnlineStore.Core.Contracts;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
 using System;
-using System.IO;
 
 namespace OnlineStore.Core.Commands
 {

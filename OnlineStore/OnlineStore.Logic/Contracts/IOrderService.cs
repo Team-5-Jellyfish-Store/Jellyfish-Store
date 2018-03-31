@@ -1,5 +1,4 @@
-﻿using OnlineStore.DTO.OrderModels;
-using OnlineStore.DTO.OrderModels.Constracts;
+﻿using OnlineStore.DTO.OrderModels.Constracts;
 using System.Collections.Generic;
 
 namespace OnlineStore.Logic.Contracts
@@ -8,6 +7,6 @@ namespace OnlineStore.Logic.Contracts
     {
         void MakeOrder(IOrderMakeModel orderModel);
 
-        IEnumerable<OrderModel> GetAllOrders();
+        IEnumerable<IOrderModel> GetAllOrders();
     }
 }

@@ -149,6 +149,14 @@
     <Compile Include="Services\OrderServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\OrderServiceTests\GetAllOrders_Should.cs" />
     <Compile Include="Services\OrderServiceTests\MakeOrder_Should.cs" />
+    <Compile Include="Services\ProductService\AddProductRange_Should.cs" />
+    <Compile Include="Services\ProductService\AddProduct_Should.cs" />
+    <Compile Include="Services\ProductService\Constructor_Should.cs" />
+    <Compile Include="Services\ProductService\FindProductByName_Should.cs" />
+    <Compile Include="Services\ProductService\GetAllProducts_Should.cs" />
+    <Compile Include="Services\ProductService\GetProductsByCategoryName_Should.cs" />
+    <Compile Include="Services\ProductService\ProductExistsByName_Should.cs" />
+    <Compile Include="Services\ProductService\RemoveProductByName_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\AddSupplierRange_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\Constructor_Should.cs" />
     <Compile Include="Services\SupplierServiceTests\SupplierExistsByName_Should.cs" />

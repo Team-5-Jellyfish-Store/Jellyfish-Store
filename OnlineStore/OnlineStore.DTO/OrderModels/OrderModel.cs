@@ -18,7 +18,6 @@ namespace OnlineStore.DTO.OrderModels
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {
-            //If the line under is deleted test is OK :D
             configuration.CreateMap<Order, OrderModel>().ForMember(x => x.Username, cfg => cfg.MapFrom(x => x.User.Username));
         }
     }

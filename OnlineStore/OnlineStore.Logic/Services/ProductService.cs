@@ -24,13 +24,17 @@ namespace OnlineStore.Logic.Services
             this.categoryService = categoryService ?? throw new ArgumentNullException();
         }
 
-        public IEnumerable<ProductModel> GetAllProducts()
+        public IEnumerable<IProductModel> GetAllProducts()
         {
             return this.context.Products.ProjectTo<ProductModel>();
         }
 
         public IEnumerable<IProductModel> GetProductsByCategoryName(string categoryName)
         {
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                throw new ArgumentNullException();
+            }
             var filteredProducts = this.context.Products.Where(w => w.Category.Name == categoryName);
 
             return filteredProducts.ProjectTo<ProductModel>();
@@ -65,7 +69,7 @@ namespace OnlineStore.Logic.Services
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Product name is required!", nameof(name));
+                throw new ArgumentNullException(nameof(name), "Product name is required!");
             }
 
             var product = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");
@@ -78,7 +82,7 @@ namespace OnlineStore.Logic.Services
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Product name is required!", nameof(name));
+                throw new ArgumentNullException(nameof(name), "Product name is required!");
             }
 
             var productToRemove = this.context.Products.FirstOrDefault(x => x.Name == name) ?? throw new ArgumentException("No such product!");

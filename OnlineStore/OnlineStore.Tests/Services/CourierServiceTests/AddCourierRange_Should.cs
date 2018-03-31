@@ -38,8 +38,8 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeCourierImportModel = new CourierImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeCourierImportModels = new List<CourierImportModel>() { fakeCourierImportModel };
+            var fakeCourierImportModel = new Mock<ICourierImportModel>();
+            var fakeCourierImportModels = new List<ICourierImportModel>() { fakeCourierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
@@ -71,8 +71,16 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
                         .Setup(ctx => ctx.Addresses)
                         .Returns(newfakeAddresses.Object);
 
+            fakeCourierImportModel
+                    .SetupGet(cip => cip.Address)
+                    .Returns(fakeAddressText);
+
+            fakeCourierImportModel
+                .SetupGet(cip => cip.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel))
+                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel.Object))
                 .Returns(fakeCourier.Object);
 
             ctxStub
@@ -108,8 +116,8 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeCourierImportModel = new CourierImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeCourierImportModels = new List<CourierImportModel>() { fakeCourierImportModel };
+            var fakeCourierImportModel = new Mock<ICourierImportModel>();
+            var fakeCourierImportModels = new List<ICourierImportModel>() { fakeCourierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -134,8 +142,16 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
                         .Setup(ctx => ctx.Addresses)
                         .Returns(newfakeAddresses.Object);
 
+            fakeCourierImportModel
+                    .SetupGet(cip => cip.Address)
+                    .Returns(fakeAddressText);
+
+            fakeCourierImportModel
+                .SetupGet(cip => cip.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel))
+                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel.Object))
                 .Returns(fakeCourier.Object);
 
             ctxStub
@@ -167,8 +183,8 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeCourierImportModel = new CourierImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeCourierImportModels = new List<CourierImportModel>() { fakeCourierImportModel };
+            var fakeCourierImportModel = new Mock<ICourierImportModel>();
+            var fakeCourierImportModels = new List<ICourierImportModel>() { fakeCourierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -186,8 +202,16 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
 
             var courierService = new CourierService(ctxStub.Object, townServiceStub.Object, addressServiceStub.Object, mapperStub.Object);
 
+            fakeCourierImportModel
+                    .SetupGet(cip => cip.Address)
+                    .Returns(fakeAddressText);
+
+            fakeCourierImportModel
+                .SetupGet(cip => cip.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel))
+                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel.Object))
                 .Returns(fakeCourier.Object);
 
             ctxStub
@@ -215,8 +239,8 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
             // Arrange
             var fakeAddressText = "testAddress";
             var fakeTownName = "testTown";
-            var fakeCourierImportModel = new CourierImportModel() { Address = fakeAddressText, Town = fakeTownName };
-            var fakeCourierImportModels = new List<CourierImportModel>() { fakeCourierImportModel };
+            var fakeCourierImportModel = new Mock<ICourierImportModel>();
+            var fakeCourierImportModels = new List<ICourierImportModel>() { fakeCourierImportModel.Object };
 
             var fakeTown = new Town() { Name = fakeTownName };
             var fakeTowns = new List<Town>() { fakeTown }.GetQueryableMockDbSet();
@@ -234,8 +258,16 @@ namespace OnlineStore.Tests.Services.CourierServiceTests
 
             var courierService = new CourierService(mockCtx.Object, townServiceStub.Object, addressServiceStub.Object, mapperStub.Object);
 
+            fakeCourierImportModel
+                    .SetupGet(cip => cip.Address)
+                    .Returns(fakeAddressText);
+
+            fakeCourierImportModel
+                .SetupGet(cip => cip.Town)
+                .Returns(fakeTownName);
+
             mapperStub
-                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel))
+                .Setup(m => m.Map<ICourierImportModel, Courier>(fakeCourierImportModel.Object))
                 .Returns(fakeCourier.Object);
 
             mockCtx

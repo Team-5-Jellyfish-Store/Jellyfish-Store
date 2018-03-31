@@ -8,36 +8,36 @@ namespace OnlineStore.Core.Providers.Providers
 {
     public class UserSession : IUserSession
     {
-        private IUserLoginModel loggedUser;
+        protected virtual IUserLoginModel LoggedUser { get; set; }
 
         public string GetLoggedUserName()
         {
-            if (this.loggedUser == null)
+            if (this.LoggedUser == null)
             {
                 throw new ArgumentException("No user logged in!");
             }
 
-            return this.loggedUser.Username;
+            return this.LoggedUser.Username;
         }
 
         public bool HasAdminRights()
         {
-            if (this.loggedUser == null)
+            if (this.LoggedUser == null)
             {
                 throw new ArgumentException("No user logged in!");
             }
 
-            return this.loggedUser.Role == UserRole.Admin || this.loggedUser.Role == UserRole.Moderator;
+            return this.LoggedUser.Role == UserRole.Admin || this.LoggedUser.Role == UserRole.Moderator;
         }
 
         public bool HasSomeoneLogged()
         {
-            return this.loggedUser != null;
+            return this.LoggedUser != null;
         }
 
         public void Login(IUserLoginModel userToLogin)
         {
-            if (this.loggedUser != null)
+            if (this.LoggedUser != null)
             {
                 throw new ArgumentException("User already logged in!");
             }
@@ -47,12 +47,12 @@ namespace OnlineStore.Core.Providers.Providers
                 throw new ArgumentNullException(nameof(userToLogin));
             }
 
-            this.loggedUser = userToLogin;
+            this.LoggedUser = userToLogin;
         }
 
         public void Logout()
         {
-            this.loggedUser = null;
+            this.LoggedUser = null;
         }
     }
 }

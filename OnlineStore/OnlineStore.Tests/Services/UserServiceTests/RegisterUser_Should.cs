@@ -40,7 +40,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         {
             // Arrange
             var fakeUsername = "testUsername";
-            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername };
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
             var fakeUser = new User() { Username = fakeUsername };
             var fakeUsers = new List<User>() { fakeUser }.GetQueryableMockDbSet();
@@ -52,11 +52,15 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
+
             ctxStub
                 .Setup(x => x.Users)
                 .Returns(fakeUsers.Object);
 
-            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel);
+            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel.Object);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(executingRegisterUserMethod);
@@ -68,11 +72,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             // Arrange
             var fakeUsername = "testUsername";
             var fakeEmail = "test@email";
-            var fakeUserRegisterModel = new UserRegisterModel()
-            {
-                Username = fakeUsername,
-                EMail = fakeEmail
-            };
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
             var fakeUser = new User() { EMail = fakeEmail };
             var fakeUsers = new List<User>() { fakeUser }.GetQueryableMockDbSet();
@@ -84,11 +84,19 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.EMail)
+                .Returns(fakeEmail);
+
             ctxStub
                 .Setup(x => x.Users)
                 .Returns(fakeUsers.Object);
 
-            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel);
+            Action executingRegisterUserMethod = () => userService.RegisterUser(fakeUserRegisterModel.Object);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(executingRegisterUserMethod);
@@ -97,113 +105,80 @@ namespace OnlineStore.Tests.Services.UserServiceTests
         [TestMethod]
         public void Invoke_TownServiceCreate_When_TownName_DoesNotExists_InDatabase()
         {
-            //// Arrange
-            //var fakeUsername = "testUsername";
-            //var fakeEmail = "test@email";
-            //var fakeTownName = "testTownName";
-            //var fakeAddressText = "testAdress";
-            //var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
+            // Arrange
+            var fakeUsername = "testUsername";
+            var fakeEmail = "test@email";
+            var fakeTownName = "testTownName";
+            var fakeAddressText = "testAdress";
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
-            //var fakeAddress = new Address() { AddressText = fakeAddressText };
+            var fakeAddress = new Address() { AddressText = fakeAddressText };
 
-            //var fakeTown = new Town() { Name = fakeTownName };
-            //var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
-            //var newFakeTowns = new List<Town> { fakeTown }.GetQueryableMockDbSet();
+            var fakeTown = new Town() { Name = fakeTownName };
+            var fakeTowns = new List<Town>() { }.GetQueryableMockDbSet();
+            var newFakeTowns = new List<Town> { fakeTown }.GetQueryableMockDbSet();
 
-            //var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
-            //var userToRegisterStub = new User();
+            var fakeUsers = new List<User>() { }.GetQueryableMockDbSet();
+            var userToRegisterStub = new User();
 
-            //var ctxStub = new Mock<IOnlineStoreContext>();
-            //var mapperStub = new Mock<IMapper>();
-            //var mockTownService = new Mock<ITownService>();
-            //var addressServiceStub = new Mock<IAddressService>();
+            var ctxStub = new Mock<IOnlineStoreContext>();
+            var mapperStub = new Mock<IMapper>();
+            var mockTownService = new Mock<ITownService>();
+            var addressServiceStub = new Mock<IAddressService>();
 
-            //var userService = new UserService(ctxStub.Object, mapperStub.Object, mockTownService.Object, addressServiceStub.Object);
+            var userService = new UserService(ctxStub.Object, mapperStub.Object, mockTownService.Object, addressServiceStub.Object);
 
-            //Action addingTownToTowns =
-            //    () =>
-            //        ctxStub
-            //            .Setup(x => x.Towns)
-            //            .Returns(newFakeTowns.Object);
+            Action addingTownToTowns =
+                () =>
+                    ctxStub
+                        .Setup(x => x.Towns)
+                        .Returns(newFakeTowns.Object);
 
-            //Action addingAddressToTown =
-            //    () => fakeTown.Addresses.Add(fakeAddress);
-
-            //ctxStub
-            //    .Setup(x => x.Users)
-            //    .Returns(fakeUsers.Object);
-
-            //ctxStub
-            //    .Setup(x => x.Towns)
-            //    .Returns(fakeTowns.Object);
-
-            //mockTownService
-            //    .Setup(ts => ts.Create(fakeUserRegisterModel.TownName))
-            //    .Callback(addingTownToTowns);
-
-            //addressServiceStub
-            //    .Setup(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName))
-            //    .Callback(addingAddressToTown);
-
-            //mapperStub
-            //    .Setup(m => m.Map<User>(fakeUserRegisterModel))
-            //    .Returns(userToRegisterStub);
-
-            //// Act
-            //userService.RegisterUser(fakeUserRegisterModel);
-
-            //// Assert
-            //mockTownService.Verify(ts => ts.Create(fakeUserRegisterModel.TownName), Times.Once);
+            Action addingAddressToTown =
+                () => fakeTown.Addresses.Add(fakeAddress);
 
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
 
-            //Marto writes here *should be deleted*
-            //arrange
-            var stubCtx = new Mock<IOnlineStoreContext>();
-            var stubMapper = new Mock<IMapper>();
-            var stubAddressService = new Mock<IAddressService>();
-            var fakeUserToRegister = new Mock<IUserRegisterModel>();
-            var mockTownSer = new Mock<ITownService>();
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.EMail)
+                .Returns(fakeEmail);
 
-            var fakeTown = new Town();
-            var fakeAddress = new Address();
-            var emptyFakeUser = new User();
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.TownName)
+                .Returns(fakeTownName);
 
-            fakeTown.Name = "TestTown";
-            fakeAddress.AddressText = "TestAdress";
-            fakeTown.Addresses = new Collection<Address> { fakeAddress };
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.AddressText)
+                .Returns(fakeAddressText);
 
-            fakeUserToRegister.Setup(x => x.TownName).Returns("TestTown");
-            fakeUserToRegister.Setup(x => x.AddressText).Returns("TestAdress");
-            stubMapper.Setup(x => x.Map<User>(It.IsAny<IUserRegisterModel>())).Returns(emptyFakeUser);
+            ctxStub
+                .Setup(x => x.Users)
+                .Returns(fakeUsers.Object);
 
-           
-            var fakeUserService = new UserService
-                (stubCtx.Object, stubMapper.Object, mockTownSer.Object, stubAddressService.Object);
+            ctxStub
+                .Setup(x => x.Towns)
+                .Returns(fakeTowns.Object);
 
-            var stubDbSetTowns = new Mock<DbSet<Town>>();
-            var dataTowns = new List<Town>();
-            stubDbSetTowns.SetupData(dataTowns);
+            mockTownService
+                .Setup(ts => ts.Create(fakeTownName))
+                .Callback(addingTownToTowns);
 
-            //updatedTowns
-            var updatedDataTowns = new List<Town> { fakeTown };
-            Action setTheTownName = () => stubDbSetTowns.SetupData(updatedDataTowns);
-            mockTownSer.Setup(x => x.Create(It.IsAny<string>())).Callback(setTheTownName);
-            //to here
+            addressServiceStub
+                .Setup(addServ => addServ.Create(fakeAddressText, fakeTownName))
+                .Callback(addingAddressToTown);
 
-            var stubDbSetUsers = new Mock<DbSet<User>>();
-            var dataUsers = new List<User>();
-            stubDbSetUsers.SetupData(dataUsers);
+            mapperStub
+                .Setup(m => m.Map<User>(fakeUserRegisterModel.Object))
+                .Returns(userToRegisterStub);
 
-            stubCtx.Setup(x => x.Towns).Returns(stubDbSetTowns.Object);
-            stubCtx.Setup(x => x.Users).Returns(stubDbSetUsers.Object);
+            // Act
+            userService.RegisterUser(fakeUserRegisterModel.Object);
 
-     
-            //act
-            fakeUserService.RegisterUser(fakeUserToRegister.Object);
-            //assert
-            mockTownSer.Verify(x => x.Create(It.IsAny<string>()));
-            //Marto writes here *should be deleted*
+            // Assert
+            mockTownService.Verify(ts => ts.Create(fakeTownName), Times.Once);
         }
 
         [TestMethod]
@@ -214,7 +189,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeEmail = "test@email";
             var fakeTownName = "testTownName";
             var fakeAddressText = "testAdress";
-            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
             var fakeAddress = new Address() { AddressText = fakeAddressText };
 
@@ -234,6 +209,22 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             Action addingAddressToTown =
                 () => fakeTown.Addresses.Add(fakeAddress);
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.EMail)
+                .Returns(fakeEmail);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.TownName)
+                .Returns(fakeTownName);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.AddressText)
+                .Returns(fakeAddressText);
+
             ctxStub
                 .Setup(ctx => ctx.Users)
                 .Returns(fakeUsers.Object);
@@ -243,18 +234,18 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Returns(fakeTowns.Object);
 
             mockAddressService
-                .Setup(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName))
+                .Setup(addServ => addServ.Create(fakeAddressText, fakeTownName))
                 .Callback(addingAddressToTown);
 
             mapperStub
-                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Setup(m => m.Map<User>(fakeUserRegisterModel.Object))
                 .Returns(userToRegisterStub);
 
             // Act
-            userService.RegisterUser(fakeUserRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel.Object);
 
             // Assert
-            mockAddressService.Verify(addServ => addServ.Create(fakeUserRegisterModel.AddressText, fakeUserRegisterModel.TownName), Times.Once);
+            mockAddressService.Verify(addServ => addServ.Create(fakeAddressText, fakeTownName), Times.Once);
         }
 
         [TestMethod]
@@ -265,7 +256,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeEmail = "test@email";
             var fakeTownName = "testTownName";
             var fakeAddressText = "testAdress";
-            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
             var fakeAddress = new Address() { AddressText = fakeAddressText };
             var fakeTown = new Town() { Name = fakeTownName, Addresses = new List<Address>() { fakeAddress } };
@@ -281,6 +272,22 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             var userService = new UserService(ctxStub.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.EMail)
+                .Returns(fakeEmail);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.TownName)
+                .Returns(fakeTownName);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.AddressText)
+                .Returns(fakeAddressText);
+
             ctxStub
                 .Setup(ctx => ctx.Users)
                 .Returns(mockUsers.Object);
@@ -290,7 +297,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Returns(fakeTowns.Object);
 
             mapperStub
-                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Setup(m => m.Map<User>(fakeUserRegisterModel.Object))
                 .Returns(userToRegisterStub);
 
             mockUsers
@@ -298,7 +305,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Verifiable();
 
             // Act
-            userService.RegisterUser(fakeUserRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel.Object);
 
             // Assert
             mockUsers.Verify(u => u.Add(userToRegisterStub), Times.Once);
@@ -312,7 +319,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
             var fakeEmail = "test@email";
             var fakeTownName = "testTownName";
             var fakeAddressText = "testAdress";
-            var fakeUserRegisterModel = new UserRegisterModel() { Username = fakeUsername, EMail = fakeEmail, TownName = fakeTownName, AddressText = fakeAddressText };
+            var fakeUserRegisterModel = new Mock<IUserRegisterModel>();
 
             var fakeAddress = new Address() { AddressText = fakeAddressText };
             var fakeTown = new Town() { Name = fakeTownName, Addresses = new List<Address>() { fakeAddress } };
@@ -328,6 +335,22 @@ namespace OnlineStore.Tests.Services.UserServiceTests
 
             var userService = new UserService(mockCtx.Object, mapperStub.Object, townServiceStub.Object, addressServiceStub.Object);
 
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.Username)
+                .Returns(fakeUsername);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.EMail)
+                .Returns(fakeEmail);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.TownName)
+                .Returns(fakeTownName);
+
+            fakeUserRegisterModel
+                .SetupGet(urm => urm.AddressText)
+                .Returns(fakeAddressText);
+
             mockCtx
                 .Setup(ctx => ctx.Users)
                 .Returns(fakeUsers.Object);
@@ -337,7 +360,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Returns(fakeTowns.Object);
 
             mapperStub
-                .Setup(m => m.Map<User>(fakeUserRegisterModel))
+                .Setup(m => m.Map<User>(fakeUserRegisterModel.Object))
                 .Returns(userToRegisterStub);
 
             fakeUsers
@@ -345,7 +368,7 @@ namespace OnlineStore.Tests.Services.UserServiceTests
                 .Verifiable();
 
             // Act
-            userService.RegisterUser(fakeUserRegisterModel);
+            userService.RegisterUser(fakeUserRegisterModel.Object);
 
             // Assert
             mockCtx.Verify(ctx => ctx.SaveChanges(), Times.Once);

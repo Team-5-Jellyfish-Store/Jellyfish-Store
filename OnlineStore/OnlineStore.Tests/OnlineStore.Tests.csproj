@@ -99,6 +99,8 @@
     <Compile Include="Commands\AddOrder\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\Constructor_Should.cs" />
     <Compile Include="Commands\AddProductToProducts\ExecuteThisCommand_Should.cs" />
+    <Compile Include="Commands\Help\Constructor_Should.cs" />
+    <Compile Include="Commands\Help\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\ImportExternalData\Constructor_Should.cs" />
     <Compile Include="Commands\ImportExternalData\ExecuteThisCommand_Should.cs" />
     <Compile Include="Commands\Login\Constructor_Should.cs" />

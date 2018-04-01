@@ -42,7 +42,6 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<DatetimeProvider>().AsSelf();
             builder.RegisterType<PDFExporter>().As<IPDFExporter>();
 
-
             builder.RegisterType<OnlineStoreContext>().As<IOnlineStoreContext>().InstancePerLifetimeScope();
             builder.RegisterType<UserSession>().As<IUserSession>().SingleInstance();
 
@@ -71,9 +70,9 @@ namespace OnlineStore.App.AutofacConfig
             builder.RegisterType<PrintAvailableProductReportCommand>().Named<ICommand>("reportproducts");
             builder.RegisterType<PrintOrdersReportCommand>().Named<ICommand>("reportorders");
             builder.RegisterType<AddOrderCommand>().Named<ICommand>("addorder");
-
             builder.RegisterType<SearchCategoryCommand>().Named<ICommand>("searchbycategory");
             builder.RegisterType<SearchProductCommand>().Named<ICommand>("searchbyname");
+            builder.RegisterType<HelpCommand>().Named<ICommand>("help");
 
             //DTOs
             builder.RegisterType<CategoryModel>().As<ICategoryModel>();

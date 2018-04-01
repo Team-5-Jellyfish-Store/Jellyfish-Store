@@ -27,7 +27,7 @@ namespace OnlineStore.Core.Commands
 
             var results = new StringBuilder();
 
-            results.AppendLine($"Items in category {categoryName}");
+            results.AppendLine($"Items in category {categoryName}:");
 
             if (matchingProducts.Any())
             {
@@ -35,7 +35,7 @@ namespace OnlineStore.Core.Commands
                 {
                     results.AppendLine(
                         $"Name: {item.Name}" + Environment.NewLine
-                        + $"Selling price: ${item.SellingPrice}" + Environment.NewLine);
+                        + $"Selling price: ${Math.Round(item.SellingPrice,2)} per item" + Environment.NewLine);
                 }
             }
             else

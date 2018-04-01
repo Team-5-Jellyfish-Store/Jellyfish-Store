@@ -28,11 +28,9 @@ namespace OnlineStore.Core.Commands
             if (matchingProduct != null)
             {
                 result = $"Name: {matchingProduct.Name}" + Environment.NewLine
-              + $"Selling price: ${matchingProduct.SellingPrice}" + Environment.NewLine
+              + $"Selling price: ${Math.Round(matchingProduct.SellingPrice, 2)} per item" + Environment.NewLine
               + $"Category: {matchingProduct.CategoryName}";
             }
-
-
             return result;
         }
     }

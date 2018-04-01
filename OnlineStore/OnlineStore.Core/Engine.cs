@@ -59,7 +59,7 @@ namespace OnlineStore.Core
                 }
                 catch (ComponentNotRegisteredException)
                 {
-                    this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please contact Dev team to implement it :)");
+                    this.writer.WriteLine($"There is no command named [{inputLine}] implemented! Please type help to see the list of available commands and if not available contact Dev team to implement it :)");
                 }
                 catch (Exception e)
                 {

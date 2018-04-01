@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineStore.DTO.ProductModels;
 
 namespace OnlineStore.Tests.Commands.SearchCategory
 {

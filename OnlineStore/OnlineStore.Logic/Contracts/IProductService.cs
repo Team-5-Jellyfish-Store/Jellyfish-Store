@@ -7,7 +7,7 @@ namespace OnlineStore.Logic.Contracts
     public interface IProductService
     {
         IEnumerable<IProductModel> GetAllProducts();
-        IEnumerable<ProductModel> GetProductsByCategoryName(string categoryName);
+        IEnumerable<IProductModel> GetProductsByCategoryName(string categoryName);
 
         IProductModel FindProductByName(string name);
 

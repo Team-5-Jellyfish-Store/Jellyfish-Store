@@ -14,28 +14,6 @@ namespace OnlineStore.Tests.Commands.AddProductToProducts
     public class ExecuteThisCommand_Should
     {
         [TestMethod]
-        public void RequireLogin_IfNoUserLogged()
-        {
-            //Arrange
-            var fakeReader = new Mock<IReader>();
-            var fakeWriter = new Mock<IWriter>();
-            var fakeDtoFactory = new Mock<IDataTransferObjectFactory>();
-            var fakeUserSession = new Mock<IUserSession>();
-            var fakeProductService = new Mock<IProductService>();
-            var fakeValidator = new Mock<IValidator>();
-
-            fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
-            var addProductCommand = new AddProductToProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeDtoFactory.Object, fakeReader.Object, fakeWriter.Object, fakeValidator.Object);
-            var expectedMessage = "Login first!";
-
-            //Act
-            var actualMessage = addProductCommand.ExecuteThisCommand();
-
-            //Assert
-            Assert.AreEqual(expectedMessage, actualMessage);
-        }
-
-        [TestMethod]
         public void RequireAdminRights_IfUserIsLogged()
         {
             //Arrange

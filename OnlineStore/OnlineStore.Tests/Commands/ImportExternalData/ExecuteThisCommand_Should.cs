@@ -10,23 +10,6 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
     public class ExecuteThisCommand_Should
     {
         [TestMethod]
-        public void RequireLogin_IfNoUserLogged()
-        {
-            //Arrange
-            var fakeUserSession = new Mock<IUserSession>();
-            fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
-            var fakeImportService = new Mock<IImportService>();
-            var importCommand = new ImportExternalDataCommand(fakeImportService.Object, fakeUserSession.Object);
-            var expectedMessage = "Login first!";
-
-            //Act
-            var actualMessage = importCommand.ExecuteThisCommand();
-
-            //Assert
-            Assert.AreEqual(expectedMessage, actualMessage);
-        }
-
-        [TestMethod]
         public void RequireAdminRights_IfUserIsLogged()
         {
             //Arrange
@@ -75,9 +58,9 @@ namespace OnlineStore.Tests.Commands.ImportExternalData
             var fakeImportService = new Mock<IImportService>();
             fakeImportService.Setup(s => s.Import()).Returns(expectedResult);
             var importCommand = new ImportExternalDataCommand(fakeImportService.Object, fakeUserSession.Object);
-            
+
             //Act
-            var actualResult =  importCommand.ExecuteThisCommand();
+            var actualResult = importCommand.ExecuteThisCommand();
             //Assert
             Assert.AreEqual(expectedResult, actualResult);
         }

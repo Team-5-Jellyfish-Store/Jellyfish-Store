@@ -24,11 +24,6 @@ namespace OnlineStore.Core.Commands.AdminCommands
         }
         public string ExecuteThisCommand()
         {
-            if (!this.userSession.HasSomeoneLogged())
-            {
-                return this.NoLoggedUserFailMessage;
-            }
-
             if (!this.userSession.HasAdminRights())
             {
                 return this.UserHasNoRightsFailMessage;

@@ -10,25 +10,6 @@ namespace OnlineStore.Tests.Commands.RemoveProductFromProducts
     public class ExecuteThisCommand_Should
     {
         [TestMethod]
-        public void RequireLogin_IfNoUserLogged()
-        {
-            //Arrange
-            var fakeReader = new Mock<IReader>();
-            var fakeWriter = new Mock<IWriter>();
-            var fakeUserSession = new Mock<IUserSession>();
-            var fakeProductService = new Mock<IProductService>();
-            fakeUserSession.Setup(s => s.HasSomeoneLogged()).Returns(false);
-            var removeProductCommand = new RemoveProductFromProductsCommand(fakeProductService.Object, fakeUserSession.Object, fakeReader.Object, fakeWriter.Object);
-            var expectedMessage = "Login first!";
-
-            //Act
-            var actualMessage = removeProductCommand.ExecuteThisCommand();
-
-            //Assert
-            Assert.AreEqual(expectedMessage, actualMessage);
-        }
-
-        [TestMethod]
         public void RequireAdminRights_IfUserIsLogged()
         {
             //Arrange

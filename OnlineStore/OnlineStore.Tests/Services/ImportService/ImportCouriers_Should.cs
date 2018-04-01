@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineStore.Core.Contracts;
 using OnlineStore.DTO.CourierModels;
-using OnlineStore.DTO.SupplierModels;
 using OnlineStore.Logic.Contracts;
 using OnlineStore.Providers.Contracts;
 using OnlineStore.Tests.Mocks;

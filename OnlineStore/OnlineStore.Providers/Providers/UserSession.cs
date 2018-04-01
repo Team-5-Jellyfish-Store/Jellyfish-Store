@@ -1,5 +1,4 @@
 ﻿using OnlineStore.Core.Contracts;
-using OnlineStore.DTO.UserModels;
 using OnlineStore.DTO.UserModels.Contracts;
 using OnlineStore.Models.Enums;
 using System;
@@ -42,12 +41,7 @@ namespace OnlineStore.Core.Providers.Providers
                 throw new ArgumentException("User already logged in!");
             }
 
-            if (userToLogin == null)
-            {
-                throw new ArgumentNullException(nameof(userToLogin));
-            }
-
-            this.LoggedUser = userToLogin;
+            this.LoggedUser = userToLogin ?? throw new ArgumentNullException(nameof(userToLogin));
         }
 
         public void Logout()

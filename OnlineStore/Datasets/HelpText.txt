@@ -1,14 +1,18 @@
 ﻿This is the list of implemented commands:
-	- login		(logs user if user is registered)
-	- register	(registers user)
-	- importexternaldata	(imports data from external source)
-	- addProduct			(adds product)
-	- removeProduct			(removes existing product)
+	- login				(logs user if user is registered)
+	- register			(registers user)
+	- importexternaldata		(imports data from external source)**
+	- addProduct			(adds product)**
+	- addOrder			(adds order using existing products)*
+	- removeProduct			(removes existing product)**
 	- reportProducts		(prints PDF report to folder PDFРeports)
-	- reportOrders			(prints PDF report to folder PDFРeports)
+	- reportOrders			(prints PDF report to folder PDFРeports)**
 	- searchByCategory		(searches the database for products by category)
 	- searchByName			(searches the database for products by product name)
-	- logout				(logs out the existing user)
-	- exit					(exits from the program)
+	- logout			(logs out the existing user)*
+	- help				(prints this list)
+	- exit				(exits from the program)
 
-	Please note that some commands require special (Admin/Moderator) access.
+Commands are case insensitive.
+*These commands require login.
+** These commands require login with special (Admin/Moderator) access!
